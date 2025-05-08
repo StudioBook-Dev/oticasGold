@@ -1,0 +1,235 @@
+.controles-tabela {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+}
+
+.campo-busca {
+    display: flex;
+    /* gap: 0.75rem; */
+    flex: 1;
+}
+
+.busca-tabela {
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.busca-tabela:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-filtrar {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-filtrar:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.tabela-produtos {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    table-layout: fixed;
+}
+
+.tabela-produtos th,
+.tabela-produtos td {
+    padding: 1.5rem 2rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tabela-produtos th {
+    background-color: rgba(0, 0, 0, 0.02);
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 1.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.tabela-produtos tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-produtos tbody tr {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tabela-produtos tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transform: translateY(-1px);
+}
+
+.tabela-produtos td {
+    color: #4a4a4a;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+
+.acoes-container {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-start;
+}
+
+.btn-acao {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #666;
+}
+
+.btn-acao:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.btn-editar {
+    color: #2196F3;
+}
+
+.btn-editar:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.btn-excluir {
+    color: #F44336;
+}
+
+.btn-excluir:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* Tema escuro */
+.dark-theme .busca-tabela {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f5f5f5;
+}
+
+.dark-theme .busca-tabela:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .btn-filtrar {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f5f5f5;
+}
+
+.dark-theme .btn-filtrar:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .tabela-produtos {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .tabela-produtos th {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #f5f5f5;
+}
+
+.dark-theme .tabela-produtos td {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+}
+
+.dark-theme .tabela-produtos tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.dark-theme .btn-acao {
+    color: #999;
+}
+
+.dark-theme .btn-acao:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .btn-editar:hover {
+    background-color: rgba(33, 150, 243, 0.15);
+}
+
+.dark-theme .btn-excluir:hover {
+    background-color: rgba(244, 67, 54, 0.15);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .controles-tabela {
+        flex-direction: column;
+    }
+
+    .campo-busca {
+        width: 100%;
+    }
+
+    .busca-tabela {
+        max-width: none;
+    }
+
+    .btn-filtrar,
+    .btn-adicionar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .tabela-produtos th,
+    .tabela-produtos td {
+        padding: 1.25rem 1rem;
+    }
+
+    .tabela-produtos th {
+        padding: 1.25rem 1rem;
+    }
+
+    .btn-acao {
+        width: 36px;
+        height: 36px;
+    }
+}

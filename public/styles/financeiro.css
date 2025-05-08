@@ -1,0 +1,170 @@
+/* Estilos para a seção Financeiro */
+.opcoes-financeiro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+    justify-content: center;
+}
+
+.btn-financeiro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    width: 160px;
+    height: 120px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.btn-financeiro:hover {
+    background-color: #eaeaea;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-financeiro i {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #4a6cf7;
+}
+
+.btn-financeiro span {
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos para o formulário de categorias financeiras */
+.form-categoria-financeira {
+    padding: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-grupo {
+    margin-bottom: 15px;
+}
+
+.form-grupo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-grupo input[type="text"],
+.form-grupo textarea,
+.form-grupo select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-grupo textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.opcoes-radio {
+    display: flex;
+    gap: 20px;
+}
+
+.opcao-radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.opcao-radio input[type="radio"] {
+    margin: 0;
+}
+
+.form-cor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-cor input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-salvar {
+    background-color: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-salvar:hover {
+    background-color: #3a5cd7;
+}
+
+.btn-cancelar {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+    background-color: #e5e5e5;
+}
+
+/* Tema escuro */
+body.dark-theme .btn-financeiro {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+body.dark-theme .btn-financeiro:hover {
+    background-color: #333;
+}
+
+body.dark-theme .btn-financeiro span {
+    color: #eee;
+}
+
+body.dark-theme .form-grupo input[type="text"],
+body.dark-theme .form-grupo textarea,
+body.dark-theme .form-grupo select {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #eee;
+}
+
+body.dark-theme .btn-cancelar {
+    background-color: #333;
+    color: #eee;
+    border-color: #444;
+}
+
+body.dark-theme .btn-cancelar:hover {
+    background-color: #444;
+} 

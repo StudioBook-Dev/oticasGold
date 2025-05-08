@@ -1,0 +1,115 @@
+/* Estilos para a visualização de detalhes do pedido */
+.detalhes-pedido-container {
+    padding: 20px;
+    max-width: 100%;
+    overflow-y: auto;
+}
+
+.detalhe-secao {
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.detalhe-secao h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.tabela-produtos-pedido {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-produtos-pedido th, 
+.tabela-produtos-pedido td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.tabela-produtos-pedido th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+}
+
+.status-pedido {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.status-fila, .status-pendente {
+    background-color: #ffeaa7;
+    color: #d35400;
+}
+
+.status-concluido {
+    background-color: #d5f5e3;
+    color: #27ae60;
+}
+
+.status-cancelar, .status-cancelado {
+    background-color: #fce4e4;
+    color: #e74c3c;
+}
+
+.resumo-financeiro {
+    background-color: #f5f9ff;
+}
+
+.linha-resumo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #eee;
+}
+
+.linha-resumo.total {
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 2px solid #ddd;
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Estilos para tema escuro */
+.dark-theme .detalhe-secao {
+    background-color: #333;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.dark-theme .detalhe-secao h3 {
+    border-bottom-color: #444;
+    color: #eee;
+}
+
+.dark-theme .tabela-produtos-pedido th {
+    background-color: #3a3a3a;
+}
+
+.dark-theme .tabela-produtos-pedido td,
+.dark-theme .tabela-produtos-pedido th {
+    border-bottom-color: #444;
+}
+
+.dark-theme .linha-resumo {
+    border-bottom-color: #444;
+}
+
+.dark-theme .linha-resumo.total {
+    border-top-color: #555;
+}
+
+.dark-theme .resumo-financeiro {
+    background-color: #2a3a4a;
+} 

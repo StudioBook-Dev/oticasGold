@@ -1,0 +1,381 @@
+
+@import 'botoesTopoModalLancamentos.css';
+@import 'categoriasFinanceiras.css';
+@import 'configuracoes.css';
+@import 'dashboard.css';
+@import 'financeiro.css';
+@import 'icones.css';
+@import 'kanban.css';
+@import 'menuLateral.css';
+@import 'modalPrincipal.css';
+
+@import 'modais/principal/detalhesPedido.css';
+@import 'modais/principal/lancamentoVendas.css';
+@import 'modais/principal/modalEstoque.css';
+@import 'modais/principal/modalPrincipal.css';
+@import 'modais/principal/tabela_modalPrincipal.css';
+@import 'modais/principal/tabelaModalVendas.css';
+
+@import 'modais/secundario/modalSecundario.css';
+
+
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+/* Variáveis para o tema light */
+:root {
+  --background-color: #fff;
+  --background-card: #fff;
+  --border-color: #e0e0e0;
+  --text-color: #333;
+  --text-secondary: #666;
+  --text-tertiary: #999;
+  --accent-color: #4CAF50;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Variáveis para o tema dark */
+body.dark-theme {
+  --background-color: #363636;
+  --background-card: #2d2d2d;
+  --border-color: #676464;
+  --text-color: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --accent-color: #666;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-shadow: rgba(0, 0, 0, 0.4);
+}
+
+body {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barra de navegação */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.text-button {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.text-button:hover {
+  color: #666;
+}
+
+
+.menu-button,
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+  transition: all 0.3s ease;
+}
+
+.menu-button i,
+.theme-toggle i {
+  font-size: 16px;
+}
+
+.menu-button:hover,
+.theme-toggle:hover {
+  background-color: #efefef;
+}
+
+/* Divisor */
+.divisor {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  z-index: 999;
+}
+
+/* Conteúdo principal */
+.main-content {
+  flex: 1;
+  padding: 80px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Container principal */
+.container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0 auto;
+}
+
+/* Footer e botão de adição */
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: white;
+  display: flex;
+  padding: 0 20px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.add-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+.add-button i {
+  font-size: 14px;
+}
+
+.add-button:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+
+
+.desativado{
+  display: none;
+}
+  
+.active-text-button {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Tema escuro */
+.dark-theme {
+  background-color: #222;
+  color: #f5f5f5;
+}
+
+.dark-theme .navbar,
+.dark-theme .app-footer {
+  background-color: #333;
+}
+
+.dark-theme .text-button {
+  color: #f5f5f5;
+}
+
+.dark-theme .text-button:hover {
+  color: #ccc;
+}
+
+.dark-theme .main-content {
+  background-color: #333;
+}
+
+.dark-theme .menu-button,
+.dark-theme .theme-toggle,
+.dark-theme .add-button {
+  color: #f5f5f5;
+  background-color: #3a3a3a;
+}
+
+.dark-theme .menu-button:hover,
+.dark-theme .theme-toggle:hover,
+.dark-theme .add-button:hover {
+  background-color: #444;
+}
+
+.dark-theme .divisor {
+  background-color: #444;
+}
+
+.dark-theme .container {
+  background-color: #333;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .add-button {
+  color: #333;
+  background-color: #f7f7f7;
+}
+
+.dark-theme .add-button:hover {
+  background-color: #ffffff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .main-content {
+    padding-bottom: 80px;
+    /* Adiciona espaço extra no final para não sobrepor o footer */
+  }
+}
+
+/* Estilos para a tabela de produtos */
+.tabela-produtos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.tabela-produtos th,
+.tabela-produtos td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabela-produtos th {
+  font-weight: 600;
+  background-color: #f9f9f9;
+}
+
+.tabela-produtos tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.tabela-produtos .erro {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+/* Estilos para o tema escuro */
+.dark-theme .tabela-produtos th {
+  background-color: #3a3a3a;
+  color: #f5f5f5;
+}
+
+.dark-theme .tabela-produtos td {
+  border-bottom-color: #444;
+  color: #f5f5f5;
+}
+
+.dark-theme .tabela-produtos tbody tr:hover {
+  background-color: #333;
+}
+
+.dark-theme .tabela-produtos .erro {
+  color: #ff6b6b;
+}
+
+/* Estilos globais para tabelas - garante que th tenha o mesmo tamanho que td */
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table th {
+    width: auto;
+    box-sizing: border-box;
+}
+
+/* Regra global para garantir que todas as células e elementos dentro das tabelas sejam alinhados à esquerda */
+table th, 
+table td, 
+table tr, 
+table th *, 
+table td * {
+    text-align: left !important;
+}
+
+.tabela-produtos th {
+  font-weight: 600;
+  background-color: #f9f9f9;
+}
+
+/* Estilos para usar diferentes pesos da fonte Geist */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600; /* SemiBold para cabeçalhos */
+  letter-spacing: -0.02em; /* Spacing mais ajustado para cabeçalhos */
+}
+
+strong, b {
+  font-weight: 600; /* SemiBold para textos em negrito */
+}
+
+.modal-titulo {
+  font-weight: 500; /* Medium para títulos de modais */
+}
+
+.btn-primario {
+  font-weight: 500; /* Medium para botões primários */
+}
+
+/* Usando a fonte Geist Mono para elementos que necessitam de espaçamento monospace */
+code, pre {
+  font-family: 'Geist Mono', monospace;
+}
+
+/* Dashboard e Kanban */
+.dashboard, .kanban {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.conteudo-dashboard, .conteudo-kanban {
+  width: 100%;
+  overflow-x: hidden;
+}

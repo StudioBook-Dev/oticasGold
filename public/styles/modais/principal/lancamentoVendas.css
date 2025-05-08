@@ -1,0 +1,400 @@
+/* Estilos para o layout de lançamento de vendas */
+
+.container-duas-colunas {
+    display: flex;
+    gap: 2rem;
+    position: relative;
+    width: 100%;
+    max-height: 70vh;
+}
+
+.coluna-produtos {
+    flex: 1;
+    overflow-y: auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.tabela-modal-vendas {
+    text-align: left;
+    width: 100%;
+    table-layout: fixed;
+    /* Garante que os headers e células tenham o mesmo tamanho */
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+}
+
+/* Define a largura da primeira coluna como 20% */
+.tabela-modal-vendas th:first-child,
+.tabela-modal-vendas td:first-child {
+    width: 5%;
+}
+
+/* Define a largura da segunda coluna como 40% */
+.tabela-modal-vendas th:nth-child(2),
+.tabela-modal-vendas td:nth-child(2) {
+    width: 30%;
+}
+
+/* Define a largura da terceira coluna como 20% */
+.tabela-modal-vendas th:nth-child(3),
+.tabela-modal-vendas td:nth-child(3) {
+    width: 15%;
+}
+
+.tabela-modal-vendas th:nth-child(4),
+.tabela-modal-vendas td:nth-child(4) {
+    width: 15%;
+}
+
+/* Ajusta as demais colunas para distribuir o espaço restante proporcionalmente */
+.tabela-modal-vendas th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)),
+.tabela-modal-vendas td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) {
+    width: auto;
+    /* Distribui o espaço restante */
+}
+
+.tabela-modal-vendas th,
+.tabela-modal-vendas td {
+    padding-bottom: 1rem;
+    text-align: left;
+    /* Garante alinhamento à esquerda */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tabela-modal-vendas th {
+    /* background-color: rgba(0, 0, 0, 0.02); */
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    /* padding: 1.25rem 1.75rem; */
+    position: sticky;
+    /* Torna os headers fixos durante a rolagem */
+    top: 0;
+    z-index: 10;
+}
+
+.coluna.carrinho {
+    flex: 1;
+    position: relative;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.carrinho h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+#itens-carrinho {
+    flex: 1;
+    min-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+#itens-carrinho p {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.total-carrinho {
+    padding: 1rem 0;
+    margin: 1rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.total-carrinho p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: right;
+}
+
+.btn-primario {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.btn-primario:hover:not([disabled]) {
+    background-color: #388E3C;
+    transform: translateY(-2px);
+}
+
+.btn-primario:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Tema escuro */
+.dark-theme .coluna-produtos,
+.dark-theme .coluna.carrinho {
+    background-color: #222222;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .carrinho h3 {
+    color: #e6e6e6;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme #itens-carrinho p {
+    color: #999;
+}
+
+.dark-theme .total-carrinho {
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .total-carrinho p {
+    color: #e6e6e6;
+}
+
+/* Tema escuro para tabela de vendas */
+.dark-theme .tabela-modal-vendas th {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #f5f5f5;
+}
+
+.dark-theme .tabela-modal-vendas td {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+}
+
+.dark-theme .tabela-modal-vendas tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Estilos para os contadores */
+.contador-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.contador-valor {
+    display: inline-block;
+    min-width: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: 0.5em;
+    margin-right: -0.6em;
+}
+
+.btn-contador {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-contador:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.btn-contador:active {
+    transform: translateY(0);
+}
+
+/* Tema escuro para contadores */
+.dark-theme .btn-contador {
+    background-color: #444;
+    color: #f5f5f5;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .btn-contador:hover {
+    background-color: #555;
+}
+
+.dark-theme .contador-valor {
+    color: #f5f5f5;
+}
+
+/* Botão de carrinho entre as colunas */
+.btn-carrinho-colunas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-65%, -50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #555;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.btn-carrinho-colunas:hover {
+    /* background-color: var(--cor-verde-primaria); */
+    transform: translate(-60%, -50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(119, 126, 131, 0.4);
+}
+
+.btn-carrinho-colunas i {
+    font-size: 1.25rem;
+}
+
+/* Tema escuro */
+.dark-theme .btn-carrinho-colunas {
+    /* background-color: var(--cor-verde-primaria); */
+    box-shadow: 0 2px 8px rgba(119, 126, 131, 0.4);
+}
+
+/* .dark-theme .btn-carrinho-colunas:hover { */
+    /* background-color: var(--cor-verde-primaria); */
+    /* box-shadow: 0 4px 12px rgba(79, 73, 73, 0.5); */
+/* } */
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .container-duas-colunas {
+        flex-direction: column;
+    }
+
+    .coluna-produtos,
+    .coluna.carrinho {
+        flex: 1;
+        width: 100%;
+    }
+
+    .coluna.carrinho {
+        margin-top: 1.5rem;
+    }
+
+    .btn-carrinho-colunas {
+        left: 50%;
+        top: auto;
+        bottom: -25px;
+        transform: translateX(-50%);
+    }
+
+    .btn-carrinho-colunas:hover {
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+@media (max-width: 768px) {
+    .container-duas-colunas {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-carrinho-colunas {
+        left: 50%;
+        top: auto;
+        bottom: -25px;
+        transform: translateX(-50%);
+    }
+
+    .btn-carrinho-colunas:hover {
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* Estilos para os itens do carrinho */
+.item-carrinho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 0.9rem;
+}
+
+.item-carrinho:last-child {
+    border-bottom: none;
+}
+
+.item-carrinho span:first-child {
+    flex: 2;
+    font-weight: 500;
+}
+
+.item-carrinho span:nth-child(2) {
+    flex: 1;
+    text-align: center;
+    color: #666;
+}
+
+.item-carrinho span:last-child {
+    flex: 1;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Tema escuro para itens do carrinho */
+.dark-theme .item-carrinho {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .item-carrinho span:nth-child(2) {
+    color: #999;
+}
+
+/* Responsividade para itens do carrinho */
+@media (max-width: 768px) {
+    .item-carrinho {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .item-carrinho span {
+        width: 100%;
+        text-align: left;
+    }
+
+    .item-carrinho span:last-child {
+        text-align: left;
+    }
+}

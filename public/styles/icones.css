@@ -1,0 +1,64 @@
+/* Estilos para ícones */
+i {
+  display: inline-block;
+  line-height: 1;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ícones nos botões da navegação e footer */
+.menu-button, 
+.theme-toggle, 
+.fechar-menu {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.add-button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.menu-button i, 
+.theme-toggle i, 
+.fechar-menu i {
+  font-size: 14px;
+}
+
+/* Para garantir que o ícone de adição seja visível sobre o fundo escuro */
+.add-button i {
+  font-size: 14px;
+}
+
+/* Ícones do menu lateral */
+.menu-item i {
+  font-size: 14px;
+  margin-right: 12px;
+  width: 18px;
+  text-align: center;
+}
+
+/* Tema escuro */
+.dark-theme .menu-button,
+.dark-theme .theme-toggle,
+.dark-theme .fechar-menu {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .add-button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de hover nos botões */
+.menu-button:hover, 
+.theme-toggle:hover, 
+.fechar-menu:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.add-button:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+

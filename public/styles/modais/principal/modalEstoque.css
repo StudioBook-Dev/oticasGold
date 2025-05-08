@@ -1,0 +1,242 @@
+/* Estilos para o Modal de Estoque */
+
+/* Botões no topo do modal */
+.acoes-estoque {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.botao-estoque {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.botao-estoque:hover {
+    background-color: #e0e0e0;
+}
+
+.botao-estoque i {
+    margin-right: 5px;
+}
+
+/* Botões específicos */
+#btn-entrada-estoque {
+    color: #28a745;
+}
+
+#btn-saida-estoque {
+    color: #dc3545;
+}
+
+/* Botão de histórico é o terceiro (agora último) filho */
+.acoes-estoque button:last-child {
+    color: #17a2b8;
+}
+
+/* Formulários dentro dos modais */
+.form-estoque {
+    padding: 15px;
+}
+
+.form-grupo {
+    margin-bottom: 15px;
+}
+
+.form-grupo label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.campo-formulario {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-acoes {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.botao-formulario {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.botao-formulario:hover {
+    background-color: #0069d9;
+}
+
+/* Estilos para o histórico de estoque */
+.filtros-historico {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.entrada-estoque {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.saida-estoque {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Tabela de histórico */
+.tabela-modal {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabela-modal th {
+    /* background-color: #f8f9fa; */
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #ebecec;
+}
+.dark-theme .tabela-modal th {
+    border-bottom: 1px solid #616466;
+}
+
+
+.tabela-modal td {
+    padding: 10px 8px;
+    border-bottom: none;
+    vertical-align: middle;
+}
+
+/* Informações de filtro */
+.info-filtro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #17a2b8;
+    font-size: 13px;
+}
+
+.botao-limpar-filtro {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.botao-limpar-filtro:hover {
+    background-color: #e9ecef;
+    text-decoration: underline;
+}
+
+/* Indicador de total de registros */
+.total-registros {
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+/* Mensagem de sem registros */
+.sem-registros {
+    padding: 20px;
+    text-align: center;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.sem-registros i {
+    margin-right: 5px;
+    color: #17a2b8;
+}
+
+/* Ações do histórico */
+.acoes-historico {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info-filtro {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.botao-limpar-filtro {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.botao-limpar-filtro:hover {
+    background-color: #e0e0e0;
+}
+
+.opcoes-debug {
+    display: flex;
+    gap: 10px;
+}
+
+.botao-debug {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+
+.botao-debug:hover {
+    background-color: #eaf7ff;
+    border-color: #7fb9e6;
+}
+
+.opcoes-debug .botao-debug:first-child {
+    background-color: #e8f4fe;
+    border-color: #a0c8e5;
+}
+
+.opcoes-debug .botao-debug:last-child {
+    background-color: #fff0f0;
+    border-color: #e5a0a0;
+}
+
+.opcoes-debug .botao-debug:last-child:hover {
+    background-color: #ffe8e8;
+    border-color: #e57f7f;
+} 

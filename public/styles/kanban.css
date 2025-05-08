@@ -1,0 +1,323 @@
+/* Estilos para o Kanban */
+.kanban-container {
+    display: flex;
+    width: 100%;
+    height: calc(90%); /* Altura total menos o espaço para a barra de rolagem */
+    gap: 16px;
+    padding: 20px 20px 0 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: flex-start;
+    background-color: var(--background-color);
+    
+    /* Estilização da barra de rolagem - aspecto clean */
+    scrollbar-width: thin;
+    scrollbar-color: #9b9d9b transparent;
+}
+
+/* Estilização da barra de rolagem para Chrome, Safari e Opera */
+.kanban-container::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+}
+
+.kanban-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin: 0;
+}
+
+.kanban-container::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    border: 2px solid var(--background-color);
+    transition: background-color 0.3s ease;
+}
+
+.kanban-container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color-hover, var(--accent-color));
+}
+
+/* Tema escuro para a barra de rolagem */
+body.dark-theme .kanban-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .kanban-container::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border: 2px solid var(--background-color);
+}
+
+body.dark-theme .kanban-container::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+}
+
+/* Estilização do indicador visual de rolagem (scroll shadow) */
+.kanban-container::after {
+    content: none;
+}
+
+
+.kanban-coluna {
+    width: 20%;
+    height: 90%;
+    min-width: 280px;
+    background-color: var(--background-card);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.kanban-coluna:hover {
+    box-shadow: 0 4px 12px var(--hover-shadow);
+}
+
+.kanban-coluna-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background-header);
+}
+
+.kanban-coluna-titulo {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kanban-coluna-titulo i {
+    opacity: 0.8;
+}
+
+.kanban-coluna-contagem {
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.kanban-coluna-cards {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background-color: var(--background-card);
+}
+
+/* Estilos específicos para cada coluna por status */
+.kanban-coluna[data-status="fila"] .kanban-coluna-contagem {
+    background-color: #296dff;
+}
+
+.kanban-coluna[data-status="preparando"] .kanban-coluna-contagem {
+    background-color: #f39c12;
+}
+
+.kanban-coluna[data-status="retirada"] .kanban-coluna-contagem {
+    background-color: #9b59b6;
+}
+
+.kanban-coluna[data-status="entrega"] .kanban-coluna-contagem {
+    background-color: #2980b9;
+}
+
+.kanban-coluna[data-status="finalizado"] .kanban-coluna-contagem {
+    background-color: #27ae60;
+}
+
+.kanban-coluna[data-status="cancelado"] .kanban-coluna-contagem {
+    background-color: #e74c3c;
+}
+
+/* Estilos para os cards de pedidos */
+.card-pedido {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    cursor: grab;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-pedido:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--hover-shadow);
+    border-color: var(--accent-color);
+}
+
+.card-pedido::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--accent-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-pedido:hover::before {
+    opacity: 1;
+}
+
+.card-pedido.arrastando {
+    opacity: 0.6;
+    border: 2px dashed var(--border-color);
+}
+
+.numero-pedido {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.produto-pedido {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.valor-pedido {
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.data-pedido {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: right;
+    font-family: monospace;
+}
+
+.sem-pedidos {
+    color: var(--text-tertiary);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Estilos para o tema escuro */
+body.dark-theme .kanban-container {
+    background-color: var(--background-color);
+}
+
+body.dark-theme .kanban-coluna {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+body.dark-theme .kanban-coluna-header {
+    background-color: #333;
+    border-color: #444;
+}
+
+body.dark-theme .kanban-coluna-cards {
+    background-color: #2d2d2d;
+}
+
+body.dark-theme .card-pedido {
+    background-color: #363636;
+    border-color: #404040;
+}
+
+body.dark-theme .card-pedido:hover {
+    border-color: #666;
+    background-color: #404040;
+}
+
+body.dark-theme .valor-pedido {
+    color: #54c563;
+}
+
+body.dark-theme .sem-pedidos {
+    color: #999;
+}
+
+/* Media queries para responsividade */
+@media screen and (max-width: 1200px) {
+    .kanban-coluna {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .kanban-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .kanban-coluna {
+        width: 100%;
+        margin-bottom: 20px;
+        height: auto;
+        max-height: 500px;
+    }
+}
+
+/* Estilos para interação de drag and drop */
+.kanban-coluna-cards.coluna-hover {
+    background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+    border: 2px dashed var(--accent-color);
+}
+
+body.dark-theme .kanban-coluna-cards.coluna-hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px dashed #666;
+}
+
+/* Indicador visual de rolagem */
+.kanban-scroll-indicator {
+    display: none;
+}
+
+.kanban-scroll-indicator.ativo {
+    display: none;
+}
+
+.kanban-scroll-indicator:hover {
+    display: none;
+}
+
+.kanban-scroll-indicator i {
+    display: none;
+}
+
+/* Tema escuro para o indicador de rolagem */
+body.dark-theme .kanban-scroll-indicator {
+    display: none;
+}
+
+/* Estilos para o container externo do kanban */
+.kanban-wrap {
+    width: 100%;
+    height: 90vh;
+    padding: 10px 0 20px 0;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}

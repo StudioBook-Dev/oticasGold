@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="fonts/geist.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="abrirDashboard()">
+    <div class="menuLateral"></div>
+    <!-- Barra de navegação -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="menu-button" onclick="abrirMenuLateral()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="nav-right">
+            <button id="btn-dashboard" class="text-button" onclick="abrirDashboard()">Dashboard</button>
+            <button id="btn-kanban" class="text-button" onclick="abrirKanban()">Kanban</button>
+            <button class="theme-toggle" onclick="alternarTema()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Divisor -->
+    <div class="divisor"></div>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <div class="container">
+            <div class="kanban desativado"> 
+                <h1>Kanban</h1>
+                 <br>
+                <div id="kanban" class="conteudo-kanban"></div>
+            </div>
+            <div class="dashboard"> 
+                <h1>Dashboard</h1>
+                <br>
+                <div id="dashboard" class="conteudo-dashboard"></div>
+            </div>
+            <div class="modalPrincipal"></div>
+            <!-- Aqui você pode adicionar o conteúdo da sua aplicação -->
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <button class="add-button" onclick="selecionarLancamento()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </footer>
+
+
+    
+    <!-- Código para uso Geral  -->
+    <script src="scripts/0_GERAL/alteranarTema.js"></script>
+    <script src="scripts/0_GERAL/excluirItem.js"></script>
+    <script src="scripts/0_GERAL/fecharModais.js"></script>
+    <script src="scripts/0_GERAL/modalSecundario.js"></script>
+    <script src="scripts/0_GERAL/modalPrincipal.js"></script>
+    <script src="scripts/0_GERAL/data.js"></script>
+    <script src="scripts/0_GERAL/buscarItens.js"></script>
+    <script src="scripts/0_GERAL/localStorage.js"></script>
+    <script src="scripts/0_GERAL/converterParaValorMonetario.js"></script>
+    <script src="scripts/0_GERAL/selecionarLancamento.js"></script>
+
+
+    <!-- Código para configurações -->
+    <script src="scripts/configuracoes/excluirTodosItens.js"></script>
+    <script src="scripts/configuracoes/modalPrincipalConfiguracoes.js"></script>
+
+
+    <!-- Código para dashboard -->
+    <script src="scripts/dashboard/dadosFinanceiros.js"></script>
+    <script src="scripts/dashboard/exportarRelatorios.js"></script>
+    <script src="scripts/dashboard/dashboardFinanceiro.js"></script>
+    <script src="scripts/dashboard/abrirDashboard.js"></script>
+    <script src="scripts/dashboard/tabelaTransacoes.js"></script>
+    <script src="scripts/dashboard/graficos.js"></script>
+
+
+    <!-- Código para kanban -->
+    <script src="scripts/kanban/criarColunaKanbanHTML.js"></script>
+    <script src="scripts/kanban/abrirKanban.js"></script>
+    <script src="scripts/kanban/dragInDrop.js"></script>
+    <script src="scripts/kanban/pedidos/detalhes.js"></script>
+    <script src="scripts/kanban/pedidos/excluirPedidos.js"></script>
+    <script src="scripts/kanban/pedidos/cards.js"></script>
+    <script src="scripts/kanban/pedidos/getPedidos.js"></script>
+    <script src="scripts/kanban/pedidos/editarPedido.js"></script>
+
+
+    <!-- Código para uso do menu lateral -->
+    <script src="scripts/menuLateral/abrirMenuLateral.js"></script>
+
+
+    <!-- Código para categorias -->
+    <script src="scripts/categorias/getCategoria.js"></script>
+    <script src="scripts/categorias/editarCategoria.js"></script>
+    <script src="scripts/categorias/modalPrincipalCategoria.js"></script>
+    <script src="scripts/categorias/modalSecundarioCategoria.js"></script>
+    <script src="scripts/categorias/salvarCategoriaNaPlanilha.js"></script>
+
+
+    <!-- Código para produtos -->
+    <script src="scripts/produtos/getProdutos.js"></script>
+    <script src="scripts/produtos/modalPrincipalProdutos.js"></script>
+    <script src="scripts/produtos/getProdutos.js"></script>
+    <script src="scripts/produtos/editarProduto.js"></script>
+    <script src="scripts/produtos/salvaProdutoNaPlanilha.js"></script>
+    <script src="scripts/produtos/modalSecundarioProdutos.js"></script>
+
+
+    <!-- Código para clientes -->
+    <script src="scripts/clientes/getClientes.js"></script>
+    <script src="scripts/clientes/editarCliente.js"></script>
+    <script src="scripts/clientes/modalPrincipalClientes.js"></script>
+    <script src="scripts/clientes/modalSecundarioClientes.js"></script>
+    <script src="scripts/clientes/salvarClienteNaPlanilha.js"></script>
+
+
+    <!-- Código para cupons -->
+    <script src="scripts/cupons/getCupons.js"></script>
+    <script src="scripts/cupons/editarCupom.js"></script>
+    <script src="scripts/cupons/modalPrincipalCupons.js"></script>
+    <script src="scripts/cupons/modalSecundarioCupons.js"></script>
+    <script src="scripts/cupons/salvarCupomNaPlanilha.js"></script>
+
+
+    <!-- Código para pedidos -->
+    <script src="scripts/lancamentoPedido/modalPrincipalPedido.js"></script>
+    <script src="scripts/lancamentoPedido/carrinho.js"></script>
+    <script src="scripts/lancamentoPedido/counters.js"></script>
+    <script src="scripts/lancamentoPedido/cupomNoCarrinho.js"></script>
+    <script src="scripts/lancamentoPedido/htmlTabelaProdutosPedido.js"></script>
+    <script src="scripts/lancamentoPedido/finalizarLancamento.js"></script>
+    <script src="scripts/lancamentoPedido/salvarPedidoNoBancoDeDados.js"></script>
+
+
+    <!-- Código para botoesTopo -->
+    <script src="scripts/lancamentoPedido/botoesTopo/frete.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/clientes.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/desconto.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/observacao.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/cupons.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/botoes.js"></script>
+    <script src="scripts/lancamentoPedido/botoesTopo/receita.js"></script>
+
+
+    <!-- Código para estoque -->
+    <script src="scripts/estoque/entrada.js"></script>
+    <script src="scripts/estoque/saida.js"></script>
+    <script src="scripts/estoque/modalPrincipalEstoque.js"></script>
+    <script src="scripts/estoque/modalDoHistorico.js"></script>
+    <script src="scripts/estoque/salvarMovimentacao.js"></script>
+
+        
+    <!-- Código para financeiro -->
+    <script src="scripts/financeiro/categorias/crudBancoDeDados.js"></script>
+    <script src="scripts/financeiro/categorias/editarCategoria.js"></script>
+    <script src="scripts/financeiro/categorias/modalPrincipalFinanceiro.js"></script>
+    <script src="scripts/financeiro/categorias/modalSecundarioCategoriasFinanceiras.js"></script>
+
+    <script src="scripts/financeiro/transacoes/modalLancamentoTransacao.js"></script>
+    <script src="scripts/financeiro/transacoes/crud.js"></script>
+
+    <script src="scripts/financeiro/pagamento/pagamento.js"></script>
+
+</body>
+
+</html>

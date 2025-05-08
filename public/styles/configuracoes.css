@@ -1,0 +1,58 @@
+.botoes-configuracoes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.botao-config {
+    padding: 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao-config:hover {
+    background-color: #c82333;
+}
+
+.modal-excluir-conteudo {
+    padding: 1rem;
+    text-align: center;
+}
+
+.botoes-modal-excluir {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.botao-confirmar {
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-cancelar {
+    padding: 0.5rem 1rem;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-confirmar:hover {
+    background-color: #c82333;
+}
+
+.botao-cancelar:hover {
+    background-color: #5a6268;
+} 
