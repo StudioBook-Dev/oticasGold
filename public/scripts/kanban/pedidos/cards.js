@@ -1,3 +1,5 @@
+
+
 // Função para criar o HTML do card de pedido
 function criarCardPedidoHTML(pedido) {
     // Formatar o valor total para exibição
@@ -57,9 +59,15 @@ function criarCardPedidoHTML(pedido) {
             <div class="card-itens">${quantidadeItens} item(ns)</div>
             <div class="card-valor">${valorFormatado}</div>
             <div class="card-acoes">
+
                 <button class="btn-card visualizar-pedido" 
                     onclick="abrirModalPrincipal_DetalhesDosPedidos('${pedido.id}')">
                     <i class="fas fa-info-circle"></i>
+                </button>
+
+                <button class="btn-card pagamento-pedido" 
+                    onclick="abriModalPagamentoDoPedido('${pedido.id}')">
+                    <i class="fas fa-credit-card"></i>
                 </button>
 
                 <button style="display: none;" 
@@ -72,6 +80,7 @@ function criarCardPedidoHTML(pedido) {
                 </button>
             </div>
         </div>
+
         <style>
             .card-pedido {
                 border-radius: 8px;

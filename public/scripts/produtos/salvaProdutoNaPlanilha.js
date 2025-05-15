@@ -13,6 +13,7 @@ function enviaNovoProdutoPara_Salvar() {
         categoria: getInputValue('categoria'),
         dataCriacao: dataFormatada().data
     };
+    console.log(produto)
     salvarProdutoNovo_noBancoDeDados(produto)
     fecharModalSecundario()
     abrirModalProdutos()

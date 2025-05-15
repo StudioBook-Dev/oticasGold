@@ -1,5 +1,6 @@
 
 
+
 // Função para buscar todas as transações financeiras
 async function Ler_TransacoesFinanceiras() {
     try {
@@ -27,6 +28,7 @@ async function Ler_TransacoesFinanceiras() {
 
 // Função para salvar uma transação financeira no banco de dados
 async function salvarTransacaoFinanceira(transacao) {
+    // console.log(transacao)
     try {
         // Verificar campos obrigatórios
         if (!transacao.id || !transacao.tipo || !transacao.valor) {

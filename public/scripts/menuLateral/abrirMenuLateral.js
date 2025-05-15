@@ -1,3 +1,5 @@
+
+
 // Definindo os itens do menu
 const itensMenu = [
     { nome: 'Produtos', icone: 'fas fa-box', onClick: 'abrirModalProdutos()' },

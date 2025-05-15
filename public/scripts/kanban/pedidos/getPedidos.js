@@ -1,8 +1,6 @@
-
-
 // Função para carregar os pedidos diretamente da API
 async function getPedidos() {
-    return fetch('/api/pedidos')
+    return fetch('api/pedidos')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro ao carregar pedidos da API');
@@ -54,6 +52,7 @@ async function getPedido(id) {
             throw new Error(`Erro ao buscar pedido: ${response.status} ${response.statusText}`);
         }
         const pedido = await response.json();
+        console.log(pedido);
         return pedido;
     } catch (error) {
         console.error("Erro ao carregar pedido:", error);       

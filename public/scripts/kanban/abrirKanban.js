@@ -62,7 +62,7 @@ function atualizarKanbanPedidos() {
 // Função para criar o HTML de uma coluna do Kanban
 function criarColunaKanbanHTML(categoria, pedidos) {
     // Filtrar pedidos pelo status
-    const pedidosColuna = pedidos.filter(pedido => pedido.status === categoria.id);
+    const pedidosColuna = pedidos.filter(pedido => pedido.status === categoria.id) || [];
     
     return `
         <div class="kanban-coluna" data-status="${categoria.id}">

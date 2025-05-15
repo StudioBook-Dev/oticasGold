@@ -1,3 +1,5 @@
+
+
 function criarColunaKanbanHTML(status) {
     // Formata o título da coluna
     const titulo = status.charAt(0).toUpperCase() + status.slice(1);

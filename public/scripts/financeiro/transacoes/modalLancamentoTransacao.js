@@ -1,8 +1,11 @@
+
+
 function abrirModalTransacaoFinanceira() {
     fecharModalSecundario()
-    abrirModalSecundario({
+    abrirModalPrincipal({
         titulo: 'Lançamento de Transações Financeiras',
         conteudo: `<div id="modalTransacoesFinanceiras"></div>`,
+        adicionar: false
     });
     form_LancamentoTransacoesFinanceiras()
 }

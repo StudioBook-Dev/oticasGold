@@ -5,7 +5,6 @@ function finalizarPedido() {
         alert('O carrinho está vazio!');
         return;
     }
-    
 
     // Calcular o valor final considerando o frete, cupom e desconto
     let subtotal = parseFloat(calcularTotalCarrinho().replace(',', '.'));

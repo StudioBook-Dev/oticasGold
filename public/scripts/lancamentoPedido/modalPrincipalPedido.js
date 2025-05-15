@@ -59,13 +59,13 @@ function gerarTabelaModalPedidos(produtos) {
 
     let tabela = `
         <table class="tabela-modal tabela-modal-vendas">
-        <thead><tr>
-        <th class="coluna-acoes"></th>
-        <th class="coluna-nome"></th>
-        <th class="coluna-preco"></th>
-        <th class="coluna-contadores"></th>
-        </tr></thead>
-        <tbody class="modal-conteudo">
+            <thead><tr>
+            <th class="coluna-acoes"></th>
+            <th class="coluna-nome"></th>
+            <th class="coluna-preco"></th>
+            <th class="coluna-contadores"></th>
+            </tr></thead>
+            <tbody class="modal-conteudo">
     `
     // Verificar cada produto e exibir seus dados
     produtos.forEach((produto, index) => {
