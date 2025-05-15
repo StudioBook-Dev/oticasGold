@@ -47,7 +47,10 @@ function criarCardPedidoHTML(pedido) {
     // Formatar a data para exibição
     const dataPedido = pedido.dataCriacao ? new Date(pedido.dataCriacao) : new Date();
     const dataFormatada = dataPedido.toLocaleDateString('pt-BR');
-    
+   
+    const condicaoPagamento = pedido.pagamento.valor === 0 || pedido.status === 'finalizado' 
+    const condicaoExcluir = pedido.pagamento.status === 'finalizado' || pedido.status === 'cancelado'
+
     // Gerar o HTML do card
     return `
         <div class="card-pedido" data-id="${pedido.id}" >
@@ -65,8 +68,10 @@ function criarCardPedidoHTML(pedido) {
                     <i class="fas fa-info-circle"></i>
                 </button>
 
-                <button class="btn-card pagamento-pedido" 
-                    onclick="abriModalPagamentoDoPedido('${pedido.id}')">
+                <button class="btn-card pagamento-pedido
+                onclick="abriModalPagamentoDoPedido('${pedido.id}')" 
+                    ${condicaoPagamento ? 'style="display: none;"' : ''}" 
+                    ${condicaoExcluir ? 'style="display: none;"' : ''}">
                     <i class="fas fa-credit-card"></i>
                 </button>
 
@@ -75,7 +80,10 @@ function criarCardPedidoHTML(pedido) {
                     <i class="fas fa-pencil-alt"></i>
                 </button>
 
-                <button class="btn-card excluir-pedido" onclick="excluirPedidos('${pedido.id}')">
+                <button class="btn-card excluir-pedido" 
+                    onclick="excluirPedidos('${pedido.id}')"
+                    ${condicaoPagamento ? 'style="display: none;"' : ''}
+                    ${condicaoExcluir ? 'style="display: none;"' : ''}>
                     <i class="fas fa-trash"></i>
                 </button>
             </div>

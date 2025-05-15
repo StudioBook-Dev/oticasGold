@@ -1,6 +1,3 @@
-
-
-
 // Função para buscar todas as transações financeiras
 async function Ler_TransacoesFinanceiras() {
     try {
@@ -12,7 +9,11 @@ async function Ler_TransacoesFinanceiras() {
         const data = await response.json();
 
         if (Array.isArray(data)) {
-            return data;
+            // Transformar a propriedade pagamento em objeto para cada transação
+            return data.map(transacao => ({
+                ...transacao,
+                pagamento: typeof transacao.pagamento === 'string' ? JSON.parse(transacao.pagamento) : transacao.pagamento
+            }));
         } else if (data && typeof data === 'object') {
             console.log('Resposta não é um array:', data);
             return data;
@@ -128,6 +129,12 @@ async function buscarTransacaoPorId(id) {
         }
 
         const data = await response.json();
+
+        // Transformar a propriedade pagamento em objeto
+        if (data && typeof data.pagamento === 'string') {
+            data.pagamento = JSON.parse(data.pagamento);
+        }
+
         return data;
     } catch (error) {
         console.error(`Erro ao buscar transação com ID ${id}:`, error);

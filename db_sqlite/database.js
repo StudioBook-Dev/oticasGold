@@ -10,7 +10,7 @@ function getDb() {
         if (err) {
             console.error('Erro ao conectar ao banco de dados SQLite:', err.message);
         } else {
-            console.log('Conexão com o banco de dados SQLite estabelecida.');
+            // console.log('Conexão com o banco de dados SQLite estabelecida.');
         }
     });
 }
@@ -52,13 +52,13 @@ function getOne(sql, params = []) {
 function getAll(sql, params = []) {
     return new Promise((resolve, reject) => {
         const db = getDb();
-        console.log(`Executando consulta SQL: ${sql} com parâmetros:`, params);
+        // console.log(`Executando consulta SQL: ${sql} com parâmetros:`, params);
         db.all(sql, params, (err, rows) => {
             if (err) {
                 console.error('Erro na consulta SQL:', err);
                 reject(err);
             } else {
-                console.log('Dados retornados pela consulta:', rows);
+                // console.log('Dados retornados pela consulta:', rows);
                 resolve(rows);
             }
         });

@@ -1,6 +1,6 @@
 
 
-function abriModalPagamentoDoPedido(id) {
+async function abriModalPagamentoDoPedido(id) {    
     abrirModalPrincipal({
         titulo: `Pagamento do Pedido #${id}` ,
         conteudo: `<div id="modalPagamentoDoPedido"></div>`,
@@ -119,8 +119,8 @@ async function lancarPagamentoDoPedido(id) {
         return
     }
 
-    const transacao = {
-        id: pedido.id,
+    const pagamento = {
+        id: gerarId(),
         dataCriacao: dataFormatada().data,
         descricao: `Pagamento do Pedido #${pedido.id}`,
         tipo: 'receita',
@@ -132,10 +132,15 @@ async function lancarPagamentoDoPedido(id) {
         }
     };
 
-    pedido.pagamento = transacao;
+    pedido.pagamento = pagamento;
+    pedido.status = 'finalizado'
+
+    console.log(pedido)
 
     atualizarPedidoNoBancoDeDados(pedido)
-    salvarTransacaoFinanceira(transacao)
+    salvarTransacaoFinanceira(pagamento)
+    atualizarKanbanPedidos()
+    fecharModalSecundario()
 }
 
 

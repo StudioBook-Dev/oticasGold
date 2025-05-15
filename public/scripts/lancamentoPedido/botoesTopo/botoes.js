@@ -18,6 +18,5 @@ function botoesNavDoModalLancamento() {
         <button class="botao-icone-lancamento" title="Anexar Receita" onclick="abrirModalAnexarReceita()">
             <i class="fas fa-prescription"></i>
         </button>
-        
     `;
 }

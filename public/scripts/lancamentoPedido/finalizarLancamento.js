@@ -57,7 +57,18 @@ function finalizarPedido() {
         frete: valorFrete.toFixed(2).replace('.', ',') || '0,00',
         status: 'fila', 
         dataCriacao: dataFormatada().data, 
-        pagamento: {},
+        pagamento: {
+            id: '',
+            dataCriacao: '',
+            descricao: ``,
+            tipo: '',
+            categoria: '',
+            valor: 0,
+            pagamento: {
+            formas: '',
+            juros: 0,
+        }
+        },
         cupons: cupomInfo || {},
         desconto: valorDesconto.toFixed(2).replace('.', ',') || '0,00',
         observacao: observacaoPedido || '',

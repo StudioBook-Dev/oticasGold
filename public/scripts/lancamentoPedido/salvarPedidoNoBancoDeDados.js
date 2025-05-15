@@ -32,29 +32,26 @@ async function salvarPedidoNoBancoDeDados(pedido) {
 
 
 async function atualizarPedidoNoBancoDeDados(pedido) {
+    try {
+        // Enviar para a API SQLite
+        const response = await fetch(`/api/pedidos/${pedido.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pedido)
+        });
 
-    console.log(pedido)
-    
-    // try {
-    //     // Enviar para a API SQLite
-    //     const response = await fetch(`/api/pedidos/${pedido.id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(pedido)
-    //     });
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: `Status HTTP: ${response.status}` }));
+            throw new Error(errorData.error || `Erro ao atualizar pedido: ${response.status}`);
+        }
 
-    //     if (!response.ok) {
-    //         const errorData = await response.json().catch(() => ({ error: `Status HTTP: ${response.status}` }));
-    //         throw new Error(errorData.error || `Erro ao atualizar pedido: ${response.status}`);
-    //     }
-
-    //     return { success: true };
-    // } catch (error) {
-    //     console.error('Erro ao atualizar pedido:', error);
-    //     return { success: false, error: error.message };
-    // }
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao atualizar pedido:', error);
+        return { success: false, error: error.message };
+    }
 }
 
 

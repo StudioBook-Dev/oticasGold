@@ -33,7 +33,9 @@ async function preencherTabelaTransacoes() {
             const horario = extrairHorario(transacao.dataCriacao);
 
             conteudo += `
-                <div style="display: flex; padding: 10px 0; border-bottom: 1px solid #f0f0f0; align-items: center;">
+                <div style="display: flex; padding: 10px 0; border-bottom: 1px 
+                    solid #f0f0f0; align-items: center; cursor: pointer;" 
+                    onclick="detalhesDaTransacao('${transacao.id}')">
                     <div style="margin-right: 12px; width: 32px; height: 32px; background-color: ${isPositivo ? '#d3f4e1' : '#fee9e7'}; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="${icone}" style="font-size: 12px; color: ${isPositivo ? '#06c858' : '#e74c3c'};"></i>
                     </div>
@@ -46,7 +48,7 @@ async function preencherTabelaTransacoes() {
                             </div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 500; color: ${isPositivo ? '#2ecc71' : '#e74c3c'}; font-size: 13px;">${prefixo} R$ ${valorFormatado}</div>
+                        <div style="font-weight: 500; color: ${isPositivo ? '#2ecc71' : '#e74c3c'}; font-size: 13px; white-space: nowrap;">${prefixo} R$ ${valorFormatado}</div>
                         <div style="font-size: 9px; color: #999; margin-top: 2px;">${horario}</div>
                     </div>
                 </div>

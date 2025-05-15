@@ -6,13 +6,16 @@ async function inicializarDashboardFinanceiro() {
 
     const dadosFinanceiros = await calculaDadosFinanceiros(); 
 
+    const widthTransacoesRecentes = 19
+    const widthGraficos = 100 - widthTransacoesRecentes
+
     // Criar estrutura do dashboard financeiro com filtros
     conteudoDashboard.innerHTML = `
         <div class="dashboard-financeiro" 
             style="display: flex; gap: 1em; width: 100%; margin-left: -1em;">
 
             <div class="transacoes-recentes" 
-                style="width: 17%; min-width: 300px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 15px;">
+                style="width: ${widthTransacoesRecentes}%; min-width: 300px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 15px;">
                 <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 14px; color: #666666;">
                     Transações Recentes
                 </h3>
@@ -23,7 +26,7 @@ async function inicializarDashboardFinanceiro() {
                 </div>
             </div>  
 
-            <div class="graficos" style="width: 83%; flex-grow: 1;">
+            <div class="graficos" style="width: ${widthGraficos}%; flex-grow: 1;">
                 <div class="indicadores-financeiros">
                     <div class="card-indicador" id="receitas-totais">
                         <h3 style="font-size: 14px; margin-bottom: 8px;">Receitas Totais</h3>
