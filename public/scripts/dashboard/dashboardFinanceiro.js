@@ -5,8 +5,9 @@ async function inicializarDashboardFinanceiro() {
     const conteudoDashboard = document.getElementById('dashboard');
 
     const dadosFinanceiros = await calculaDadosFinanceiros(); 
+    const lucroMensal = await lucroMesAtual()
 
-    const widthTransacoesRecentes = 19
+    const widthTransacoesRecentes = 17
     const widthGraficos = 100 - widthTransacoesRecentes
 
     // Criar estrutura do dashboard financeiro com filtros
@@ -15,7 +16,7 @@ async function inicializarDashboardFinanceiro() {
             style="display: flex; gap: 1em; width: 100%; margin-left: -1em;">
 
             <div class="transacoes-recentes" 
-                style="width: ${widthTransacoesRecentes}%; min-width: 300px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 15px;">
+                style="width: ${widthTransacoesRecentes}%; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 15px;">
                 <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 14px; color: #666666;">
                     Transações Recentes
                 </h3>
@@ -29,12 +30,11 @@ async function inicializarDashboardFinanceiro() {
             <div class="graficos" style="width: ${widthGraficos}%; flex-grow: 1;">
                 <div class="indicadores-financeiros">
                     <div class="card-indicador" id="receitas-totais">
-                        <h3 style="font-size: 14px; margin-bottom: 8px;">Receitas Totais</h3>
-                        <p class="valor" style="font-size: 22px; margin: 5px 0;">R$ ${dadosFinanceiros.receitasTotais.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                        <p class="variacao positiva" style="font-size: 12px;">+${dadosFinanceiros.variacaoReceitas.toFixed(2)}% <i class="fas fa-arrow-up"></i></p>
+                        <h3 style="font-size: 16px; margin-bottom: 8px;">Receitas Totais</h3>
+                        <p class="valor" style="font-size: 26px; margin: 5px 0;">R$ ${dadosFinanceiros.receitasTotais.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                     </div>
                     <div class="card-indicador" id="despesas-totais">
-                        <h3 style="font-size: 14px; margin-bottom: 8px;">Despesas Totais</h3>
+                        <h3 style="font-size: 16px; margin-bottom: 8px;">Despesas Totais</h3>
                         <p class="valor" style="font-size: 22px; margin: 5px 0;">R$ ${dadosFinanceiros.despesasTotais.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                         <p class="variacao negativa" style="font-size: 12px;">-${dadosFinanceiros.variacaoDespesas.toFixed(2)}% <i class="fas fa-arrow-down"></i></p>
                     </div>
@@ -42,6 +42,10 @@ async function inicializarDashboardFinanceiro() {
                         <h3 style="font-size: 14px; margin-bottom: 8px;">Lucro Líquido</h3>
                         <p class="valor" style="font-size: 22px; margin: 5px 0;">R$ ${dadosFinanceiros.lucroLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                         <p class="variacao positiva" style="font-size: 12px;">+${dadosFinanceiros.variacaoLucro.toFixed(2)}% <i class="fas fa-arrow-up"></i></p>
+                    </div>
+                    <div class="card-indicador" id="lucro-mensal">
+                        <h3 style="font-size: 16px; margin-bottom: 8px;">Lucro Mensal</h3>
+                        <p class="valor" style="font-size: 26px; margin: 5px 0;">R$ ${lucroMensal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                     </div>
                 </div>
                 <div class="graficos-container" 

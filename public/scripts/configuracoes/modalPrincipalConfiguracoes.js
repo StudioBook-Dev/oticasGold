@@ -12,8 +12,8 @@ function abrirModalConfiguracoes() {
                     <button class="botao-config" onclick="abrirModalExcluir('produtos')">Excluir Produtos</button>
                     <button class="botao-config" onclick="abrirModalExcluir('pedidos')">Excluir Pedidos</button>
                     <button class="botao-config" onclick="abrirModalExcluir('clientes')">Excluir Clientes</button>
+                    <button class="botao-config" onclick="abrirModalExcluir('transacoesFinanceiras')">Excluir Transações Financeiras</button>
                 </div>
-            
         </div>`,
         adicionar: false
     });
@@ -33,7 +33,7 @@ function abrirModalExcluir(tabela) {
         `
     };
     abrirModalSecundario(parametro);
-} 
+}
 
 
 

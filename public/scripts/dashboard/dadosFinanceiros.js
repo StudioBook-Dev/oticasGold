@@ -1,5 +1,13 @@
 
 
+// Mapeamento de números de mês para nomes em português
+const meses = {
+    0: 'janeiro', 1: 'fevereiro', 2: 'marco', 3: 'abril', 4: 'maio',
+    5: 'junho', 6: 'julho', 7: 'agosto', 8: 'setembro', 9: 'outubro',
+    10: 'novembro', 11: 'dezembro'
+};
+
+
 async function calculaDadosFinanceiros() {
     let receitasTotais = 0;
     let despesasTotais = 0;
@@ -31,23 +39,17 @@ async function desempenhoMensal() {
     const transacoes = await Ler_TransacoesFinanceiras();
     const dados = {
         receitas: {
-            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0, agosto: 0, setembro: 0, outubro: 0, novembro: 0,
-            dezembro: 0
+            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0,
+            agosto: 0, setembro: 0, outubro: 0, novembro: 0,  dezembro: 0
         },
         despesas: {
-            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0, agosto: 0, setembro: 0, outubro: 0, novembro: 0,
-            dezembro: 0
+            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0, 
+            agosto: 0, setembro: 0, outubro: 0, novembro: 0, dezembro: 0
         },
         lucros: {
-            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0, agosto: 0, setembro: 0, outubro: 0, novembro: 0,
-            dezembro: 0
+            janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0, 
+            agosto: 0, setembro: 0, outubro: 0, novembro: 0, dezembro: 0
         }
-    };
-    // Mapeamento de números de mês para nomes em português
-    const meses = {
-        0: 'janeiro', 1: 'fevereiro', 2: 'marco', 3: 'abril', 4: 'maio',
-        5: 'junho', 6: 'julho', 7: 'agosto', 8: 'setembro', 9: 'outubro',
-        10: 'novembro', 11: 'dezembro'
     };
     // Processa cada transação
     transacoes.forEach(transacao => {
@@ -62,7 +64,17 @@ async function desempenhoMensal() {
         }
         dados.lucros[mes] = dados.receitas[mes] - dados.despesas[mes];
     });
+
     return dados;
+}
+
+
+async function lucroMesAtual() {
+    const mesAtualNumero = parseInt(dataFormatada().mes)
+    const mesAtualNome   = meses[mesAtualNumero]
+    const dados = await desempenhoMensal()
+    const lucroDoMesAtual = dados.lucros[mesAtualNome]
+    return lucroDoMesAtual
 }
 
 

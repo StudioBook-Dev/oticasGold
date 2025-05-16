@@ -205,6 +205,17 @@ async function deleteTransacaoFinanceira(id) {
     }
 }
 
+// Função para excluir todas as transações financeiras
+async function deleteAllTransacoesFinanceiras() {
+    try {
+        await executeSql('DELETE FROM transacoesFinanceiras');
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao excluir todas as transações financeiras:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 module.exports = {
     getCategoriasFinanceiras,
     getCategoriaFinanceiraById,
@@ -217,5 +228,6 @@ module.exports = {
     getTransacaoFinanceiraById,
     createTransacaoFinanceira,
     updateTransacaoFinanceira,
-    deleteTransacaoFinanceira
+    deleteTransacaoFinanceira,
+    deleteAllTransacoesFinanceiras
 }; 

@@ -59,9 +59,6 @@ async function gerarTabelaCategoriasFinanceiras() {
                         }
                     </tbody>
             </table>
-            <div class="acoes-lista">
-                <button class="btn-nova-categoria" onclick="abrirModalSecundarioFinanceiro()">Nova Categoria</button>
-            </div>
         </div>`;
     }
     html.innerHTML = conteudo;

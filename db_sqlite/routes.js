@@ -382,6 +382,9 @@ router.delete('/excluir-todos/:tabela', async (req, res) => {
                 result = await estoqueModel.deleteAllEstoque();
                 // console.log('Resultado da função deleteAllEstoque:', result);
                 break;
+            case 'transacoesFinanceiras':
+                result = await financeiroModel.deleteAllTransacoesFinanceiras();
+                break;
             default:
                 // console.log(`Tabela não reconhecida: ${tabela}`);
                 return res.status(400).json({ success: false, mensagem: `Tabela '${tabela}' não reconhecida` });

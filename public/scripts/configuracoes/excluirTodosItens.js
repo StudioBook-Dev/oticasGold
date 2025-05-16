@@ -16,6 +16,7 @@ async function excluirTodosItens(tabela) {
 
         alert(data.mensagem || `Itens da tabela ${tabela} excluídos com sucesso`);
         fecharModalSecundario();
+        window.location.reload();
     } catch (error) {
         // console.error('Erro detalhado:', error);
         alert('Erro ao excluir itens: ' + error.message);

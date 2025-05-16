@@ -25,7 +25,8 @@ function html_visualizarDetalhesTransacao(transacao) {
         <p>Data: ${transacao.dataCriacao}</p>
         <p>Descrição: ${transacao.descricao || 'N/A'}</p>
         <p>Categoria: ${transacao.categoria}</p>
-        <p>Tipo: ${transacao.tipo}</p>
+        <p style="color: ${transacao.tipo === 'receita' ? 'green' : 'red'};">
+            Tipo: ${transacao.tipo}</p>
         <div> 
             <h3>Pagamento</h3>
             <p> Juros: ${pagamento.juros}</p>
