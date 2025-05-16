@@ -96,7 +96,7 @@ async function form_LancamentoTransacoesFinanceiras() {
 
 
 async function selecionarTipoCategoriaFinanceira(tipo) {
-    const categorias = await Ler_CategoriasFinanceiras()
+    const categorias = await getCategoriasFinanceiras()
     const categoriasFiltradas = categorias.filter(categoria => categoria.tipo === tipo)
     adicionarCategoriasFinanceirasNoSelect(categoriasFiltradas)
 }

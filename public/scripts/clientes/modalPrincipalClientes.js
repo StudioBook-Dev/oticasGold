@@ -77,25 +77,3 @@ function gerarTabelaClientes(clientes) {
     return html;
 }
 
-// Função para filtrar clientes
-function filtrarClientes() {
-    const input = document.getElementById('searchCliente');
-    const filter = input.value.toUpperCase();
-    const table = document.getElementById('tabelaClientes');
-    const tr = table.getElementsByTagName('tr');
-
-    for (let i = 1; i < tr.length; i++) {
-        const td = tr[i].getElementsByTagName('td');
-        let encontrado = false;
-
-        for (let j = 0; j < td.length - 1; j++) {
-            const txtValue = td[j].textContent || td[j].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                encontrado = true;
-                break;
-            }
-        }
-
-        tr[i].style.display = encontrado ? '' : 'none';
-    }
-} 

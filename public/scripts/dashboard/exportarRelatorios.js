@@ -9,17 +9,17 @@ async function buscarDadosFinanceiros() {
         }
         const transacoes = await response.json();
         return transacoes;
-    } catch (error) {
+    } catch (error) { 
         console.error('Erro ao buscar dados financeiros:', error);
         return [];
     }
 }
 
+
 // Função para calcular resumo financeiro
 function calcularResumoFinanceiro(transacoes) {
     let receitasTotais = 0;
     let despesasTotais = 0;
-
     transacoes.forEach(transacao => {
         if (transacao.tipo === 'receita') {
             receitasTotais += parseFloat(transacao.valor);
@@ -27,7 +27,6 @@ function calcularResumoFinanceiro(transacoes) {
             despesasTotais += parseFloat(transacao.valor);
         }
     });
-
     const lucroLiquido = receitasTotais - despesasTotais;
     const variacaoReceitas = receitasTotais > 0 ? 100 : 0;
     const variacaoDespesas = receitasTotais > 0 ? (despesasTotais / receitasTotais) * 100 : 0;

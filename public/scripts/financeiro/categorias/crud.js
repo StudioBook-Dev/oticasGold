@@ -1,33 +1,39 @@
 
 
-// Função para buscar as categorias financeiras da API
-async function Ler_CategoriasFinanceiras() {
+// Função para buscar todas as categorias financeiras da API
+async function getCategoriasFinanceiras() {
     try {
         const response = await fetch('/api/financeiro/categorias');        
         if (!response.ok) {
             throw new Error(`Erro ao buscar categorias financeiras: ${response.status} ${response.statusText}`);
         }
-        
         const data = await response.json();
-        
-        if (Array.isArray(data)) {
-            return data;
-        } else if (data && typeof data === 'object') {
-            // Se a resposta não for um array, mas for um objeto, pode ser uma resposta de erro ou estrutura diferente
-            console.log('Resposta não é um array:', data);
-            return data;
-        } else {
-            // Se não for nem array nem objeto, retorna array vazio
-            console.log('Resposta inválida, retornando array vazio');
-            return [];
-        }
+        return data;
     } catch (error) {
         console.error('Erro ao buscar categorias financeiras:', error);
         return [];
     }
 }
 
-function excluirCategoriaFinanceira(id) {
+
+// Função para buscar uma categoria financeira pelo ID
+async function getCategoriaFinanceiraById(id) {
+    try {
+        const response = await fetch(`/api/financeiro/categorias/${id}`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar categoria financeira: ${response.status} ${response.statusText}`);
+        }   
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Erro ao buscar categoria financeira:', error);
+        return null;
+    }
+}
+
+
+// Função para excluir uma categoria financeira pelo ID
+function deleteCategoriaFinanceira(id) {
     if (confirm('Tem certeza que deseja excluir esta categoria?')) {
         fetch(`/api/financeiro/categorias/${id}`, {
             method: 'DELETE'
@@ -44,7 +50,9 @@ function excluirCategoriaFinanceira(id) {
     }
 }
 
-function salvarCategoriaFinanceiraNoBancoDeDados(categoria) {
+
+// Função para salvar uma nova categoria financeira
+function postCategoriaFinanceira(categoria) {
     fetch('/api/financeiro/categorias', {
         method: 'POST',
         headers: {
@@ -54,9 +62,7 @@ function salvarCategoriaFinanceiraNoBancoDeDados(categoria) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Categoria salva com sucesso:', data);
         alert('Categoria financeira salva com sucesso!');
-        // Aqui você pode adicionar código para atualizar a interface
     })
     .catch(error => {
         console.error('Erro ao salvar categoria:', error);
@@ -64,31 +70,21 @@ function salvarCategoriaFinanceiraNoBancoDeDados(categoria) {
     });
 }
 
-// Função para salvar a edição da categoria
-function atualizarCategoriaFinanceira() {
-    const id = document.getElementById('idCategoriaFinanceira').value;
-    const nome = document.getElementById('nomeEditarCategoriaFinanceira').value;
-    const descricao = document.getElementById('descricaoEditarCategoriaFinanceira').value;
-    const tipo = document.querySelector('input[name="tipoEditarCategoriaFinanceira"]:checked').value;
-    const cor = document.getElementById('corEditarCategoriaFinanceira').value;
 
-    fetch(`/api/financeiro/categorias/${id}`, {
+// Função para salvar a edição da categoria
+function putCategoriaFinanceira(categoria) {
+    fetch(`/api/financeiro/categorias/${categoria.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            nome: nome,
-            tipo: tipo,
-            descricao: descricao,
-            cor: cor
-        })
+        body: JSON.stringify(categoria)
     })
     .then(response => response.json())
     .then(data => {
         alert('Categoria atualizada com sucesso!');
         fecharModalSecundario();
-        gerarTabelaCategoriasFinanceiras(); // Atualizar a tabela
+        gerarTabelaCategoriasFinanceiras(); 
     })
     .catch(error => {
         console.error('Erro ao atualizar categoria:', error);

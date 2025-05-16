@@ -58,7 +58,7 @@ function criarCategoriaFinanceira() {
     }
 
     console.log(categoria);
-    salvarCategoriaFinanceiraNoBancoDeDados(categoria);
+    postCategoriaFinanceira(categoria);
     fecharModalSecundario();
     abrirModalFinanceiro();
 }

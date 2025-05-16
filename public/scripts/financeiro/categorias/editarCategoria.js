@@ -134,11 +134,30 @@ async function editarCategoriaFinanceira(id) {
         // Adicionar evento de submit ao formulário
         document.getElementById('formEditarCategoriaFinanceira').addEventListener('submit', function(e) {
             e.preventDefault();
-            atualizarCategoriaFinanceira();
+            putCategoriaFinanceira();
         });
     } catch (error) {
         console.error('Erro ao editar categoria:', error);
         alert('Erro ao carregar dados da categoria para edição.');
     }
+}
+
+
+function constructPutCategoriaFinanceira() {
+    const id = document.getElementById('idCategoriaFinanceira').value;
+    const nome = document.getElementById('nomeEditarCategoriaFinanceira').value;
+    const descricao = document.getElementById('descricaoEditarCategoriaFinanceira').value;
+    const tipo = document.querySelector('input[name="tipoEditarCategoriaFinanceira"]:checked').value;
+    const cor = document.getElementById('corEditarCategoriaFinanceira').value;
+
+    const categoria = {
+        id: id,
+        nome: nome,
+        tipo: tipo,
+        descricao: descricao,
+        cor: cor
+    }
+
+    putCategoriaFinanceira(categoria);
 }
 

@@ -15,7 +15,7 @@ function abrirModalFinanceiro() {
 // Função para listar as categorias financeiras em uma tabela
 async function gerarTabelaCategoriasFinanceiras() {
     let conteudo = '';
-    const categorias = await Ler_CategoriasFinanceiras();
+    const categorias = await getCategoriasFinanceiras();
     const html = document.getElementById('modalTransacoesFinanceiras');
     console.log(categorias);
     if (categorias.length === 0) {
@@ -52,7 +52,7 @@ async function gerarTabelaCategoriasFinanceiras() {
                                     <td>R$ ${Number(categoria.saldo).toFixed(2)}</td>
                                     <td class="acoes">
                                         <button class="btn-editar" onclick="editarCategoriaFinanceira('${categoria.id}')">Editar</button>
-                                        <button class="btn-excluir" onclick="excluirCategoriaFinanceira('${categoria.id}')">Excluir</button>
+                                        <button class="btn-excluir" onclick="deleteCategoriaFinanceira('${categoria.id}')">Excluir</button>
                                     </td>
                                 </tr>
                             `).join('')
