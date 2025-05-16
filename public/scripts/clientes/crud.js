@@ -58,7 +58,7 @@ function postCliente(cliente) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(categoria)
+        body: JSON.stringify(cliente)
     })
     .then(response => response.json())
     .then(data => {
@@ -78,7 +78,7 @@ function putCliente(cliente) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(categoria)
+        body: JSON.stringify(cliente)
     })
     .then(response => response.json())
     .then(data => {
