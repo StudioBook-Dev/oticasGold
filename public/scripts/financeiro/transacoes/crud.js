@@ -1,5 +1,7 @@
+
+
 // Função para buscar todas as transações financeiras
-async function Ler_TransacoesFinanceiras() {
+async function getTransacoesFinanceiras() {
     try {
         const response = await fetch('/api/financeiro/transacoes');
         if (!response.ok) {

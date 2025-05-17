@@ -3,7 +3,7 @@
 // Função para preencher a tabela de transações recentes
 async function preencherTabelaTransacoes() {
     const container = document.getElementById('lista-transacoes');
-    const transacoes = await Ler_TransacoesFinanceiras();
+    const transacoes = await getTransacoesFinanceiras();
 
     if (!transacoes || transacoes.length === 0) {
         container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Nenhuma transação encontrada</div>';

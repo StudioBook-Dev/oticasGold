@@ -11,7 +11,7 @@ const meses = {
 async function calculaDadosFinanceiros() {
     let receitasTotais = 0;
     let despesasTotais = 0;
-    const transacoes = await Ler_TransacoesFinanceiras();
+    const transacoes = await getTransacoesFinanceiras();
     transacoes.forEach(transacao => {
         if (transacao.tipo === 'receita') {
             receitasTotais += transacao.valor;
@@ -36,7 +36,7 @@ async function calculaDadosFinanceiros() {
 
 
 async function desempenhoMensal() {
-    const transacoes = await Ler_TransacoesFinanceiras();
+    const transacoes = await getTransacoesFinanceiras();
     const dados = {
         receitas: {
             janeiro: 0, fevereiro: 0, marco: 0, abril: 0, maio: 0, junho: 0, julho: 0,
@@ -79,7 +79,7 @@ async function lucroMesAtual() {
 
 
 async function dadosDetalheReceitas() {
-    const transacoes = await Ler_TransacoesFinanceiras();
+    const transacoes = await getTransacoesFinanceiras();
 
     // Filtra receitas e agrupa por categoria em um único passo
     const categorias = {};
@@ -105,7 +105,7 @@ async function dadosDetalheReceitas() {
 
 
 async function dadosDetalheDespesas() {
-    const transacoes = await Ler_TransacoesFinanceiras();
+    const transacoes = await getTransacoesFinanceiras();
 
     // Filtra receitas e agrupa por categoria em um único passo
     const categorias = {};
