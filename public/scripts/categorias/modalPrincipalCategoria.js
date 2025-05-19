@@ -1,35 +1,29 @@
 
 
 function abrirModalCategorias() {
-    // Abrir o modal primeiro com mensagem de carregamento
     abrirModalPrincipal({
         titulo: 'Categorias',
         conteudo: '<div id="lista-categorias">Carregando categorias...</div>',
-        adicionar: true
+        adicionar: `
+        <button class="modal-adicionar" 
+            onclick="abrirModalSecundarioCategorias()">
+            <i class="fas fa-plus"></i>
+            <span>Adicionar</span>
+        </button> `
     });
-
-    // Obter as categorias
-    getCategorias()
-        .then(categorias => {
-            // Gerar HTML das categorias
-            const htmlCategorias = gerarTabelaCategorias(categorias);
-            // Atualizar o conteúdo do modal
-            document.getElementById('lista-categorias').innerHTML = htmlCategorias;
-        })
-        .catch(error => {
-            console.error('Erro ao carregar categorias:', error);
-            document.getElementById('lista-categorias').innerHTML = 'Erro ao carregar categorias.';
-        });
+    gerarTabelaCategorias()
 }
 
 
 // Função para gerar o HTML das categorias
-function gerarTabelaCategorias(categorias) {
+async function gerarTabelaCategorias() {
+    const categorias = await getCategorias()
+    const html = document.getElementById('lista-categorias')
     if (!categorias || categorias.length === 0) {
         return '<p>Nenhuma categoria encontrada.</p>';
     }
     // Criar a tabela
-    let html = `
+    let conteudo = `
     <table class="tabela-modal">
     <thead>
         <tr>
@@ -44,7 +38,7 @@ function gerarTabelaCategorias(categorias) {
         const id = categoria.id || '';
         const nome = categoria.nome || '';
         const descricao = categoria.descricao || '';
-        html += `
+        conteudo += `
         <tr>
             <td>
                 <div class="acoes-container">
@@ -62,20 +56,9 @@ function gerarTabelaCategorias(categorias) {
             <td>${descricao}</td>
         </tr>`
     })
-    html += '</tbody></table>'
-    return html
+    conteudo += '</tbody></table>'
+    html.innerHTML = conteudo
 }
 
 
-// Função para editar categoria
-function editarCategoria(id) {
-    // Buscar categoria pelo ID
-    getCategorias().then(categorias => {
-        const categoria = categorias.find(cat => cat.id == id);
-        if (categoria) {
-            abrirModalSecundarioCategorias(categoria);
-        } else {
-            alert('Categoria não encontrada.');
-        }
-    });
-}
+

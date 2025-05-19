@@ -1,36 +1,20 @@
-function abrirModalSecundarioCategorias(categoria) {
-    const html = htmlModalSecundarioCategorias(categoria);
+
+
+function abrirModalSecundarioCategorias() {
     abrirModalSecundario({
-        titulo: categoria ? 'Editar Categoria' : 'Adicionar Nova Categoria',
-        conteudo: html
-    });
-}
-
-
-function htmlModalSecundarioCategorias(categoria) {
-    // Função auxiliar para tratar valores undefined ou nulos
-    const getValorSeguro = (valor) => {
-        if (valor === undefined || valor === null || valor === 'undefined') {
-            return '';
-        }
-        return valor;
-    };
-
-    // Adicionar campo oculto para ID se estiver editando
-    const campoId = categoria ? `<input type="hidden" id="id" name="id" value="${categoria.id}">` : '';
-
-    const html = `
+        titulo: 'Adicionar Nova Categoria',
+        conteudo: `
         <div class="form-container">
-            <form id="formCategoria" onsubmit="event.preventDefault(); salvarCategoriaDoFormulario();">
-                ${campoId}
+            <form id="formCategoria" onsubmit="event.preventDefault(); 
+               constructPostCategoria();">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" required value="${getValorSeguro(categoria?.nome)}">
+                    <input type="text" id="nome" name="nome" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
-                    <textarea id="descricao" name="descricao" class="form-control" rows="3">${getValorSeguro(categoria?.descricao)}</textarea>
+                    <textarea id="descricao" name="descricao" class="form-control" rows="3"></textarea>
                 </div>
                 
                 <div class="form-actions">
@@ -39,29 +23,18 @@ function htmlModalSecundarioCategorias(categoria) {
                 </div>
             </form>
         </div>
-    `;
-
-    return html;
+    ` })
 }
 
-// Função para salvar os dados do formulário
-function salvarCategoriaDoFormulario() {
-    const id = document.getElementById('id')?.value || '';
+
+// Função para construir uma nova categoria
+function constructPostCategoria() {
     const nome = document.getElementById('nome').value;
     const descricao = document.getElementById('descricao').value;
-
-    // Validar campos obrigatórios
-    if (!nome.trim()) {
-        alert('O nome da categoria é obrigatório.');
-        return;
-    }
-
     const categoria = {
-        id: id || null, // Passa null para SQLite gerar ID automaticamente para novas categorias
-        nome: nome,
-        descricao: descricao
+        id: gerarId(),
+        nome,
+        descricao
     };
-
-    // Salvar categoria usando a API SQLite
-    salvarCategoriaNaPlanilha(id ? categoria : false);
+    postCategoria(categoria)
 }

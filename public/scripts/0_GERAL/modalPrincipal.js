@@ -20,15 +20,14 @@ function abrirModalPrincipal(parametro) {
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-ferramentas" style="${parametro.adicionar ? 'border-bottom: 1px solid rgba(0, 0, 0, 0.08)' : ''} ">
-                ${botaoAdicionar(parametro.titulo, parametro.adicionar) }
+            <div class="modal-ferramentas" >
+                ${parametro.adicionar || ''}
             </div>
             <div class="modal-conteudo">
                 ${parametro.conteudo || 'Nenhum conteúdo fornecido.'}
             </div>
         </div>
     `;
-    
     // Adicionar classe para animar a entrada
     setTimeout(() => {
         modalPrincipal.classList.add('ativo');
@@ -37,21 +36,6 @@ function abrirModalPrincipal(parametro) {
     document.addEventListener('keydown', fecharModalPrincipalComEsc);
 }
 
-
-
-function botaoAdicionar(titulo, adicionar) {
-    if (adicionar === true) {
-        return `
-            <button class="modal-adicionar btnResponsavelPorAdicionar" 
-                onclick="abrirModalSecundario${titulo}()">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar</span>
-            </button>
-        `;
-    }else {
-        return '';
-    }
-}
 
 
 
