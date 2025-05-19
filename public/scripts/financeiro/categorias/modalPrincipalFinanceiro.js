@@ -12,12 +12,12 @@ function abrirModalFinanceiro() {
     gerarTabelaCategoriasFinanceiras();
 }
 
+
 // Função para listar as categorias financeiras em uma tabela
 async function gerarTabelaCategoriasFinanceiras() {
     let conteudo = '';
     const categorias = await getCategoriasFinanceiras();
     const html = document.getElementById('modalTransacoesFinanceiras');
-    console.log(categorias);
     if (categorias.length === 0) {
         conteudo = '<b>Nenhuma categoria encontrada</b>';
     } else {
@@ -63,6 +63,7 @@ async function gerarTabelaCategoriasFinanceiras() {
     }
     html.innerHTML = conteudo;
 }
+
 
 function styleTabelaCategoriasFinanceiras() {
     return `

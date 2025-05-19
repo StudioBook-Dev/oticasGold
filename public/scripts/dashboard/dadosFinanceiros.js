@@ -64,7 +64,6 @@ async function desempenhoMensal() {
         }
         dados.lucros[mes] = dados.receitas[mes] - dados.despesas[mes];
     });
-
     return dados;
 }
 
@@ -80,11 +79,9 @@ async function lucroMesAtual() {
 
 async function dadosDetalheReceitas() {
     const transacoes = await getTransacoesFinanceiras();
-
     // Filtra receitas e agrupa por categoria em um único passo
     const categorias = {};
     let totalReceitas = 0;
-
     transacoes.forEach(t => {
         if (t.tipo === 'receita') {
             const nome = t.categoria || 'Sem Categoria';
@@ -92,7 +89,6 @@ async function dadosDetalheReceitas() {
             totalReceitas += t.valor;
         }
     });
-
     // Converte para array, calcula percentuais e ordena
     return Object.entries(categorias)
         .map(([categoria, valor]) => ({
@@ -106,11 +102,9 @@ async function dadosDetalheReceitas() {
 
 async function dadosDetalheDespesas() {
     const transacoes = await getTransacoesFinanceiras();
-
     // Filtra receitas e agrupa por categoria em um único passo
     const categorias = {};
     let totalDespesas = 0;
-
     transacoes.forEach(t => {
         if (t.tipo === 'despesa') {
             const nome = t.categoria || 'Sem Categoria';
@@ -118,7 +112,6 @@ async function dadosDetalheDespesas() {
             totalDespesas += t.valor;
         }
     });
-
     // Converte para array, calcula percentuais e ordena
     return Object.entries(categorias)
         .map(([categoria, valor]) => ({

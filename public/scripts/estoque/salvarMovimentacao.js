@@ -1,3 +1,5 @@
+
+
 /**
  * Funções para gerenciar as movimentações de estoque (entradas e saídas)
  */

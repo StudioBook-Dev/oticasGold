@@ -1,3 +1,5 @@
+
+
 async function getByIdTransacaoFinanceira(id) {
     try {
         const response = await fetch(`/api/financeiro/transacoes/${id}`);
@@ -17,3 +19,5 @@ async function getByIdTransacaoFinanceira(id) {
         return null;
     }
 }
+
+

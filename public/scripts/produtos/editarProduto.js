@@ -74,34 +74,12 @@ function enviaNovoProdutoPara_Atualizar(id) {
         categoria: getInputValue('categoria'),
         dataCriacao: getInputValue('dataCriacao')
     };
-    atualizarProdutonoBancoDeDados(produto)
+    putProduto(produto)
     fecharModalSecundario()
     abrirModalProdutos()
     hubAtualizarEstoque_Automatico(produto, 'edição de produto')
 }
 
 
-async function atualizarProdutonoBancoDeDados(produto) {
-    try {
-        let response;
-        response = await fetch(`/api/produtos/${produto.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(produto)
-        });
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || `Erro ao atualizar produto: ${response.status}`);
-        }
-        // Mostrar notificação de sucesso
-        mostrarNotificacao('Produto atualizado com sucesso!', 'sucesso');
-        return true;
-    } catch (error) {
-        console.error("Erro ao atualizar produto:", error);
-        mostrarNotificacao(error.message || 'Erro ao atualizar o produto.', 'erro');
-        return false;
-    }
-}
+
 
