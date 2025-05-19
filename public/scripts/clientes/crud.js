@@ -63,6 +63,8 @@ function postCliente(cliente) {
     .then(response => response.json())
     .then(data => {
         alert('Cliente salvo com sucesso!');
+        fecharModalSecundario();
+        gerarTabelaClientes();
     })
     .catch(error => {
         console.error('Erro ao salvar cliente:', error);

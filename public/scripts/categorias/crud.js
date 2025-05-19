@@ -76,23 +76,22 @@ function postCategoria(categoria) {
 
 // Função para salvar a edição da categoria
 function putCategoria(categoria) {
-    console.log(categoria)
-    // fetch(`/api/categorias/${categoria.id}`, {
-    //     method: 'PUT',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(categoria)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     alert('Categoria atualizada com sucesso!');
-    //     fecharModalSecundario();
-    //     gerarTabelaCategorias(); 
-    // })
-    // .catch(error => {
-    //     console.error('Erro ao atualizar categoria:', error);
-    //     alert('Erro ao atualizar categoria.');
-    // });
+    fetch(`/api/categorias/${categoria.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(categoria)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Categoria atualizada com sucesso!');
+        fecharModalSecundario();
+        gerarTabelaCategorias(); 
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar categoria:', error);
+        alert('Erro ao atualizar categoria.');
+    });
 }
 
