@@ -63,6 +63,8 @@ function postCupom(cupom) {
     .then(response => response.json())
     .then(data => {
         alert('Cupom salvo com sucesso!');
+        fecharModalSecundario();
+        gerarTabelaCupons();
     })
     .catch(error => {
         console.error('Erro ao salvar cupom:', error);

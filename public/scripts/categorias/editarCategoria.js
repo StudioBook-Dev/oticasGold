@@ -8,6 +8,7 @@ async function editarCategoria(id) {
         <div class="form-container">
             <form id="formCategoria" onsubmit="event.preventDefault(); 
                 constructPutCategoria();">
+                
                 <input type="hidden" id="id" name="id" value="${categoria.id}">
                 <div class="form-group">
                     <label for="nome">Nome</label>
