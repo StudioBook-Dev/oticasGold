@@ -1,10 +1,11 @@
 
 
-function abrirModalSecundarioFinanceiro() {
+function abrirModalSecundarioCategoriasFinanceiras() {
     abrirModalSecundario({
-        titulo: 'Lançamento de Transações Financeiras',
+        titulo: 'Lançamento Categorias Financeiras',
         conteudo: `
-            <div class="opcoes-financeiro" onsubmit="event.preventDefault(); criarCategoriaFinanceira();">
+            <div class="opcoes-financeiro" onsubmit="event.preventDefault(); 
+                constructCategoriaFinanceira();">
                 <form id="formCategoriaFinanceira">
                     <div class="form-group">
                         <label for="nomeCategoriaFinanceira">Nome</label>
@@ -41,7 +42,8 @@ function abrirModalSecundarioFinanceiro() {
     });  
 }
 
-function criarCategoriaFinanceira() {
+
+function constructCategoriaFinanceira() {
     const nome = document.getElementById('nomeCategoriaFinanceira').value;
     const descricao = document.getElementById('descricaoCategoriaFinanceira').value;
     const tipo = document.querySelector('input[name="tipoCategoriaFinanceira"]:checked').value;
@@ -57,10 +59,7 @@ function criarCategoriaFinanceira() {
         saldo: 0
     }
 
-    console.log(categoria);
     postCategoriaFinanceira(categoria);
-    fecharModalSecundario();
-    abrirModalFinanceiro();
 }
 
 
