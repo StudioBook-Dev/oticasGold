@@ -5,17 +5,23 @@ function abrirModalTransacaoFinanceira() {
     abrirModalPrincipal({
         titulo: 'Lançamento de Transações Financeiras',
         conteudo: `<div id="modalTransacoesFinanceiras"></div>`,
-        adicionar: false
+        adicionar: `
+        <button class="modal-adicionar" 
+            onclick="abrirModalSecundarioTransacaoFinanceira()">
+            <i class="fas fa-plus"></i>
+            <span>Adicionar</span>
+        </button> `
     });
-    form_LancamentoTransacoesFinanceiras()
 }
 
 
-async function form_LancamentoTransacoesFinanceiras() {
-    let conteudo = ''
+async function abrirModalSecundarioTransacaoFinanceira() {
     const html = document.querySelector('#modalTransacoesFinanceiras')
+    const categorias = await getCategoriasFinanceiras()
+    let conteudo = ''
     conteudo += `
-        <form onsubmit="event.preventDefault(); lancarTransacaoFinanceira();">
+        <form onsubmit="event.preventDefault(); 
+            constructPostTransacaoFinanceira();">
             <div class="form-group">
                 <div class="form-group">
                     <label>Tipo</label>
@@ -76,10 +82,8 @@ async function form_LancamentoTransacoesFinanceiras() {
                 </div>
                 <div class="form-group" style="width: 50%;">
                     <label for="categoriaFinanceira">Categoria</label>
-                    <select id="categoriaFinanceira" name="categoriaFinanceira" class="form-control" required>
-                        <option value="">
-                            Selecione uma opção 
-                        </option>
+                    <select id="categoria" name="categoriaFinanceira" class="form-control" required>
+                        ${ await opcoesSelecionaveis(categorias) }
                     </select>
                 </div>
             </div>
@@ -88,42 +92,17 @@ async function form_LancamentoTransacoesFinanceiras() {
                 <button type="submit" class="btn-salvar">Salvar</button>
                 <button type="button" class="btn-cancelar" onclick="fecharModalSecundario()">Cancelar</button>
             </div>
-        </form>
-    `
+        </form> `
+
     html.innerHTML = conteudo
-    selecionarTipoCategoriaFinanceira('despesa')
 }
 
 
-async function selecionarTipoCategoriaFinanceira(tipo) {
-    const categorias = await getCategoriasFinanceiras()
-    const categoriasFiltradas = categorias.filter(categoria => categoria.tipo === tipo)
-    adicionarCategoriasFinanceirasNoSelect(categoriasFiltradas)
-}
-
-
-function adicionarCategoriasFinanceirasNoSelect(categorias) {
-    const html = document.getElementById('categoriaFinanceira');
-    // Manter apenas a primeira opção (placeholder)
-    const primeiraOpcao = html.options[0].textContent;
-    let opcoesHTML = primeiraOpcao;
-    if (categorias.length > 0) {
-        categorias.forEach(categoria => {
-            opcoesHTML += `<option value="${categoria.nome}">${categoria.nome}</option>`;
-        });
-    } else {
-        opcoesHTML += `<option>Nenhuma categoria encontrada</option>`;
-    }
-    html.innerHTML = opcoesHTML;
-}
-
-
-function lancarTransacaoFinanceira() {
+function constructPostTransacaoFinanceira() {
     const tipo = document.querySelector('input[name="tipo"]:checked').value
     const descricao = document.querySelector('#descricaoCategoriaFinanceira').value
-    const categoria = document.querySelector('#categoriaFinanceira').value
+    const categoria = document.querySelector('#categoria').value
     const juros = document.querySelector('#juros').value
-
     // Coletar valores das formas de pagamento
     const pagamentoPix = parseFloat(document.querySelector('#pagamentoPix').value) || 0
     const pagamentoDinheiro = parseFloat(document.querySelector('#pagamentoDinheiro').value) || 0
@@ -132,11 +111,9 @@ function lancarTransacaoFinanceira() {
     const pagamentoBoleto = parseFloat(document.querySelector('#pagamentoBoleto').value) || 0
     const pagamentoOutros = parseFloat(document.querySelector('#pagamentoOutros').value) || 0
     const pagamentoReserva = parseFloat(document.querySelector('#pagamentoReserva').value) || 0
-
     // Calcular valor total
     const valorTotal = pagamentoPix + pagamentoDinheiro + pagamentoCredito +
         pagamentoDebito + pagamentoBoleto + pagamentoOutros + pagamentoReserva
-
     // Criar array de formas de pagamento (incluindo apenas os que têm valor maior que zero)
     const formasPagamento = []
 
@@ -161,9 +138,7 @@ function lancarTransacaoFinanceira() {
         }
     };
 
-    console.log(transacao)
-    salvarTransacaoFinanceira(transacao)
-    abrirDashboard()
+    postTransacaoFinanceira(transacao)
 }
 
 

@@ -9,3 +9,7 @@ async function opcoesSelecionaveis(dados) {
     });
     return conteudo;
 }
+
+
+
+
