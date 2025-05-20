@@ -8,8 +8,9 @@ function abrirModalPrincipalPedidos() {
     abrirModalPrincipal({
         titulo: 'Lançamento de Vendas',
         conteudo: '<div id="lista-produtos">Carregando produtos...</div>',
-        adicionar: false
+        adicionar: ''
     });
+    
     // Obter os produtos e exibi-los no console
     getProdutos()
         .then(produtos => {

@@ -1,3 +1,5 @@
+
+
 function incrementarContador(id) {
     // Encontra o elemento do contador para o produto com o ID específico
     const tr = document.getElementById(`produto-${id}`);
