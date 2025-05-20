@@ -1,18 +1,23 @@
 
 async function editarProduto(id) {
-
-    const produto = await getProduto(id);
-
+    const produto = await getProdutoById(id);
+    console.log(produto)
+    const categorias = await getCategorias();
     abrirModalSecundario({
-        titulo: `Editando ${produto.nome}`,
+        titulo: `Editar Produto ${produto.nome} #${produto.id}`,
         conteudo: `
          <div class="form-container">
             <form id="formProduto" onsubmit="event.preventDefault(); 
-                enviaNovoProdutoPara_Atualizar(${id});">
-                <input type="hidden" id="dataCriacao" name="id" value="${produto.dataCriacao}">
+                constructPutProduto();">
+                
+                <input type="hidden" id="id" value="${produto.id}">
+                <input type="hidden" id="estoque" value="${produto.estoque}">
+                <input type="hidden" id="dataCriacao" value="${produto.dataCriacao}">
+                
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" required value="${produto?.nome}">
+                    <input type="text" id="nome" name="nome" class="form-control" required 
+                    value="${produto.nome}">
                 </div>
                 
                 <div class="form-group">
@@ -22,30 +27,27 @@ async function editarProduto(id) {
                 
                 <div class="form-group">
                     <label for="preco">Preço (R$)</label>
-                    <input type="number" id="preco" name="preco" class="form-control" step="0.01" required value="${produto?.preco}">
+                    <input type="number" id="preco" name="preco" class="form-control" step="0.01" required 
+                    value="${produto.preco}">
                 </div>
                 
                 <div class="form-group">
                     <label for="codigoInterno">Código Interno</label>
-                    <input type="text" id="codigoInterno" name="codigoInterno" class="form-control" value="${produto?.codigoInterno}">
+                    <input type="text" id="codigoInterno" name="codigoInterno" class="form-control" 
+                    value="${produto.codigoInterno}">
                 </div>
                 
                 <div class="form-group">
                     <label for="codigoExterno">Código Externo</label>
-                    <input type="text" id="codigoExterno" name="codigoExterno" class="form-control" value="${produto?.codigoExterno}">
-                </div>
-
-                <div class="form-group">
-                    <label for="estoque">Estoque</label>
-                    <input type="number" id="estoque" name="estoque" class="form-control" min="0" required value="${produto?.estoque}">
+                    <input type="text" id="codigoExterno" name="codigoExterno" class="form-control" 
+                    value="${produto.codigoExterno}">
                 </div>
                 
                 <div class="form-group">
                     <label for="categoria">Categoria</label>
-                    <select id="categoria" name="categoria" class="form-control" required>
-                        <option value="${produto?.categoria || 'Selecione uma categoria'}">
-                            ${produto?.categoria || 'Selecione uma categoria'}
-                        </option>
+                    <select name="categoria" class="form-control" id="categoria" required>
+                        <option> ${produto.categoria} </option>
+                        ${ await opcoesSelecionaveis(categorias) }
                     </select>
                 </div>
                 
@@ -57,27 +59,34 @@ async function editarProduto(id) {
         </div>
     `
     });
-    adicionarCategoriasNoSelect(produto);
 }
 
 
 // Função para salvar o produto do formulário
-function enviaNovoProdutoPara_Atualizar(id) {
+function constructPutProduto() {
+    const id = document.getElementById('id').value
+    const nome = document.getElementById('nome').value
+    const descricao = document.getElementById('descricao').value
+    const codigoInterno = document.getElementById('codigoInterno').value
+    const codigoExterno = document.getElementById('codigoExterno').value
+    const preco = document.getElementById('preco').value
+    const estoque = document.getElementById('estoque').value
+    const categoria = document.getElementById('categoria').value
+    const dataCriacao = document.getElementById('dataCriacao').value
+
     const produto = {
-        id: id,
-        nome: getInputValue('nome'),
-        descricao: getInputValue('descricao'),
-        codigoInterno: getInputValue('codigoInterno'),
-        codigoExterno: getInputValue('codigoExterno'),
-        preco: getInputValue('preco'),
-        estoque: getInputValue('estoque'),
-        categoria: getInputValue('categoria'),
-        dataCriacao: getInputValue('dataCriacao')
+        id,
+        nome,
+        descricao,
+        codigoInterno,
+        codigoExterno,
+        preco,
+        estoque,
+        categoria,
+        dataCriacao
     };
+
     putProduto(produto)
-    fecharModalSecundario()
-    abrirModalProdutos()
-    hubAtualizarEstoque_Automatico(produto, 'edição de produto')
 }
 
 

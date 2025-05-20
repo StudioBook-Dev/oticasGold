@@ -41,11 +41,11 @@ async function gerarTabelaEstoque() {
             <tr>
                 <td style="display: flex; gap: 10px;">
                     <button id="btn-entrada-estoque" class="botao-estoque" 
-                    onclick="abrirModalEntradaEstoqueProduto(${produto.id})">
+                    onclick="abrirModalEntradaEstoqueProduto(${produto.id}, '${produto.nome}')">
                         <i class="fas fa-plus-circle"></i> 
                     </button>
                     <button id="btn-saida-estoque" class="botao-estoque" 
-                    onclick="abrirModalSaidaEstoqueProduto(${produto.id})">
+                    onclick="abrirModalSaidaEstoqueProduto(${produto.id}, '${produto.nome}')">
                         <i class="fas fa-minus-circle"></i> 
                     </button>
                 </td>

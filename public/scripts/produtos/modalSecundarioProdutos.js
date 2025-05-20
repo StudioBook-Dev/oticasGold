@@ -1,10 +1,12 @@
 
 async function abrirModalSecundarioProdutos() {
+    const categorias = await getCategorias();
     abrirModalSecundario({
         titulo: 'Adicionar Novo Produto',
         conteudo: `
         <div class="form-container">
-            <form id="formProduto" onsubmit="event.preventDefault(); enviaNovoProdutoPara_Salvar();">
+            <form id="formProduto" onsubmit="event.preventDefault(); 
+                constructPostProduto();">
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" id="nome" name="nome" class="form-control" required value="">
@@ -32,15 +34,14 @@ async function abrirModalSecundarioProdutos() {
 
                 <div class="form-group">
                     <label for="estoque">Estoque</label>
-                    <input type="number" id="estoque" name="estoque" class="form-control" min="0" required value="">
+                    <input type="number" id="estoque" name="estoque" class="form-control" min="0" value="0">
                 </div>
                 
                 <div class="form-group">
                     <label for="categoria">Categoria</label>
-                    <select id="categoria" name="categoria" class="form-control" required>
-                        <option value="Selecione uma categoria">
-                            Selecione uma categoria
-                        </option>
+                    <select name="categoria" class="form-control" id="categoria" required>
+                        <option>Selecione uma categoria</option>
+                        ${ await opcoesSelecionaveis(categorias) }
                     </select>
                 </div>
                 
@@ -51,44 +52,39 @@ async function abrirModalSecundarioProdutos() {
             </form>
         </div>`
     });
-    adicionarCategoriasNoSelect();
 }
 
-async function adicionarCategoriasNoSelect(produto) {  
-    try {
-        // Carregar categorias após o modal ser aberto
-        const selectCategoria = document.getElementById('categoria');
-        const categorias = await getCategorias();
-        
-        // Limpar opções existentes exceto a primeira
-        while (selectCategoria.children.length > 1) {
-            selectCategoria.removeChild(selectCategoria.lastChild);
-        }
-        // Adicionar novas opções
-        categorias.forEach(categoria => {
-            const option = document.createElement('option');
-            option.value = categoria.nome;
-            option.textContent = categoria.nome;
-            
-            if (produto && produto.categoria === categoria.nome) {
-                option.selected = true;
-            }
-            selectCategoria.appendChild(option);
-        });
-        // Selecionar categoria do produto se estiver editando
-        if (produto && produto.categoria) {
-            const options = selectCategoria.options;
-            for (let i = 0; i < options.length; i++) {
-                if (options[i].value === produto.categoria) {
-                    selectCategoria.selectedIndex = i;
-                    break;
-                }
-            }
-        }
-    } catch (error) {
-        console.error('Erro ao carregar categorias:', error);
-    }
+
+// Função para salvar o produto do formulário
+function constructPostProduto() {
+    const nome = document.getElementById('nome').value;
+    const descricao = document.getElementById('descricao').value;
+    const codigoInterno = document.getElementById('codigoInterno').value;
+    const codigoExterno = document.getElementById('codigoExterno').value;
+    const preco = document.getElementById('preco').value;
+    const estoque = document.getElementById('estoque').value;
+    const categoria = document.getElementById('categoria').value;
+    const dataCriacao = dataFormatada().data
+
+    const produto = {
+        id: gerarId(),
+        nome,
+        descricao,
+        codigoInterno,
+        codigoExterno,
+        preco,
+        estoque,
+        categoria,
+        dataCriacao
+    };
+    
+    postProduto(produto)
+    
+    constructPostMovimentacao(id, 'criação de produto')
 }
+
+
+
 
 
 

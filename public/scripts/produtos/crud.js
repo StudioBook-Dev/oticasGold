@@ -63,6 +63,8 @@ function postProduto(produto) {
     .then(response => response.json())
     .then(data => {
         alert('Produto salvo com sucesso!');
+        fecharModalSecundario();
+        gerarTabelaProdutos();
     })
     .catch(error => {
         console.error('Erro ao salvar produto:', error);
