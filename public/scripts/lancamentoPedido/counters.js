@@ -7,31 +7,21 @@ function incrementarContador(id) {
         console.error(`Linha do produto ${id} não encontrada`);
         return;
     }
-    
     const contadorElement = tr.querySelector('.contador-valor');
     if (!contadorElement) {
         console.error(`Elemento contador para produto ${id} não encontrado`);
         return;
     }
-    
     // Obtém o valor atual e converte para número
-    let valorAtual = parseInt(contadorElement.textContent || "0");
-    
+    let valorAtual = parseInt(contadorElement.textContent);
     // Obtém o valor máximo (estoque) do atributo max
-    const estoqueMaximo = parseInt(contadorElement.getAttribute('max') || "0");
-    
+    const estoqueMaximo = parseInt(contadorElement.getAttribute('max'));
     // Só incrementa se o valor atual for menor que o estoque disponível
     if (valorAtual < estoqueMaximo) {
         // Incrementa o valor
         valorAtual++;
-        
         // Atualiza o texto do contador
         contadorElement.textContent = valorAtual;
-        
-        // Chama a função para atualizar o carrinho, se existir
-        if (typeof atualizarItemCarrinho === 'function') {
-            atualizarItemCarrinho(id, valorAtual);
-        }
     } else {
         // Alerta o usuário que o limite de estoque foi atingido
         alert(`Não é possível adicionar mais unidades. Estoque disponível: ${estoqueMaximo}`);
@@ -52,16 +42,14 @@ function decrementarContador(id) {
         return;
     }
     // Obtém o valor atual e converte para número
-    let valorAtual = parseInt(contadorElement.textContent || "0");
+    let valorAtual = parseInt(contadorElement.textContent);
     // Decrementa o valor, mas não permite que seja menor que 0
-    if (valorAtual > 0) {
+    if (valorAtual >= 1) {
+        valorAtual = 1;
+    }if (valorAtual > 1){
         valorAtual--;
         // Atualiza o texto do contador
         contadorElement.textContent = valorAtual;
-        // Chama a função para atualizar o carrinho, se existir
-        if (typeof atualizarItemCarrinho === 'function') {
-            atualizarItemCarrinho(id, valorAtual);
-        }
     }
 }
 

@@ -1,8 +1,9 @@
 
+
 // Função para buscar todas as movimentações da API
 async function getMovimentacoes() {
     try {
-        const response = await fetch('/api/estoque/movimentacao');        
+        const response = await fetch('/api/estoque/movimentacoes');
         if (!response.ok) {
             throw new Error(`Erro ao buscar movimentações: ${response.status} ${response.statusText}`);
         }
@@ -21,7 +22,7 @@ async function getMovimentacaoById(id) {
         const response = await fetch(`/api/estoque/movimentacao/${id}`);
         if (!response.ok) {
             throw new Error(`Erro ao buscar movimentação: ${response.status} ${response.statusText}`);
-        }   
+        }
         const data = await response.json();
         return data;
     } catch (error) {
@@ -37,38 +38,37 @@ function deleteCategoria(id) {
         fetch(`/api/estoque/movimentacao/${id}`, {
             method: 'DELETE'
         })
-        .then(response => response.json())
-        .then(data => {
-            alert('Movimentação excluída com sucesso!');
-            gerarTabelaMovimentacoes(); // Atualizar a tabela
-        })
-        .catch(error => {
-            console.error('Erro ao excluir movimentação:', error);
-            alert('Erro ao excluir movimentação.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                alert('Movimentação excluída com sucesso!');
+                gerarTabelaMovimentacoes(); // Atualizar a tabela
+            })
+            .catch(error => {
+                console.error('Erro ao excluir movimentação:', error);
+                alert('Erro ao excluir movimentação.');
+            });
     }
 }
 
 
 // Função para salvar uma nova movimentação
 function postMovimentacao(movimentacao) {
-    fetch('/api/estoque/movimentacao', {    
+    fetch('/api/estoque/movimentacao', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(movimentacao)
     })
-    .then(response => response.json())
-    .then(data => {
-        alert('Movimentação salva com sucesso!');
-        fecharModalSecundario();
-        gerarTabelaMovimentacoes();
-    })
-    .catch(error => {
-        console.error('Erro ao salvar movimentação:', error);
-        alert('Erro ao salvar movimentação.');
-    });
+        .then(response => response.json())
+        .then(data => {
+            alert('Movimentação salva com sucesso!');
+            abrirModalHistoricoEstoque();
+        })
+        .catch(error => {
+            console.error('Erro ao salvar movimentação:', error);
+            alert('Erro ao salvar movimentação.');
+        });
 }
 
 
@@ -81,15 +81,15 @@ function putMovimentacao(movimentacao) {
         },
         body: JSON.stringify(movimentacao)
     })
-    .then(response => response.json())
-    .then(data => {
-        alert('Movimentação atualizada com sucesso!');
-        fecharModalSecundario();
-        gerarTabelaMovimentacoes(); 
-    })
-    .catch(error => {
-        console.error('Erro ao atualizar movimentação:', error);
-        alert('Erro ao atualizar movimentação.');
-    });
+        .then(response => response.json())
+        .then(data => {
+            alert('Movimentação atualizada com sucesso!');
+            fecharModalSecundario();
+            gerarTabelaMovimentacoes();
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar movimentação:', error);
+            alert('Erro ao atualizar movimentação.');
+        });
 }
 

@@ -12,7 +12,7 @@ function abrirModalPrincipalPedidos() {
                 <div class="coluna-produtos" id="lista-produtos">
                     carregando produtos...
                 </div>
-                <button class="btn-carrinho-colunas" onclick="adicionarAoCarrinho()" 
+                <button class="btn-carrinho-colunas" onclick="adicionarAoCarrinho()"
                     title="Adicionar produto ao carrinho">
                     <i class="fas fa-shopping-cart"></i>
                 </button>
@@ -49,14 +49,17 @@ async function gerarTabelaDeProdutosParaPedido() {
     const produtos = await getProdutos();
     let conteudo = `
     <table class="tabela-modal tabela-modal-vendas">
-        <thead><tr>
-        <th class="coluna-acoes"></th>
-        <th class="coluna-nome"></th>
-        <th class="coluna-preco"></th>
-        <th class="coluna-contadores"></th>
-        </tr></thead>
+        <thead>
+            <tr>
+                <th class="coluna-acoes"></th>
+                <th class="coluna-nome"></th>
+                <th class="coluna-preco"></th>
+                <th class="coluna-contadores"></th>
+            </tr>
+        </thead>
         <tbody class="modal-conteudo">`
     produtos.forEach((produto) => {
+        if (produto.estoque == 0){ return }
         conteudo += `
             <tr id="produto-${produto.id}">
             <td class="coluna-acoes">
@@ -65,7 +68,7 @@ async function gerarTabelaDeProdutosParaPedido() {
                 </div>
             </td>
             <td class="coluna-nome">${produto.nome}</td>
-            <td class="coluna-preco">${produto.preco.toFixed(2).replace('.', ',')}</td>
+            <td class="coluna-preco">R$ ${produto.preco.toFixed(2).replace('.', ',')}</td>
             <td class="coluna-contadores">
                 <div class="contador-container">
                     <button class="btn-contador" 
@@ -73,8 +76,9 @@ async function gerarTabelaDeProdutosParaPedido() {
                         title="Diminuir quantidade">
                         -
                     </button>
-                    <input type="number" class="contador-valor" min="1" 
-                    max="${produto.estoque}" value="1">
+                    <span class="contador-valor" min="1" max="${produto.estoque}">
+                        1
+                    </span>
                     <button class="btn-contador" 
                         onclick="incrementarContador(${produto.id})"
                         title="Aumentar quantidade">

@@ -1,18 +1,4 @@
 
-// Função principal para carregar movimentações da API
-async function getMovimentacoes() {
-    try {
-        const response = await fetch('/api/estoque/historico');
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar movimentações: ${response.status} ${response.statusText}`);
-        }
-        const movimentacoes = await response.json();
-        return movimentacoes;
-    } catch (error) {
-        console.error("Erro ao carregar movimentações:", error);       
-        return [];
-    }
-}
 
 /**
  * Abre o modal do histórico de estoque
@@ -38,6 +24,7 @@ function abrirModalHistoricoEstoque() {
  */
 async function gerarTabelaHistorico() {
     const historico = await getMovimentacoes();
+    console.log(historico)
     const html = document.querySelector('#tabela-historico');
     let conteudo = `
         <table class="tabela-modal">

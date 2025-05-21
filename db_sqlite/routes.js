@@ -237,8 +237,9 @@ router.delete('/cupons/:id', async (req, res) => {
     res.json({ id: result.id });
 });
 
+
 // Rotas para estoque
-router.get('/estoque/historico', async (req, res) => {
+router.get('/estoque/movimentacoes', async (req, res) => {
     try {
         const { tipo, produtoId, produtoNome, dataInicial, dataFinal } = req.query;
         const filtros = {};
