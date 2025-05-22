@@ -17,8 +17,7 @@ async function abrirModalMovimentacoes(id) {
                 <div class="form-grupo">
                     <label for="quantidade">Quantidade:</label>
                     <input type="number" id="quantidade" class="campo-formulario" step="1"
-                    min="${produto.estoque}"  
-                    value="${produto.estoque}">
+                    min="1" value="">
                 </div>
 
                 <div class="form-group">

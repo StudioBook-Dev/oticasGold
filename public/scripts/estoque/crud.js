@@ -63,7 +63,8 @@ function postMovimentacao(movimentacao) {
         .then(response => response.json())
         .then(data => {
             alert('Movimentação salva com sucesso!');
-            abrirModalHistoricoEstoque();
+            fecharModalSecundario();
+            gerarTabelaMovimentacoes();
         })
         .catch(error => {
             console.error('Erro ao salvar movimentação:', error);

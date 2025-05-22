@@ -137,7 +137,6 @@
 .tabela-container {
     flex: 1;
     overflow-y: auto;
-    border: 1px solid #d0caca;
     border-radius: 4px;
 }
 .dark-theme .tabela-container {

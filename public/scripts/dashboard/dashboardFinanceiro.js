@@ -35,13 +35,11 @@ async function inicializarDashboardFinanceiro() {
                     </div>
                     <div class="card-indicador" id="despesas-totais">
                         <h3 style="font-size: 16px; margin-bottom: 8px;">Despesas Totais</h3>
-                        <p class="valor" style="font-size: 22px; margin: 5px 0;">R$ ${dadosFinanceiros.despesasTotais.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                        <p class="variacao negativa" style="font-size: 12px;">-${dadosFinanceiros.variacaoDespesas.toFixed(2)}% <i class="fas fa-arrow-down"></i></p>
+                        <p class="valor" style="font-size: 22px; margin: 5px 0; color: red;">R$ ${dadosFinanceiros.despesasTotais.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                     </div>
                     <div class="card-indicador" id="lucro-liquido">
                         <h3 style="font-size: 14px; margin-bottom: 8px;">Lucro Líquido</h3>
-                        <p class="valor" style="font-size: 22px; margin: 5px 0;">R$ ${dadosFinanceiros.lucroLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                        <p class="variacao positiva" style="font-size: 12px;">+${dadosFinanceiros.variacaoLucro.toFixed(2)}% <i class="fas fa-arrow-up"></i></p>
+                        <p class="valor" style="font-size: 22px; margin: 5px 0; color: green;">R$ ${dadosFinanceiros.lucroLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                     </div>
                     <div class="card-indicador" id="lucro-mensal">
                         <h3 style="font-size: 16px; margin-bottom: 8px;">Lucro Mensal</h3>

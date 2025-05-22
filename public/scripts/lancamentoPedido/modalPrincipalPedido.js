@@ -22,19 +22,19 @@ function abrirModalPrincipalPedidos() {
             </div> `,
         adicionar: `
             <div class="container-botoes-topo" style="display: flex; justify-content: space-between; align-items: center; max-width: 50%; gap: 1rem;">             
-                <button class="botao-icone-lancamento" title="Adicionar cupom" onclick="abrirCupom()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-cupom" title="Adicionar cupom" onclick="abrirCupom() ">
                     <i class="fas fa-ticket-alt"></i>
                 </button>
-                <button class="botao-icone-lancamento" title="Adicionar frete" onclick="abrirFrete()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-frete" title="Adicionar frete" onclick="abrirFrete()">
                     <i class="fas fa-truck"></i>
                 </button>
-                <button class="botao-icone-lancamento" title="Adicionar observação" onclick="abrirObservacao()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-observacao" title="Adicionar observação" onclick="abrirObservacao()">
                     <i class="fas fa-comment-alt"></i>
                 </button>
-                <button class="botao-icone-lancamento" title="Selecionar cliente" onclick="abrirCliente()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-cliente" title="Selecionar cliente" onclick="modalClientesParaPedido()">
                     <i class="fas fa-user"></i>
                 </button>
-                <button class="botao-icone-lancamento" title="Adicionar desconto" onclick="abrirDesconto()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-desconto" title="Adicionar desconto" onclick="abrirDesconto()">
                     <i class="fas fa-cash-register"></i>
                 </button>
             </div>

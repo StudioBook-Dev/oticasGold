@@ -24,7 +24,6 @@ function abrirModalHistoricoEstoque() {
  */
 async function gerarTabelaHistorico() {
     const historico = await getMovimentacoes();
-    console.log(historico)
     const html = document.querySelector('#tabela-historico');
     let conteudo = `
         <table class="tabela-modal">
