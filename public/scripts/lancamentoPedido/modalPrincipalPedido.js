@@ -47,14 +47,19 @@ function abrirModalPrincipalPedidos() {
 async function gerarTabelaDeProdutosParaPedido() {
     const html = document.getElementById('lista-produtos');
     const produtos = await getProdutos();
+
+    if (!produtos || produtos.length === 0) {
+        return '<p>Nenhum produto encontrado.</p>';
+    }
+
     let conteudo = `
     <table class="tabela-modal tabela-modal-vendas">
         <thead>
             <tr>
-                <th class="coluna-acoes"></th>
-                <th class="coluna-nome"></th>
-                <th class="coluna-preco"></th>
-                <th class="coluna-contadores"></th>
+                <th> check </th>
+                <th> produto </th>
+                <th> preço </th>
+                <th> quantidade </th>
             </tr>
         </thead>
         <tbody class="modal-conteudo">`
@@ -67,28 +72,27 @@ async function gerarTabelaDeProdutosParaPedido() {
                     <input type="radio" name="produto" id="input-produto-${produto.id}">
                 </div>
             </td>
+
             <td class="coluna-nome">${produto.nome}</td>
+
             <td class="coluna-preco">R$ ${produto.preco.toFixed(2).replace('.', ',')}</td>
+            
             <td class="coluna-contadores">
                 <div class="contador-container">
-                    <button class="btn-contador" 
-                        onclick="decrementarContador(${produto.id})" 
-                        title="Diminuir quantidade">
+                    <button class="btn-contador" onclick="decrementarContador(${produto.id})">
                         -
                     </button>
                     <span class="contador-valor" min="1" max="${produto.estoque}">
                         1
                     </span>
-                    <button class="btn-contador" 
-                        onclick="incrementarContador(${produto.id})"
-                        title="Aumentar quantidade">
+                    <button class="btn-contador" onclick="incrementarContador(${produto.id})">
                         +
                     </button>
                 </div>
             </td> `
     });
-    conteudo += '</tbody></table>';
 
+    conteudo += '</tbody></table>';
     html.innerHTML = conteudo;
 }
 

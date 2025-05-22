@@ -14,11 +14,8 @@ function modalClientesParaPedido() {
                         Confirmar
                     </button>
                 </div>
-                <br>
-                <div class="tabela-container">
-                    <table id="tabela-clientes">
-                    </table>
-                </div>
+                <br><br>
+                <div id="tabela-clientes"> </div>
             </form>`
     });
     gerarTabelaClientesParaPedido();
@@ -27,12 +24,23 @@ function modalClientesParaPedido() {
 
 // Função para carregar clientes e preencher a tabela
 async function gerarTabelaClientesParaPedido() {
-    let conteudo = '';
     const clientes = await getClientes()
     const html = document.getElementById('tabela-clientes')
+
     if (!clientes || clientes.length === 0) {
-        conteudo = '<p>Nenhum cliente encontrado.</p>';
+        return '<p>Nenhum cliente encontrado.</p>';
     }
+
+    let conteudo = `
+    <table class="tabela-modal">
+    <thead>
+        <tr>
+            <th>Ações</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+        </tr>
+    </thead>
+    <tbody class="modal-conteudo">`;
     clientes.forEach(cliente => {
         conteudo += `
             <tr>
@@ -43,6 +51,8 @@ async function gerarTabelaClientesParaPedido() {
                 <td>${cliente.telefone || ''}</td>
             </tr>`;
     });
+
+    conteudo += '</tbody></table>'
     html.innerHTML = conteudo
 }
 
@@ -62,7 +72,7 @@ function aplicarClienteSelecionado() {
         id: clienteId,
         nome: clienteNome,
         telefone: clienteTelefone
-    };
+    }
 
     localStorage.setItem("cliente", JSON.stringify(cliente));
     statusIconeNoModalPrincipalPedido('cliente', true)
