@@ -44,20 +44,21 @@ async function gerarTabelaCupons() {
         }
         conteudo += `
         <tr>
-            <div class="acoes-container">
-                <button class="btn-acao btn-editar" title="Editar" 
-                onclick="editarCupom('${cupom.id}')">
+            <td>
+                <div class="acoes-container">
+                    <button class="btn-acao btn-editar" title="Editar" 
+                    onclick="editarCupom('${cupom.id}')">
                     <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button class="btn-acao btn-excluir" title="Excluir"
-                onclick="excluirItem('cupons', '${cupom.id}')">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-        </td>
-        <td>${cupom.nome}</td>
-        <td>${valor}</td>
-        <td>${cupom.tipo === 'percentual' ? 'Percentual' : 'Absoluto'}</td>
+                    </button>
+                    <button class="btn-acao btn-excluir" title="Excluir"
+                    onclick="excluirItem('cupons', '${cupom.id}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </td>
+            <td>${cupom.nome}</td>
+            <td>${valor}</td>
+            <td>${cupom.tipo === 'percentual' ? 'Percentual' : 'Absoluto'}</td>
         </tr>`
     });
 

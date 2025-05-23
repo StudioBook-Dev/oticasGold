@@ -22,7 +22,6 @@ function inicializarColunasRedimensionais() {
         }
         .tabela-redimensionavel th,
         .tabela-redimensionavel tr:first-child td {
-            font-weight: bold;
             border-bottom: 1px solid rgba(128, 128, 128, 0.3);
             user-select: none;
             position: relative;

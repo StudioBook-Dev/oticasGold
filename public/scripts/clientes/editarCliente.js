@@ -1,8 +1,10 @@
+
+
 // Função para editar um cliente existente
 async function editarCliente(id) {
     const cliente = await getClienteById(id)
     abrirModalSecundario({
-        titulo: `Editar Cliente ${cliente.nome} #${cliente.id}`,
+        titulo: `Editar Cliente - "${cliente.nome}"`,
         conteudo: `
         <div class="form-container">
             <form id="formCliente" onsubmit="event.preventDefault(); 
