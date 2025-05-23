@@ -47,7 +47,6 @@ router.post('/pedidos', async (req, res) => {
 
         res.status(201).json({ id: result.id });
     } catch (error) {
-        // console.error("Erro ao processar requisição de pedido:", error);
         res.status(500).json({
             success: false,
             error: `Erro interno ao processar pedido: ${error.message}`
@@ -258,7 +257,6 @@ router.get('/estoque/movimentacoes', async (req, res) => {
 
         res.json(historico);
     } catch (error) {
-        // console.error('Erro ao buscar histórico de estoque:', error);
         res.status(500).json({ error: 'Erro ao buscar histórico de estoque' });
     }
 });
@@ -293,7 +291,6 @@ router.post('/estoque/movimentacao', async (req, res) => {
 
         res.status(201).json(result);
     } catch (error) {
-        // console.error('Erro ao registrar movimentação de estoque:', error);
         res.status(500).json({ error: 'Erro ao registrar movimentação de estoque' });
     }
 });
@@ -321,7 +318,6 @@ router.post('/produtos/atualizarEstoque', async (req, res) => {
 
         res.json(result);
     } catch (error) {
-        // console.error('Erro ao atualizar estoque:', error);
         res.status(500).json({ error: 'Erro ao atualizar estoque' });
     }
 });
@@ -360,8 +356,6 @@ router.delete('/excluir-todos/:tabela', async (req, res) => {
     let result = { success: false, error: 'Tabela não reconhecida' };
 
     try {
-        // console.log(`Tentando excluir todos os itens da tabela: ${tabela}`);
-
         switch (tabela) {
             case 'produtos':
                 result = await produtosModel.deleteAllProdutos();
@@ -379,27 +373,21 @@ router.delete('/excluir-todos/:tabela', async (req, res) => {
                 result = await pedidosModel.deleteAllPedidos();
                 break;
             case 'estoque':
-                // console.log('Chamando função deleteAllEstoque');
                 result = await estoqueModel.deleteAllEstoque();
-                // console.log('Resultado da função deleteAllEstoque:', result);
                 break;
             case 'transacoesFinanceiras':
                 result = await financeiroModel.deleteAllTransacoesFinanceiras();
                 break;
             default:
-                // console.log(`Tabela não reconhecida: ${tabela}`);
                 return res.status(400).json({ success: false, mensagem: `Tabela '${tabela}' não reconhecida` });
         }
 
         if (!result.success) {
-            // console.log(`Erro ao excluir tabela ${tabela}:`, result.error);
             return res.status(400).json({ success: false, mensagem: result.error });
         }
 
-        // console.log(`Todos os itens da tabela ${tabela} foram excluídos com sucesso`);
         res.json({ success: true, mensagem: `Todos os itens da tabela ${tabela} foram excluídos com sucesso` });
     } catch (error) {
-        // console.error(`Erro ao excluir itens da tabela ${tabela}:`, error);
         res.status(500).json({ success: false, mensagem: `Erro ao excluir itens: ${error.message}` });
     }
 });
@@ -460,7 +448,6 @@ router.get('/financeiro/teste', async (req, res) => {
             dados: dados
         });
     } catch (error) {
-        console.error('Erro ao verificar tabela:', error);
         res.status(500).json({ erro: error.message });
     }
 });

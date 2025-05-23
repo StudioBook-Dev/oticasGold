@@ -3,13 +3,8 @@ const { executeSql, getOne, getAll } = require('./database');
 // Função para obter todos os produtos
 async function getProdutos() {
     try {
-        // Primeiro, excluir produtos sem ID
-        await executeSql('DELETE FROM produtos WHERE id IS NULL');
-        
-        // Depois buscar produtos
         return await getAll('SELECT * FROM produtos');
     } catch (error) {
-        // console.error('Erro ao buscar produtos:', error);
         return [];
     }
 }
@@ -19,41 +14,44 @@ async function getProdutoById(id) {
     try {
         return await getOne('SELECT * FROM produtos WHERE id = ?', [id]);
     } catch (error) {
-        // console.error(`Erro ao buscar produto ${id}:`, error);
         return null;
     }
 }
 
 // Função para criar um novo produto
-async function createProduto(produto) {
+async function createProduto(produtoData) {
     try {
-        // Gerar ID único se não for fornecido
-        if (!produto.id) {
-            // Obter o maior ID atual e incrementar
-            const maxIdResult = await getOne('SELECT MAX(id) as maxId FROM produtos');
-            const maxId = maxIdResult && maxIdResult.maxId ? parseInt(maxIdResult.maxId) : 0;
-            produto.id = (maxId + 1).toString();
+        // Validar se produto com mesmo código interno já existe
+        const produtoExistente = await getOne(
+            'SELECT id FROM produtos WHERE codigoInterno = ?',
+            [produtoData.codigoInterno]
+        );
+
+        if (produtoExistente) {
+            return {
+                success: false,
+                error: `Produto com código interno "${produtoData.codigoInterno}" já existe`
+            };
         }
-        
-        const result = await executeSql(
-            `INSERT INTO produtos (id, nome, descricao, preco, estoque, codigoInterno, codigoExterno, categoria, dataCriacao) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+
+        await executeSql(
+            `INSERT INTO produtos (id, nome, descricao, preco, custo, estoque, codigoInterno, codigoExterno, categoria, dataCriacao) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-                produto.id,
-                produto.nome,
-                produto.descricao,
-                produto.preco,
-                produto.estoque,
-                produto.codigoInterno,
-                produto.codigoExterno,
-                produto.categoria,
-                produto.dataCriacao || new Date().toISOString()
+                produtoData.id,
+                produtoData.nome,
+                produtoData.descricao,
+                produtoData.preco,
+                produtoData.custo || 0,
+                produtoData.estoque,
+                produtoData.codigoInterno,
+                produtoData.codigoExterno,
+                produtoData.categoria,
+                produtoData.dataCriacao
             ]
         );
-        
-        return { success: true, id: produto.id };
+        return { success: true, id: produtoData.id };
     } catch (error) {
-        // console.error('Erro ao criar produto:', error);
         return { success: false, error: error.message };
     }
 }
@@ -61,20 +59,34 @@ async function createProduto(produto) {
 // Função para atualizar um produto existente
 async function updateProduto(id, produtoData) {
     try {
+        // Verificar se produto existe
+        const produtoExistente = await getOne('SELECT * FROM produtos WHERE id = ?', [id]);
+        if (!produtoExistente) {
+            return { success: false, error: 'Produto não encontrado' };
+        }
+
+        // Verificar se outro produto já tem o mesmo código interno (se fornecido)
+        if (produtoData.codigoInterno) {
+            const outroComMesmoCodigo = await getOne(
+                'SELECT id FROM produtos WHERE codigoInterno = ? AND id != ?',
+                [produtoData.codigoInterno, id]
+            );
+
+            if (outroComMesmoCodigo) {
+                return {
+                    success: false,
+                    error: `Produto com código interno "${produtoData.codigoInterno}" já existe`
+                };
+            }
+        }
+
         await executeSql(
-            `UPDATE produtos SET 
-                nome = ?, 
-                descricao = ?, 
-                preco = ?, 
-                estoque = ?, 
-                codigoInterno = ?, 
-                codigoExterno = ?, 
-                categoria = ? 
-             WHERE id = ?`,
+            `UPDATE produtos SET nome = ?, descricao = ?, preco = ?, custo = ?, estoque = ?, codigoInterno = ?, codigoExterno = ?, categoria = ? WHERE id = ?`,
             [
                 produtoData.nome,
                 produtoData.descricao,
                 produtoData.preco,
+                produtoData.custo || 0,
                 produtoData.estoque,
                 produtoData.codigoInterno,
                 produtoData.codigoExterno,
@@ -82,14 +94,11 @@ async function updateProduto(id, produtoData) {
                 id
             ]
         );
-        
         return { success: true, id };
     } catch (error) {
-        // console.error(`Erro ao atualizar produto ${id}:`, error);
         return { success: false, error: error.message };
     }
 }
-
 
 // Função para excluir um produto
 async function deleteProduto(id) {
@@ -97,7 +106,6 @@ async function deleteProduto(id) {
         await executeSql('DELETE FROM produtos WHERE id = ?', [id]);
         return { success: true, id };
     } catch (error) {
-        // console.error(`Erro ao excluir produto ${id}:`, error);
         return { success: false, error: error.message };
     }
 }
@@ -108,7 +116,6 @@ async function deleteAllProdutos() {
         await executeSql('DELETE FROM produtos');
         return { success: true };
     } catch (error) {
-        // console.error('Erro ao excluir todos os produtos:', error);
         return { success: false, error: error.message };
     }
 }

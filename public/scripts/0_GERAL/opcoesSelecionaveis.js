@@ -1,7 +1,6 @@
 
 
 async function opcoesSelecionaveis(dados) { 
-    console.log(dados)
     let conteudo = '';
     // Adicionar novas opções
     dados.forEach(dado => {

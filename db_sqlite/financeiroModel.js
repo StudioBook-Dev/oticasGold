@@ -3,12 +3,9 @@ const { executeSql, getDb, getAll } = require('./database');
 // Obter todas as categorias financeiras
 async function getCategoriasFinanceiras() {
     try {
-        console.log('Iniciando busca de categorias financeiras no banco de dados...');
-        const result = await getAll("SELECT * FROM categoriasFinanceiras ORDER BY nome");
-        // console.log('Resultado da consulta SQL:', result);
+        const result = await getAll('SELECT * FROM categoriasFinanceiras');
         return result;
     } catch (error) {
-        console.error("Erro ao buscar categorias financeiras:", error);
         return [];
     }
 }

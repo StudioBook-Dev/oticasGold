@@ -22,15 +22,22 @@ setInterval(() => {
 async function getHistoricoEstoque() {
     try {
         const movimentacoes = await getAll(`
-            SELECT m.*, p.nome as produtoNome
-            FROM movimentacoes m
-            LEFT JOIN produtos p ON m.idProduto = p.id
-            ORDER BY m.dataHora DESC
+            SELECT * FROM movimentacoes 
+            ORDER BY dataHora DESC
         `);
-        
-        return movimentacoes.map(formatarMovimentacao);
+
+        // Converter as strings JSON de volta para objetos se necessário
+        return movimentacoes.map(mov => ({
+            id: mov.id,
+            data: mov.dataHora,
+            produtoId: mov.idProduto,
+            produtoNome: mov.produtoNome,
+            quantidade: mov.quantidade,
+            tipo: mov.tipo,
+            motivo: mov.motivo,
+            observacao: mov.observacao
+        }));
     } catch (error) {
-        // console.error('Erro ao buscar histórico de estoque:', error);
         return [];
     }
 }
@@ -42,51 +49,49 @@ async function getHistoricoEstoque() {
  */
 async function getHistoricoEstoqueFiltrado(filtros) {
     try {
-        let sql = `
-            SELECT m.*, p.nome as produtoNome
-            FROM movimentacoes m
-            LEFT JOIN produtos p ON m.idProduto = p.id
-            WHERE 1=1
-        `;
-        
+        let sql = 'SELECT * FROM movimentacoes WHERE 1=1';
         const params = [];
-        
-        // Filtrar por tipo de transação (entrada/saída)
-        if (filtros.tipo && filtros.tipo !== 'todos') {
-            sql += ` AND m.tipo = ?`;
+
+        if (filtros.tipo) {
+            sql += ' AND tipo = ?';
             params.push(filtros.tipo);
         }
-        
-        // Filtrar por ID do produto
+
         if (filtros.produtoId) {
-            sql += ` AND m.idProduto = ?`;
+            sql += ' AND idProduto = ?';
             params.push(filtros.produtoId);
         }
-        
-        // Filtrar por nome do produto
+
         if (filtros.produtoNome) {
-            sql += ` AND p.nome LIKE ?`;
+            sql += ' AND produtoNome LIKE ?';
             params.push(`%${filtros.produtoNome}%`);
         }
-        
-        // Filtrar por data inicial
+
         if (filtros.dataInicial) {
-            sql += ` AND m.dataHora >= ?`;
+            sql += ' AND dataHora >= ?';
             params.push(filtros.dataInicial);
         }
-        
-        // Filtrar por data final
+
         if (filtros.dataFinal) {
-            sql += ` AND m.dataHora <= ?`;
+            sql += ' AND dataHora <= ?';
             params.push(filtros.dataFinal);
         }
-        
-        sql += ` ORDER BY m.dataHora DESC`;
-        
+
+        sql += ' ORDER BY dataHora DESC';
+
         const movimentacoes = await getAll(sql, params);
-        return movimentacoes.map(formatarMovimentacao);
+
+        return movimentacoes.map(mov => ({
+            id: mov.id,
+            data: mov.dataHora,
+            produtoId: mov.idProduto,
+            produtoNome: mov.produtoNome,
+            quantidade: mov.quantidade,
+            tipo: mov.tipo,
+            motivo: mov.motivo,
+            observacao: mov.observacao
+        }));
     } catch (error) {
-        // console.error('Erro ao buscar histórico filtrado:', error);
         return [];
     }
 }
@@ -98,21 +103,18 @@ async function getHistoricoEstoqueFiltrado(filtros) {
  */
 async function adicionarMovimentacaoEstoque(movimentacao) {
     try {
-        // Debug para entender o que está vindo
-        // console.log('Recebendo movimentacao:', JSON.stringify(movimentacao));
-        
         // Verificar se o estoque ficaria negativo em caso de saída
         if (movimentacao.tipo === 'saida') {
             const produto = await getOne('SELECT * FROM produtos WHERE id = ?', [movimentacao.produtoId]);
             if (!produto) {
                 return { success: false, error: 'Produto não encontrado' };
             }
-            
+
             if (produto.estoque < parseFloat(movimentacao.quantidade)) {
                 return { success: false, error: 'Estoque insuficiente para realizar esta saída' };
             }
         }
-        
+
         // Inserir na tabela movimentacoes
         await executeSql(
             `INSERT INTO movimentacoes (id, dataHora, quantidade, idProduto, produtoNome, tipo, motivo, observacao) 
@@ -128,25 +130,31 @@ async function adicionarMovimentacaoEstoque(movimentacao) {
                 movimentacao.observacao || ''
             ]
         );
-        
+
         // Atualizar o estoque do produto automaticamente
         const produto = await getOne('SELECT * FROM produtos WHERE id = ?', [movimentacao.produtoId]);
         if (produto) {
             let novoEstoque = produto.estoque;
-            
+
             if (movimentacao.tipo === 'entrada') {
                 novoEstoque += parseFloat(movimentacao.quantidade);
             } else if (movimentacao.tipo === 'saida') {
                 novoEstoque -= parseFloat(movimentacao.quantidade);
             }
-            
+
             // Atualizar o estoque do produto
             await executeSql('UPDATE produtos SET estoque = ? WHERE id = ?', [novoEstoque, movimentacao.produtoId]);
         }
-        
-        return { success: true, id: movimentacao.id };
+
+        return {
+            success: true,
+            id: movimentacao.id,
+            produtoNome: movimentacao.produtoNome,
+            quantidade: movimentacao.quantidade,
+            tipo: movimentacao.tipo,
+            novoEstoque: novoEstoque
+        };
     } catch (error) {
-        // console.error('[SERVER] Erro ao adicionar movimentação:', error);
         return { success: false, error: error.message };
     }
 }
@@ -159,56 +167,38 @@ async function adicionarMovimentacaoEstoque(movimentacao) {
  */
 async function atualizarEstoqueProduto(produtoId, valorAjuste) {
     try {
-        // Obter o produto
+        // Buscar produto atual
         const produto = await getOne('SELECT * FROM produtos WHERE id = ?', [produtoId]);
         if (!produto) {
             return { success: false, error: 'Produto não encontrado' };
         }
-        
-        const estoqueAnterior = produto.estoque;
-        const novoEstoque = estoqueAnterior + parseFloat(valorAjuste);
-        
-        // Verificar se o novo estoque ficaria negativo
+
+        // Calcular novo estoque
+        const estoqueAtual = parseFloat(produto.estoque) || 0;
+        const novoEstoque = estoqueAtual + valorAjuste;
+
+        // Validar se o estoque não ficará negativo
         if (novoEstoque < 0) {
-            return { success: false, error: 'Estoque não pode ficar negativo' };
+            return {
+                success: false,
+                error: `Estoque insuficiente. Estoque atual: ${estoqueAtual}, tentativa de ajuste: ${valorAjuste}`
+            };
         }
-        
-        // Atualizar o estoque do produto
-        await executeSql('UPDATE produtos SET estoque = ? WHERE id = ?', [novoEstoque, produtoId]);
-        
-        // Gerar ID para o log
-        const id = Date.now().toString();
-        
-        // Determinar o tipo de transação e tipo de movimento
-        const tipo = valorAjuste > 0 ? 'entrada' : 'saida';
-        const motivo = tipo === 'saida' ? 'saida_manual' : 'ajuste';
-        const observacao = tipo === 'saida' ? 'Saída manual de estoque' : 'Ajuste de estoque via API';
-        
-        // Registrar na tabela de movimentações
+
+        // Atualizar o estoque na tabela produtos
         await executeSql(
-            `INSERT INTO movimentacoes (id, dataHora, quantidade, idProduto, produtoNome, tipo, motivo, observacao) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [
-                id,
-                new Date().toISOString(),
-                Math.abs(valorAjuste),
-                produtoId,
-                produto.nome,
-                tipo,
-                motivo,
-                observacao
-            ]
+            'UPDATE produtos SET estoque = ? WHERE id = ?',
+            [novoEstoque, produtoId]
         );
-        
-        return { 
-            success: true, 
-            produtoId, 
-            estoqueAnterior,
-            valorAjuste,
-            novoEstoque
+
+        return {
+            success: true,
+            produtoId: produtoId,
+            estoqueAnterior: estoqueAtual,
+            valorAjuste: valorAjuste,
+            novoEstoque: novoEstoque
         };
     } catch (error) {
-        // console.error('Erro ao atualizar estoque do produto:', error);
         return { success: false, error: error.message };
     }
 }
@@ -221,28 +211,33 @@ async function atualizarEstoqueProduto(produtoId, valorAjuste) {
  */
 async function atualizarEstoqueProdutoInterno(produtoId, novoEstoque) {
     try {
-        // Obter o produto para verificar se existe
+        // Buscar produto atual
         const produto = await getOne('SELECT * FROM produtos WHERE id = ?', [produtoId]);
         if (!produto) {
             return { success: false, error: 'Produto não encontrado' };
         }
-        
-        // Verificar se o novo estoque é válido
+
+        // Validar se o novo estoque não é negativo
         if (novoEstoque < 0) {
-            return { success: false, error: 'Estoque não pode ficar negativo' };
+            return {
+                success: false,
+                error: `Estoque não pode ser negativo. Valor informado: ${novoEstoque}`
+            };
         }
-        
-        // Atualizar o estoque do produto
-        await executeSql('UPDATE produtos SET estoque = ? WHERE id = ?', [novoEstoque, produtoId]);
-        
-        return { 
-            success: true, 
-            produtoId, 
-            estoqueAnterior: produto.estoque,
-            novoEstoque
+
+        // Atualizar o estoque na tabela produtos
+        await executeSql(
+            'UPDATE produtos SET estoque = ? WHERE id = ?',
+            [novoEstoque, produtoId]
+        );
+
+        return {
+            success: true,
+            produtoId: produtoId,
+            estoqueAnterior: parseFloat(produto.estoque) || 0,
+            novoEstoque: novoEstoque
         };
     } catch (error) {
-        // console.error('Erro ao atualizar estoque do produto:', error);
         return { success: false, error: error.message };
     }
 }
@@ -279,13 +274,27 @@ async function limparHistorico() {
     }
 }
 
+/**
+ * Limpa o cache das transações de estoque
+ */
+function limparCacheEstoque() {
+    cacheTransacoesEstoque = [];
+}
+
 // Função para excluir todo o estoque
 async function deleteAllEstoque() {
     try {
+        // Limpar tabela de movimentações
         await executeSql('DELETE FROM movimentacoes');
+
+        // Zerar estoque de todos os produtos
+        await executeSql('UPDATE produtos SET estoque = 0');
+
+        // Limpar cache
+        limparCacheEstoque();
+
         return { success: true };
     } catch (error) {
-        // console.error('Erro ao excluir todo o estoque:', error);
         return { success: false, error: error.message };
     }
 }

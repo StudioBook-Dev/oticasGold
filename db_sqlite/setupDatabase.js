@@ -46,6 +46,7 @@ async function setupDatabase() {
                 nome TEXT NOT NULL,
                 descricao TEXT,
                 preco REAL,
+                custo REAL,
                 estoque INTEGER,
                 codigoInterno TEXT,
                 codigoExterno TEXT,
@@ -114,6 +115,16 @@ async function setupDatabase() {
                 FOREIGN KEY (idProduto) REFERENCES produtos(id)
             )
         `);
+
+        // Verificar se a coluna 'custo' existe na tabela produtos
+        try {
+            // Adicionar coluna 'custo' à tabela produtos se não existir
+            await executeSql(`ALTER TABLE produtos ADD COLUMN custo REAL DEFAULT 0`);
+            console.log('Coluna "custo" adicionada à tabela produtos com sucesso!');
+        } catch (error) {
+            // Se der erro, provavelmente a coluna já existe, então podemos ignorar
+            console.log('A coluna "custo" já existe ou ocorreu um erro:', error.message);
+        }
 
         // Criar índices para otimizar as consultas ao histórico de movimentações
         await executeSql(`CREATE INDEX IF NOT EXISTS idx_movimentacoes_datahora ON movimentacoes(dataHora)`);

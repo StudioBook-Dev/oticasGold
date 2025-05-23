@@ -1,4 +1,3 @@
-
 async function editarProduto(id) {
     const produto = await getProdutoById(id);
     console.log(produto)
@@ -32,6 +31,12 @@ async function editarProduto(id) {
                 </div>
                 
                 <div class="form-group">
+                    <label for="custo">Custo (R$)</label>
+                    <input type="number" id="custo" name="custo" class="form-control" step="0.01" required 
+                    value="${produto.custo || 0}">
+                </div>
+                
+                <div class="form-group">
                     <label for="codigoInterno">Código Interno</label>
                     <input type="text" id="codigoInterno" name="codigoInterno" class="form-control" 
                     value="${produto.codigoInterno}">
@@ -47,7 +52,7 @@ async function editarProduto(id) {
                     <label for="categoria">Categoria</label>
                     <select name="categoria" class="form-control" id="categoria" required>
                         <option> ${produto.categoria} </option>
-                        ${ await opcoesSelecionaveis(categorias) }
+                        ${await opcoesSelecionaveis(categorias)}
                     </select>
                 </div>
                 
@@ -70,6 +75,7 @@ function constructPutProduto() {
     const codigoInterno = document.getElementById('codigoInterno').value
     const codigoExterno = document.getElementById('codigoExterno').value
     const preco = document.getElementById('preco').value
+    const custo = document.getElementById('custo').value
     const estoque = document.getElementById('estoque').value
     const categoria = document.getElementById('categoria').value
     const dataCriacao = document.getElementById('dataCriacao').value
@@ -81,6 +87,7 @@ function constructPutProduto() {
         codigoInterno,
         codigoExterno,
         preco,
+        custo,
         estoque,
         categoria,
         dataCriacao

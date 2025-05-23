@@ -55,7 +55,7 @@ async function abrirModalMovimentacoes(id) {
  */
 async function constructPostMovimentacao(id, motivo) {
     const produto = await getProdutoById(id)
-    const quantidade = parseFloat(document.getElementById('quantidade').value);
+    const quantidade = document.getElementById('quantidade').value;
     const observacao = document.getElementById('observacao').value;
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
@@ -69,7 +69,7 @@ async function constructPostMovimentacao(id, motivo) {
         observacao: observacao || '',
         data: dataFormatada().data
     };
-    
+
     postMovimentacao(movimentacao)
 }
 

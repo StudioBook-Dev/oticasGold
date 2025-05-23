@@ -1,4 +1,3 @@
-
 async function abrirModalSecundarioProdutos() {
     const categorias = await getCategorias();
     abrirModalSecundario({
@@ -23,6 +22,11 @@ async function abrirModalSecundarioProdutos() {
                 </div>
                 
                 <div class="form-group">
+                    <label for="custo">Custo (R$)</label>
+                    <input type="number" id="custo" name="custo" class="form-control" step="0.01" required value="">
+                </div>
+                
+                <div class="form-group">
                     <label for="codigoInterno">Código Interno</label>
                     <input type="text" id="codigoInterno" name="codigoInterno" class="form-control" value="">
                 </div>
@@ -41,7 +45,7 @@ async function abrirModalSecundarioProdutos() {
                     <label for="categoria">Categoria</label>
                     <select name="categoria" class="form-control" id="categoria" required>
                         <option>Selecione uma categoria</option>
-                        ${ await opcoesSelecionaveis(categorias) }
+                        ${await opcoesSelecionaveis(categorias)}
                     </select>
                 </div>
                 
@@ -57,30 +61,31 @@ async function abrirModalSecundarioProdutos() {
 
 // Função para salvar o produto do formulário
 function constructPostProduto() {
+    const id = gerarId()
     const nome = document.getElementById('nome').value;
     const descricao = document.getElementById('descricao').value;
     const codigoInterno = document.getElementById('codigoInterno').value;
     const codigoExterno = document.getElementById('codigoExterno').value;
-    const preco = document.getElementById('preco').value;
-    const estoque = document.getElementById('estoque').value;
+    const preco = Number(document.getElementById('preco').value);
+    const custo = Number(document.getElementById('custo').value);
+    const estoque = Number(document.getElementById('estoque').value);
     const categoria = document.getElementById('categoria').value;
     const dataCriacao = dataFormatada().data
 
     const produto = {
-        id: gerarId(),
+        id,
         nome,
         descricao,
         codigoInterno,
         codigoExterno,
         preco,
+        custo,
         estoque,
         categoria,
         dataCriacao
     };
-    
+
     postProduto(produto)
-    
-    constructPostMovimentacao(id, 'criação de produto')
 }
 
 

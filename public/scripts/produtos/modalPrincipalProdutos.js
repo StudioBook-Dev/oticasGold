@@ -1,5 +1,3 @@
-
-
 async function abrirModalProdutos() {
     fecharModalSecundario();
     abrirModalPrincipal({
@@ -30,9 +28,10 @@ async function gerarTabelaProdutos() {
         <thead><tr>
         <th class="col-15">Ações</th>
         <th class="col-20">Nome</th>
-        <th class="col-40">Descrição</th>
-        <th class="col-15">Preço</th>
-        <th class="col-10">Estoque</th>
+        <th class="col-30">Descrição</th>
+        <th class="col-10">Preço</th>
+        <th class="col-10">Custo</th>
+        <th class="col-15">Estoque</th>
         </tr></thead>
         <tbody class="modal-conteudo">`;
     produtos.forEach((produto) => {
@@ -53,10 +52,11 @@ async function gerarTabelaProdutos() {
             <td>${produto.nome}</td>
             <td class="wrap-text">${produto.descricao}</td>
             <td class="align-right">${produto.preco}</td>
+            <td class="align-right">${produto.custo}</td>
             <td class="align-center">${produto.estoque}</td>
         </tr>`;
     });
-    
+
     conteudo += '</tbody></table>';
     html.innerHTML = conteudo;
 }

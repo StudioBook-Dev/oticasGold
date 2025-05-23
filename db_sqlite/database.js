@@ -19,13 +19,13 @@ function getDb() {
 function executeSql(sql, params = []) {
     return new Promise((resolve, reject) => {
         const db = getDb();
-        db.run(sql, params, function(err) {
+        db.run(sql, params, function (err) {
             if (err) {
                 reject(err);
             } else {
-                resolve({ 
-                    lastID: this.lastID, 
-                    changes: this.changes 
+                resolve({
+                    lastID: this.lastID,
+                    changes: this.changes
                 });
             }
         });
@@ -48,21 +48,17 @@ function getOne(sql, params = []) {
     });
 }
 
-// Função para executar uma consulta SQL que retorna múltiplos resultados
-function getAll(sql, params = []) {
+// Função para obter todos os registros
+async function getAll(sql, params = []) {
     return new Promise((resolve, reject) => {
         const db = getDb();
-        // console.log(`Executando consulta SQL: ${sql} com parâmetros:`, params);
         db.all(sql, params, (err, rows) => {
             if (err) {
-                console.error('Erro na consulta SQL:', err);
                 reject(err);
             } else {
-                // console.log('Dados retornados pela consulta:', rows);
                 resolve(rows);
             }
         });
-        db.close();
     });
 }
 

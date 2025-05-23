@@ -42,7 +42,7 @@ async function gerarTabelaClientesParaPedido() {
     </thead>
     <tbody class="modal-conteudo">`;
     clientes.forEach(cliente => {
-        conteudo += `
+        conteudo += `   
             <tr>
                 <td>
                     <input type="radio" name="cliente" value="${cliente.id}" id="cliente-${cliente.id}">
