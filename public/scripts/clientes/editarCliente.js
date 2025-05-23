@@ -1,5 +1,3 @@
-
-
 // Função para editar um cliente existente
 async function editarCliente(id) {
     const cliente = await getClienteById(id)
@@ -75,11 +73,11 @@ async function editarCliente(id) {
                 </div>
 
                 <div class="form-group">
-                    <label for="receitaArquivo">Receita (Anexar arquivo)</label>
                     <input type="file" id="receitaArquivo" name="receitaArquivo" class="form-control" 
                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp" 
                            title="Formatos aceitos: PDF, DOC, DOCX, JPG, JPEG, PNG, GIF, BMP">
                     <small class="form-text text-muted">Formatos aceitos: PDF, DOC, DOCX e imagens (JPG, PNG, GIF, BMP)</small>
+                    <div id="receita-info" style="margin-top: 5px;"></div>
                 </div>
                 
                 <div class="form-actions">
@@ -89,6 +87,11 @@ async function editarCliente(id) {
             </form>
         </div>
     ` })
+
+    // Verificar se existe receita para este cliente após o modal ser aberto
+    setTimeout(() => {
+        verificarReceita(cliente.id);
+    }, 100);
 }
 
 

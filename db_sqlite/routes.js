@@ -687,4 +687,106 @@ router.post('/upload-receita', upload.single('arquivo'), async (req, res) => {
     }
 });
 
+// Rota para verificar se existe receita para um cliente
+router.get('/verificar-receita/:clienteId', (req, res) => {
+    try {
+        const { clienteId } = req.params;
+        const receitasPath = path.join(__dirname, 'receitas');
+
+        // Verificar se a pasta de receitas existe
+        if (!fs.existsSync(receitasPath)) {
+            return res.json({
+                existe: false,
+                mensagem: 'Pasta de receitas não encontrada'
+            });
+        }
+
+        // Listar todos os arquivos na pasta
+        const arquivos = fs.readdirSync(receitasPath);
+
+        // Procurar por arquivo que comece com o ID do cliente
+        const arquivoReceita = arquivos.find(arquivo => {
+            const nomeArquivo = path.parse(arquivo).name;
+            return nomeArquivo === clienteId;
+        });
+
+        if (arquivoReceita) {
+            const caminhoCompleto = path.join(receitasPath, arquivoReceita);
+            const stats = fs.statSync(caminhoCompleto);
+
+            res.json({
+                existe: true,
+                arquivo: {
+                    nome: arquivoReceita,
+                    extensao: path.extname(arquivoReceita),
+                    tamanho: stats.size,
+                    dataModificacao: stats.mtime,
+                    url: `/api/receita/${clienteId}`
+                }
+            });
+        } else {
+            res.json({
+                existe: false,
+                mensagem: 'Nenhuma receita encontrada para este cliente'
+            });
+        }
+
+    } catch (error) {
+        console.error('Erro ao verificar receita:', error);
+        res.status(500).json({
+            erro: 'Erro interno no servidor',
+            mensagem: error.message
+        });
+    }
+});
+
+// Rota para servir o arquivo de receita
+router.get('/receita/:clienteId', (req, res) => {
+    try {
+        const { clienteId } = req.params;
+        const receitasPath = path.join(__dirname, 'receitas');
+
+        // Listar arquivos na pasta
+        const arquivos = fs.readdirSync(receitasPath);
+
+        // Encontrar arquivo do cliente
+        const arquivoReceita = arquivos.find(arquivo => {
+            const nomeArquivo = path.parse(arquivo).name;
+            return nomeArquivo === clienteId;
+        });
+
+        if (!arquivoReceita) {
+            return res.status(404).json({
+                erro: 'Receita não encontrada'
+            });
+        }
+
+        const caminhoCompleto = path.join(receitasPath, arquivoReceita);
+        const extensao = path.extname(arquivoReceita).toLowerCase();
+
+        // Definir Content-Type baseado na extensão
+        let contentType = 'application/octet-stream';
+        if (extensao === '.pdf') contentType = 'application/pdf';
+        else if (['.jpg', '.jpeg'].includes(extensao)) contentType = 'image/jpeg';
+        else if (extensao === '.png') contentType = 'image/png';
+        else if (extensao === '.gif') contentType = 'image/gif';
+        else if (extensao === '.bmp') contentType = 'image/bmp';
+        else if (extensao === '.doc') contentType = 'application/msword';
+        else if (extensao === '.docx') contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Disposition', `inline; filename="${arquivoReceita}"`);
+
+        // Enviar arquivo
+        res.sendFile(caminhoCompleto);
+
+    } catch (error) {
+        console.error('Erro ao servir receita:', error);
+        res.status(500).json({
+            erro: 'Erro interno no servidor',
+            mensagem: error.message
+        });
+    }
+});
+
 module.exports = router; 
