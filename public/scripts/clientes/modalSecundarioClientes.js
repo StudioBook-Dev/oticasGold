@@ -61,6 +61,14 @@ function abrirModalSecundarioClientes() {
                     <input type="text" id="cepCliente" name="cepCliente" class="form-control">
                 </div>
                 
+                <div class="form-group">
+                    <label for="receitaArquivo">Receita (Anexar arquivo)</label>
+                    <input type="file" id="receitaArquivo" name="receitaArquivo" class="form-control" 
+                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp" 
+                           title="Formatos aceitos: PDF, DOC, DOCX, JPG, JPEG, PNG, GIF, BMP">
+                    <small class="form-text text-muted">Formatos aceitos: PDF, DOC, DOCX e imagens (JPG, PNG, GIF, BMP)</small>
+                </div>
+                
                 <div class="form-actions">
                     <button type="submit" class="btn-salvar">Salvar</button>
                     <button type="button" class="btn-cancelar" onclick="fecharModalSecundario()">Cancelar</button>
@@ -73,6 +81,7 @@ function abrirModalSecundarioClientes() {
 
 // Função para construir um novo cliente
 function constructPostCliente() {
+    const id = gerarId()
     const nome = document.getElementById('nomeCliente').value;
     const telefone = document.getElementById('telefoneCliente').value;
     const email = document.getElementById('emailCliente').value;
@@ -86,7 +95,7 @@ function constructPostCliente() {
     const cep = document.getElementById('cepCliente').value;
 
     const cliente = {
-        id: gerarId(),
+        id: id,
         nome: nome,
         telefone: telefone,
         email: email,
@@ -101,4 +110,5 @@ function constructPostCliente() {
 
     // Salvar cliente na planilha
     postCliente(cliente)
+    constructReceita(id)
 } 

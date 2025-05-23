@@ -1,3 +1,5 @@
+
+
 // Função para buscar todas as movimentações da API
 async function getMovimentacoes() {
     try {

@@ -22,6 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Usando as rotas da API SQLite
 app.use('/api', dbRoutes);
 
+// Rota específica para upload de receitas (fora do /api)
+app.use('/upload-receita', dbRoutes);
+
 // Rota para a página inicial e qualquer outra rota (SPA)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

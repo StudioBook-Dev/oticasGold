@@ -3,7 +3,6 @@
 // Função para editar um cliente existente
 async function editarCliente(id) {
     const cliente = await getClienteById(id)
-    console.log(cliente)
     abrirModalSecundario({
         titulo: `Editar Cliente ${cliente.nome} #${cliente.id}`,
         conteudo: `
@@ -74,6 +73,14 @@ async function editarCliente(id) {
                     <input type="text" id="cepCliente" name="cepCliente" class="form-control"
                     value="${cliente.cep}">
                 </div>
+
+                <div class="form-group">
+                    <label for="receitaArquivo">Receita (Anexar arquivo)</label>
+                    <input type="file" id="receitaArquivo" name="receitaArquivo" class="form-control" 
+                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp" 
+                           title="Formatos aceitos: PDF, DOC, DOCX, JPG, JPEG, PNG, GIF, BMP">
+                    <small class="form-text text-muted">Formatos aceitos: PDF, DOC, DOCX e imagens (JPG, PNG, GIF, BMP)</small>
+                </div>
                 
                 <div class="form-actions">
                     <button type="submit" class="btn-salvar">Salvar</button>
@@ -113,5 +120,6 @@ function constructPutCliente() {
         cep
     }
     putCliente(cliente)
+    constructReceita(id)
 }
 

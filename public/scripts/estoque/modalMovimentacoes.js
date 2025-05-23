@@ -58,12 +58,6 @@ async function constructPostMovimentacao(id) {
     const observacao = document.getElementById('observacao').value;
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
-    // Validação básica
-    if (!quantidade || quantidade === '' || Number(quantidade) <= 0) {
-        alert('Por favor, informe uma quantidade válida maior que zero.');
-        return;
-    }
-
     let movimentacao = {
         id: gerarId(),
         tipo: tipo,
@@ -75,7 +69,6 @@ async function constructPostMovimentacao(id) {
         data: dataFormatada().data
     };
 
-    console.log('Dados da movimentação antes de enviar:', movimentacao);
     postMovimentacao(movimentacao)
 }
 

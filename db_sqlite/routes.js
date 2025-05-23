@@ -1,5 +1,157 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const sharp = require('sharp');
+const pdf2pic = require('pdf2pic');
+
+// Função simplificada para salvar arquivo sem conversão
+async function salvarArquivo(arquivoOriginal, nomeDestino, caminhoDestino) {
+    const caminhoCompleto = path.join(caminhoDestino, nomeDestino);
+
+    try {
+        // Simplesmente salvar o arquivo como foi recebido
+        fs.writeFileSync(caminhoCompleto, arquivoOriginal.buffer);
+        return caminhoCompleto;
+
+    } catch (error) {
+        console.error('Erro ao salvar arquivo:', error);
+        throw error;
+    }
+}
+
+// Função para converter arquivo para JPG
+async function converterParaJPG(arquivoOriginal, nomeDestino, caminhoDestino) {
+    const extensaoOriginal = path.extname(arquivoOriginal.originalname).toLowerCase();
+    const caminhoCompleto = path.join(caminhoDestino, nomeDestino);
+
+    try {
+        if (extensaoOriginal === '.pdf') {
+            try {
+                // Converter PDF para JPG (primeira página)
+                const convertOptions = {
+                    density: 100,
+                    saveFilename: path.basename(nomeDestino, '.jpg'),
+                    savePath: caminhoDestino,
+                    format: "jpg",
+                    width: 800,
+                    height: 1200
+                };
+
+                const convert = pdf2pic.fromBuffer(arquivoOriginal.buffer, convertOptions);
+                const result = await convert(1);
+
+                if (result && result.path && fs.existsSync(result.path)) {
+                    fs.renameSync(result.path, caminhoCompleto);
+                    return caminhoCompleto;
+                } else {
+                    throw new Error('Falha na conversão do PDF');
+                }
+            } catch (pdfError) {
+                console.log('Erro na conversão de PDF, criando fallback:', pdfError.message);
+                // Fallback: criar imagem com informação do arquivo
+                const svgFallback = `
+                    <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100%" height="100%" fill="white"/>
+                        <text x="50%" y="45%" text-anchor="middle" font-family="Arial" font-size="20" fill="red">
+                            Erro na conversão do PDF
+                        </text>
+                        <text x="50%" y="55%" text-anchor="middle" font-family="Arial" font-size="16" fill="black">
+                            ${path.basename(arquivoOriginal.originalname)}
+                        </text>
+                    </svg>`;
+
+                await sharp(Buffer.from(svgFallback))
+                    .jpeg({ quality: 80 })
+                    .toFile(caminhoCompleto);
+
+                return caminhoCompleto;
+            }
+
+        } else if (['.doc', '.docx'].includes(extensaoOriginal)) {
+            // Para documentos Word, criar uma imagem placeholder
+            const svgImage = `
+                <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="white"/>
+                    <text x="50%" y="45%" text-anchor="middle" font-family="Arial" font-size="20" fill="blue">
+                        Documento Word
+                    </text>
+                    <text x="50%" y="55%" text-anchor="middle" font-family="Arial" font-size="16" fill="black">
+                        ${path.basename(arquivoOriginal.originalname)}
+                    </text>
+                    <text x="50%" y="65%" text-anchor="middle" font-family="Arial" font-size="12" fill="gray">
+                        Visualização não disponível
+                    </text>
+                </svg>`;
+
+            await sharp(Buffer.from(svgImage))
+                .jpeg({ quality: 80 })
+                .toFile(caminhoCompleto);
+
+            return caminhoCompleto;
+
+        } else {
+            // Para imagens, usar sharp para converter diretamente
+            await sharp(arquivoOriginal.buffer)
+                .jpeg({ quality: 80 })
+                .resize(1200, 1600, {
+                    fit: 'inside',
+                    withoutEnlargement: true
+                })
+                .toFile(caminhoCompleto);
+
+            return caminhoCompleto;
+        }
+
+    } catch (error) {
+        console.error('Erro geral na conversão:', error);
+
+        // Fallback final: criar arquivo de erro
+        try {
+            const errorSvg = `
+                <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="#ffebee"/>
+                    <text x="50%" y="40%" text-anchor="middle" font-family="Arial" font-size="24" fill="red">
+                        Erro na Conversão
+                    </text>
+                    <text x="50%" y="50%" text-anchor="middle" font-family="Arial" font-size="16" fill="black">
+                        ${path.basename(arquivoOriginal.originalname)}
+                    </text>
+                    <text x="50%" y="60%" text-anchor="middle" font-family="Arial" font-size="12" fill="gray">
+                        ${error.message}
+                    </text>
+                </svg>`;
+
+            await sharp(Buffer.from(errorSvg))
+                .jpeg({ quality: 80 })
+                .toFile(caminhoCompleto);
+
+            return caminhoCompleto;
+        } catch (fallbackError) {
+            console.error('Erro no fallback:', fallbackError);
+            throw new Error('Não foi possível processar o arquivo');
+        }
+    }
+}
+
+// Configurar multer para armazenar arquivo em memória
+const storage = multer.memoryStorage();
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        // Verificar tipos de arquivo permitidos
+        const allowedTypes = /\.(pdf|doc|docx|jpg|jpeg|png|gif|bmp)$/i;
+        if (!allowedTypes.test(file.originalname)) {
+            return cb(new Error('Tipo de arquivo não permitido'), false);
+        }
+        cb(null, true);
+    },
+    limits: {
+        fileSize: 10 * 1024 * 1024 // Limite de 10MB
+    }
+});
 
 // Importar modelos
 const pedidosModel = require('./pedidosModel');
@@ -488,6 +640,51 @@ router.delete('/financeiro/transacoes/:id', async (req, res) => {
         return res.status(400).json({ error: result.error });
     }
     res.json({ id: result.id });
+});
+
+// Rota para upload de receitas
+router.post('/upload-receita', upload.single('arquivo'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                error: 'Nenhum arquivo foi enviado'
+            });
+        }
+
+        const { clienteId, novoNome } = req.body;
+
+        // Definir caminho de destino
+        const uploadPath = path.join(__dirname, 'receitas');
+
+        // Criar diretório se não existir
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+        }
+
+        // Salvar arquivo com o nome do ID (sem conversão)
+        const caminhoArquivoFinal = await salvarArquivo(req.file, novoNome, uploadPath);
+
+        res.json({
+            success: true,
+            message: 'Receita salva com sucesso',
+            arquivo: {
+                nomeOriginal: req.file.originalname,
+                nomeArquivoFinal: novoNome,
+                tamanhoOriginal: req.file.size,
+                clienteId: clienteId,
+                caminhoFinal: caminhoArquivoFinal,
+                formatoOriginal: path.extname(req.file.originalname)
+            }
+        });
+
+    } catch (error) {
+        console.error('Erro no upload da receita:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Erro interno no servidor ao fazer upload da receita: ' + error.message
+        });
+    }
 });
 
 module.exports = router; 

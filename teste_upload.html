@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teste Upload Receitas</title>
+</head>
+
+<body>
+    <h1>Teste de Upload de Receitas</h1>
+
+    <form id="testForm">
+        <div>
+            <label>Arquivo:</label>
+            <input type="file" id="arquivo" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp">
+        </div>
+        <br>
+        <div>
+            <label>ID do Cliente:</label>
+            <input type="text" id="clienteId" value="TESTE123">
+        </div>
+        <br>
+        <button type="button" onclick="testarUpload()">Testar Upload</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        function testarUpload() {
+            const arquivo = document.getElementById('arquivo').files[0];
+            const clienteId = document.getElementById('clienteId').value;
+
+            if (!arquivo) {
+                alert('Selecione um arquivo');
+                return;
+            }
+
+            const extensaoOriginal = arquivo.name.substring(arquivo.name.lastIndexOf('.'));
+            const novoNome = `${clienteId}${extensaoOriginal}`;
+
+            const formData = new FormData();
+            formData.append('arquivo', arquivo);
+            formData.append('novoNome', novoNome);
+            formData.append('clienteId', clienteId);
+
+            fetch('/api/upload-receita', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('resultado').innerHTML =
+                        '<h3>Resultado:</h3>' +
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                })
+                .catch(error => {
+                    document.getElementById('resultado').innerHTML =
+                        '<h3>Erro:</h3>' +
+                        '<p style="color: red;">' + error.message + '</p>';
+                });
+        }
+    </script>
+</body>
+
+</html>
