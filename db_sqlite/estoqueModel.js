@@ -131,10 +131,13 @@ async function adicionarMovimentacaoEstoque(movimentacao) {
             ]
         );
 
+        // Declarar novoEstoque fora do bloco if
+        let novoEstoque = null;
+
         // Atualizar o estoque do produto automaticamente
         const produto = await getOne('SELECT * FROM produtos WHERE id = ?', [movimentacao.produtoId]);
         if (produto) {
-            let novoEstoque = produto.estoque;
+            novoEstoque = produto.estoque;
 
             if (movimentacao.tipo === 'entrada') {
                 novoEstoque += parseFloat(movimentacao.quantidade);

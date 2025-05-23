@@ -64,7 +64,9 @@ async function gerarTabelaDeProdutosParaPedido() {
         </thead>
         <tbody class="modal-conteudo">`
     produtos.forEach((produto) => {
-        if (produto.estoque == 0){ return }
+        if (produto.estoque == 0){ 
+            return conteudo = '<p> Produto sem estoque.</p>';
+        }
         conteudo += `
             <tr id="produto-${produto.id}">
             <td class="coluna-acoes">

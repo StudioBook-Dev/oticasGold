@@ -1,4 +1,3 @@
-
 /**
  * Abre o modal de saída de estoque para um produto específico
  */
@@ -8,7 +7,7 @@ async function abrirModalMovimentacoes(id) {
         titulo: `Lançar Movimentação do ${produto.nome}`,
         conteudo: `
         <form onsubmit="event.preventDefault(); 
-            constructPostMovimentacao(${id}, 'Lançamento Manual')">
+            constructPostMovimentacao(${produto.id})">
             <div class="form-estoque">
                 <div class="form-grupo">
                     <label>Produto: ${produto.nome}</label>
@@ -40,8 +39,8 @@ async function abrirModalMovimentacoes(id) {
                 </div>
 
                 <div class="form-acoes">
-                    <button id="btn-confirmar-saida" class="botao-formulario">
-                        Confirmar Saída
+                    <button class="botao-formulario">
+                        Confirmar Lançamento
                     </button>
                 </div>
             </div>
@@ -53,23 +52,30 @@ async function abrirModalMovimentacoes(id) {
 /**
  * Funções para registrar as movimentações de estoque (entradas e saídas)
  */
-async function constructPostMovimentacao(id, motivo) {
+async function constructPostMovimentacao(id) {
     const produto = await getProdutoById(id)
     const quantidade = document.getElementById('quantidade').value;
     const observacao = document.getElementById('observacao').value;
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
+    // Validação básica
+    if (!quantidade || quantidade === '' || Number(quantidade) <= 0) {
+        alert('Por favor, informe uma quantidade válida maior que zero.');
+        return;
+    }
+
     let movimentacao = {
         id: gerarId(),
         tipo: tipo,
-        motivo: motivo || '',
+        motivo: 'Lançamento Manual',
         produtoId: produto.id,
         produtoNome: produto.nome,
-        quantidade: quantidade || produto.estoque,
+        quantidade: Number(quantidade), // Converter para número
         observacao: observacao || '',
         data: dataFormatada().data
     };
 
+    console.log('Dados da movimentação antes de enviar:', movimentacao);
     postMovimentacao(movimentacao)
 }
 
