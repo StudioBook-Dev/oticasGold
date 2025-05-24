@@ -16,12 +16,12 @@ function constructHtmlCarrinho() {
     // Calcular o desconto total (manual + cupom)
     const descontoTotal = desconto + descontoCupom;
     // Calcular o total final (subtotal + frete - desconto total)
-    const totalFinal = Math.max(0, itensPedido.valor + frete.valor - descontoTotal);
+    const totalFinal = Math.max(0, itensPedido.valor + frete - descontoTotal);
     // Formatar os valores para exibição
     const subtotalFormatado = itensPedido.valor.toFixed(2).replace('.', ',');
     const descontoManualFormatado = desconto.toFixed(2).replace('.', ',');
     const descontoCupomFormatado = descontoCupom.toFixed(2).replace('.', ',');
-    const freteFormatado = frete.valor.toFixed(2).replace('.', ',');
+    const freteFormatado = frete.toFixed(2).replace('.', ',');
     const totalFinalFormatado = totalFinal.toFixed(2).replace('.', ',');
     
     // Formatar a apresentação do cupom
@@ -58,7 +58,7 @@ function constructHtmlCarrinho() {
         </div>
     ` : '';
     // Informação do frete
-    const conteudoFrete = frete.valor > 0 ? `
+    const conteudoFrete = frete > 0 ? `
         <div class="frete-valor">
             <span>Frete:</span>
             <span>+ R$ ${freteFormatado}</span>

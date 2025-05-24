@@ -20,14 +20,11 @@ function getItensPedidoInLocalStorage() {
             valor: valorItens,
             data: itensPedido
         },
-        frete: {
-            valor: parseFloat(frete.valor) || 0,
-            data: frete
-        },
         cupom: {
             valor: parseFloat(cupom.valor) || 0,
             data: cupom
         },
+        frete: parseFloat(frete) || 0,
         desconto: parseFloat(desconto) || 0,
         cliente,
         observacao

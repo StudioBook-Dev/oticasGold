@@ -5,17 +5,18 @@ function modalDescontoParaPedido() {
     abrirModalSecundario({
         titulo: 'Adicionar Desconto',
         conteudo: `
-            <form id="form-desconto" class="form-modal-secundario">
-                <div class="campo-formulario">
-                    <label for="valor-desconto">Valor do Desconto (R$):</label>
-                    <input type="text" id="valor-desconto" name="valor-desconto" value="" 
-                        placeholder="0,00" autocomplete="off" min="0" required>
-                </div>
-                <div class="acoes-modal acoes-modal-rodape">
-                    <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarDesconto()">Cancelar</button>
-                    <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="aplicarDesconto()">Aplicar</button>
-                </div>
-            </form>`
+        <form id="form-desconto" class="form-modal-secundario">
+            <div class="acoes-modal">
+                <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarDesconto()">Cancelar</button>
+                <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="aplicarDesconto()">Aplicar</button>
+            </div>
+            <br>
+            <div class="campo-formulario">
+                <label for="valor-desconto">Valor do Desconto (R$):</label>
+                <input type="text" id="valor-desconto" name="valor-desconto" value="" 
+                    placeholder="0,00" autocomplete="off" min="0" required>
+            </div>
+        </form>`
     });
 }
 

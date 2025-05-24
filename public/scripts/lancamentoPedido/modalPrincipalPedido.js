@@ -24,7 +24,7 @@ function abrirModalPrincipalPedidos() {
                 <button class="botao-icone-lancamento btn-icone-lancamento-cupom" title="Adicionar cupom" onclick="modalCuponsParaPedido() ">
                     <i class="fas fa-ticket-alt"></i>
                 </button>
-                <button class="botao-icone-lancamento btn-icone-lancamento-frete" title="Adicionar frete" onclick="abrirFrete()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-frete" title="Adicionar frete" onclick="modalFreteParaPedido()">
                     <i class="fas fa-truck"></i>
                 </button>
                 <button class="botao-icone-lancamento btn-icone-lancamento-observacao" title="Adicionar observação" onclick="abrirObservacao()">

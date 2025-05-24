@@ -5,18 +5,18 @@ function modalCuponsParaPedido() {
     abrirModalSecundario({
         titulo: 'Selecionar Cupom',
         conteudo: `
-            <form id="form-cupom" class="form-modal-secundario" >
-                <div class="acoes-modal acoes-modal-cupons">
-                    <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarCupomSelecionado()">
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="aplicarCupomSelecionado()"> 
-                        Confirmar
-                    </button>
-                </div>
-                <br><br>
-                <div id="tabela-cupons"> </div>
-            </form>`
+        <form id="form-cupom" class="form-modal-secundario" >
+            <div class="acoes-modal">
+                <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarCupomSelecionado()">
+                    Cancelar
+                </button>
+                <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="aplicarCupomSelecionado()"> 
+                    Confirmar
+                </button>
+            </div>
+            <br>
+            <div id="tabela-cupons"> </div>
+        </form>`
     });
     gerarTabelaCuponsParaPedido();
 }

@@ -6,7 +6,7 @@ function modalClientesParaPedido() {
         titulo: 'Selecionar Cliente',
         conteudo: `
             <form id="form-cliente" class="form-modal-secundario" >
-                <div class="acoes-modal acoes-modal-clientes">
+                <div class="acoes-modal">
                     <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarClienteSelecionado()">
                         Cancelar
                     </button>
@@ -14,7 +14,7 @@ function modalClientesParaPedido() {
                         Confirmar
                     </button>
                 </div>
-                <br><br>
+                <br>
                 <div id="tabela-clientes"> </div>
             </form>`
     });
