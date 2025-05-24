@@ -1,12 +1,12 @@
 
 
 function getItensPedidoInLocalStorage() {
-    let valorItens    = 0
-    const cupom       = JSON.parse(localStorage.getItem('cupom')) || []
-    const frete       = JSON.parse(localStorage.getItem('frete')) || 0
-    const cliente     = JSON.parse(localStorage.getItem('cliente')) || []
-    const desconto    = JSON.parse(localStorage.getItem('desconto')) || 0
-    const observacao  = JSON.parse(localStorage.getItem('observacao')) || ''
+    let valorItens = 0
+    const cupom = JSON.parse(localStorage.getItem('cupom')) || []
+    const frete = JSON.parse(localStorage.getItem('frete')) || 0
+    const cliente = JSON.parse(localStorage.getItem('cliente')) || []
+    const desconto = JSON.parse(localStorage.getItem('desconto')) || 0
+    const observacao = JSON.parse(localStorage.getItem('observacao')) || ''
     const itensPedido = JSON.parse(localStorage.getItem('itensPedido')) || []
 
     if (itensPedido.length > 0) {

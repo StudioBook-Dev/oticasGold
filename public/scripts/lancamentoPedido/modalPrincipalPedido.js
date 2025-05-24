@@ -27,7 +27,7 @@ function abrirModalPrincipalPedidos() {
                 <button class="botao-icone-lancamento btn-icone-lancamento-frete" title="Adicionar frete" onclick="modalFreteParaPedido()">
                     <i class="fas fa-truck"></i>
                 </button>
-                <button class="botao-icone-lancamento btn-icone-lancamento-observacao" title="Adicionar observação" onclick="abrirObservacao()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-observacao" title="Adicionar observação" onclick="mdalObservacaoParaPedido()">
                     <i class="fas fa-comment-alt"></i>
                 </button>
                 <button class="botao-icone-lancamento btn-icone-lancamento-cliente" title="Selecionar cliente" onclick="modalClientesParaPedido()">
@@ -51,7 +51,7 @@ async function gerarTabelaDeProdutosParaPedido() {
         return '<p>Nenhum produto encontrado.</p>';
     }
 
-    let conteudo = `
+    let conteudo = `<br>
     <table class="tabela-modal tabela-modal-vendas">
         <thead>
             <tr>

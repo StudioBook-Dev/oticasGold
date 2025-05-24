@@ -1,40 +1,44 @@
+
+
 // Função para abrir o modal de observação
-function abrirObservacao() {
-    // Obter a observação atual (se existir)
-    const observacaoAtual = window.observacaoPedido || '';
-    
-    const conteudoHTML = `
-        <form id="form-observacao" class="form-modal-secundario">
-            <div class="campo-formulario">
-                <label for="observacao">Observação do Pedido:</label>
-                <textarea id="observacao" name="observacao" placeholder="Digite uma observação para o pedido" rows="4">${observacaoAtual}</textarea>
-            </div>
-            <div class="acoes-modal acoes-modal-rodape">
-                <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="fecharModalSecundario()">Cancelar</button>
-                <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="salvarObservacao()">Salvar</button>
-            </div>
-        </form>
-    `;
-    
+function mdalObservacaoParaPedido() {
     abrirModalSecundario({
         titulo: 'Adicionar Observação',
-        conteudo: conteudoHTML
+        conteudo: `
+        <form id="form-observacao" class="form-modal-secundario">
+            <div class="acoes-modal">
+                <button type="button" class="btn-modal-secundario btn-modal-secundario-cancel" onclick="cancelarObservacao()">Cancelar</button>
+                <button type="button" class="btn-modal-secundario btn-modal-primario" onclick="adicionarObservacao()">Salvar</button>
+            </div>
+            <br>
+            <div class="campo-formulario">
+                <label for="observacao">Observação do Pedido:</label>
+                <textarea id="observacao" name="observacao" placeholder="Digite uma observação para o pedido" rows="4"></textarea>
+            </div>
+        </form>`
     });
 }
 
+
 // Função para salvar observação no objeto global
-function salvarObservacao() {
+function adicionarObservacao() {
     const observacao = document.getElementById('observacao').value;
-    
-    // Armazenar a observação globalmente para ser usada ao finalizar o pedido
-    window.observacaoPedido = observacao.trim();
-    
-    if (window.observacaoPedido) {
-        console.log("Observação salva:", window.observacaoPedido);
-    } else {
-        console.log("Observação removida");
-        window.observacaoPedido = "";
+    if (!observacao) {
+        alert('Digite uma observação para o pedido');
+        return;
     }
-    
+
+    localStorage.setItem("observacao", JSON.stringify(observacao));
+    statusIconeNoModalPrincipalPedido('observacao', true)
     fecharModalSecundario();
+    constructHtmlCarrinho()
+}
+
+
+// Função para cancelar a observação
+function cancelarObservacao() {
+    localStorage.removeItem("observacao");
+    statusIconeNoModalPrincipalPedido('observacao', false)
+    fecharModalSecundario();
+    constructHtmlCarrinho()
 }
