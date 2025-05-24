@@ -21,8 +21,9 @@ function abrirModalPrincipalPedidos() {
                 </div>
             </div> `,
         adicionar: `
-            <div class="container-botoes-topo" style="display: flex; justify-content: space-between; align-items: center; max-width: 50%; gap: 1rem;">             
-                <button class="botao-icone-lancamento btn-icone-lancamento-cupom" title="Adicionar cupom" onclick="abrirCupom() ">
+            <div class="container-botoes-topo" style="display: flex; justify-content: space-between; align-items: center; max-width: 50%; gap: 1rem;">  
+
+                <button class="botao-icone-lancamento btn-icone-lancamento-cupom" title="Adicionar cupom" onclick="modalCuponsParaPedido() ">
                     <i class="fas fa-ticket-alt"></i>
                 </button>
                 <button class="botao-icone-lancamento btn-icone-lancamento-frete" title="Adicionar frete" onclick="abrirFrete()">

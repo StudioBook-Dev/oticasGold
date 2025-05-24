@@ -108,7 +108,6 @@ function constructPostCliente() {
         cep: cep
     };
 
-    // Salvar cliente na planilha
     postCliente(cliente)
     constructReceita(id)
 } 

@@ -45,14 +45,13 @@ function abrirModalSecundarioCupons() {
 
 // Função para salvar os dados do formulário
 function constructPostCupom() {
-    const id = document.getElementById('cupomId')?.value || '';
     const nome = document.getElementById('nomeCupom').value;
     const valor = parseFloat(document.getElementById('valorCupom').value);
     const tipoElements = document.getElementsByName('tipoCupom');
     const tipo = tipoElements[0].checked ? 'absoluto' : 'percentual';
 
     const cupom = {
-        id: id,
+        id: gerarId(),
         nome: nome,
         valor: valor,
         tipo: tipo
