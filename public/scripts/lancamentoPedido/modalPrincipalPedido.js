@@ -4,6 +4,7 @@
 // let produtosCarrinho = [];
 
 function abrirModalPrincipalPedidos() {
+    resetItensDoPedidoInLocalStorage()
     fecharModalSecundario()
     abrirModalPrincipal({
         titulo: 'Lançamento de Pedido',

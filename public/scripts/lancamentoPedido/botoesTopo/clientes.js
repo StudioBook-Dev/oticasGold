@@ -73,10 +73,10 @@ function aplicarClienteSelecionado() {
         nome: clienteNome,
         telefone: clienteTelefone
     }
-
     localStorage.setItem("cliente", JSON.stringify(cliente));
     statusIconeNoModalPrincipalPedido('cliente', true)
     fecharModalSecundario();
+    constructHtmlCarrinho()
 }
 
 
@@ -84,4 +84,5 @@ function cancelarClienteSelecionado() {
     localStorage.removeItem("cliente");
     statusIconeNoModalPrincipalPedido('cliente', false)
     fecharModalSecundario();
+    constructHtmlCarrinho()
 }
