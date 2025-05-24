@@ -1,7 +1,7 @@
 
 
 function getItensPedidoInLocalStorage() {
-    let valorItensPedido = 0
+    let valorItens    = 0
     const cupom       = JSON.parse(localStorage.getItem('cupom')) || []
     const frete       = JSON.parse(localStorage.getItem('frete')) || 0
     const cliente     = JSON.parse(localStorage.getItem('cliente')) || []
@@ -11,27 +11,24 @@ function getItensPedidoInLocalStorage() {
 
     if (itensPedido.length > 0) {
         itensPedido.forEach(item => {
-            valorItensPedido += parseFloat(item.preco) * item.quantidade
+            valorItens += parseFloat(item.preco) * item.quantidade
         })
     }
 
     const data = {
         itensPedido: {
-            valor: valorItensPedido,
+            valor: valorItens,
             data: itensPedido
         },
         frete: {
             valor: parseFloat(frete.valor) || 0,
             data: frete
         },
-        desconto: {
-            valor: parseFloat(desconto.valor) || 0,
-            data: desconto
-        },
         cupom: {
             valor: parseFloat(cupom.valor) || 0,
             data: cupom
         },
+        desconto: parseFloat(desconto) || 0,
         cliente,
         observacao
     }

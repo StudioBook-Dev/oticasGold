@@ -1,8 +1,5 @@
 
 
-// Array para armazenar os produtos do carrinho
-// let produtosCarrinho = [];
-
 function abrirModalPrincipalPedidos() {
     resetItensDoPedidoInLocalStorage()
     fecharModalSecundario()
@@ -36,7 +33,7 @@ function abrirModalPrincipalPedidos() {
                 <button class="botao-icone-lancamento btn-icone-lancamento-cliente" title="Selecionar cliente" onclick="modalClientesParaPedido()">
                     <i class="fas fa-user"></i>
                 </button>
-                <button class="botao-icone-lancamento btn-icone-lancamento-desconto" title="Adicionar desconto" onclick="abrirDesconto()">
+                <button class="botao-icone-lancamento btn-icone-lancamento-desconto" title="Adicionar desconto" onclick="modalDescontoParaPedido()">
                     <i class="fas fa-cash-register"></i>
                 </button>
             </div>
