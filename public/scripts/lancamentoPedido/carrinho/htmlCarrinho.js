@@ -37,7 +37,7 @@ function constructHtmlCarrinho() {
             <div class="cupom-aplicado">
                 <div class="info-cupom">
                     <span class="label-cupom">Cupom: </span>
-                    <span class="nome-cupom">${cupom.data.nome}</span>
+                    <span class="nome-cupom">${cupom.nome}</span>
                     <span class="valor-cupom">${valorFormatado}</span>
                     <button type="button" class="btn-remover-cupom" onclick="cancelarCupomSelecionado()">
                         <i class="fas fa-times"></i>

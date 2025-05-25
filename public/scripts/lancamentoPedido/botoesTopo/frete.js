@@ -2,6 +2,7 @@
 
 // Função para abrir o modal de frete
 function modalFreteParaPedido() {
+    const freteSelecionado = getItensPedidoInLocalStorage().frete
     abrirModalSecundario({
         titulo: 'Adicionar Frete',
         conteudo: `
@@ -13,7 +14,7 @@ function modalFreteParaPedido() {
             <br>
             <div class="campo-formulario">
                 <label for="valor-frete"></label>
-                <input type="text" id="valor-frete" name="valor-frete" value="" 
+                <input type="text" id="valor-frete" name="valor-frete" value="${freteSelecionado}" 
                        placeholder="0,00" autocomplete="off">
             </div>
         </form> `

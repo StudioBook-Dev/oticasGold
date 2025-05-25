@@ -26,6 +26,7 @@ function modalClientesParaPedido() {
 async function gerarTabelaClientesParaPedido() {
     const clientes = await getClientes()
     const html = document.getElementById('tabela-clientes')
+    const clienteSelecionado = getItensPedidoInLocalStorage().cliente
 
     if (!clientes || clientes.length === 0) {
         return '<p>Nenhum cliente encontrado.</p>';
@@ -45,7 +46,9 @@ async function gerarTabelaClientesParaPedido() {
         conteudo += `   
             <tr>
                 <td>
-                    <input type="radio" name="cliente" value="${cliente.id}" id="cliente-${cliente.id}">
+                    <input type="radio" name="cliente" 
+                    value="${cliente.id}"  id="cliente-${cliente.id}" 
+                    ${cliente.id === clienteSelecionado.id ? 'checked' : ''}>
                 </td>
                 <td>${cliente.nome || ''}</td>
                 <td>${cliente.telefone || ''}</td>

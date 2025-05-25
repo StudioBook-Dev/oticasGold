@@ -2,6 +2,7 @@
 
 // Função para abrir o modal de desconto
 function modalDescontoParaPedido() {
+    const descontoSelecionado = getItensPedidoInLocalStorage().desconto
     abrirModalSecundario({
         titulo: 'Adicionar Desconto',
         conteudo: `
@@ -13,7 +14,7 @@ function modalDescontoParaPedido() {
             <br>
             <div class="campo-formulario">
                 <label for="valor-desconto">Valor do Desconto (R$):</label>
-                <input type="text" id="valor-desconto" name="valor-desconto" value="" 
+                <input type="text" id="valor-desconto" name="valor-desconto" value="${descontoSelecionado}" 
                     placeholder="0,00" autocomplete="off" min="0" required>
             </div>
         </form>`

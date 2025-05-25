@@ -2,6 +2,7 @@
 
 // Função para abrir o modal de observação
 function mdalObservacaoParaPedido() {
+    const observacaoSelecionada = getItensPedidoInLocalStorage().observacao
     abrirModalSecundario({
         titulo: 'Adicionar Observação',
         conteudo: `
@@ -13,7 +14,7 @@ function mdalObservacaoParaPedido() {
             <br>
             <div class="campo-formulario">
                 <label for="observacao">Observação do Pedido:</label>
-                <textarea id="observacao" name="observacao" placeholder="Digite uma observação para o pedido" rows="4"></textarea>
+                <textarea id="observacao" name="observacao" placeholder="Digite uma observação para o pedido" rows="4">${observacaoSelecionada}</textarea>
             </div>
         </form>`
     });

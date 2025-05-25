@@ -26,6 +26,7 @@ function modalCuponsParaPedido() {
 async function gerarTabelaCuponsParaPedido() {
     const cupons = await getCupons()
     const html = document.getElementById('tabela-cupons')
+    const cupomSelecionado = getItensPedidoInLocalStorage().cupom
 
     if (!cupons || cupons.length === 0) {
         return '<p>Nenhum cupom encontrado.</p>';
@@ -46,7 +47,8 @@ async function gerarTabelaCuponsParaPedido() {
         conteudo += `
             <tr>
                 <td>
-                    <input type="radio" name="cupom" value="${cupom.id}" id="cupom-${cupom.id}">
+                    <input type="radio" name="cupom" value="${cupom.id}" id="cupom-${cupom.id}" 
+                    ${cupom.id === cupomSelecionado.id ? 'checked' : ''}>
                 </td>
                 <td>${cupom.nome}</td>  
                 <td>${cupom.valor}</td>
