@@ -2,38 +2,43 @@
 
 function getItensPedidoInLocalStorage() {
     let valorItens = 0
-    const cupom = JSON.parse(localStorage.getItem('cupom')) || []
-    const frete = JSON.parse(localStorage.getItem('frete')) || 0
-    const cliente = JSON.parse(localStorage.getItem('cliente')) || []
-    const desconto = JSON.parse(localStorage.getItem('desconto')) || 0
-    const observacao = JSON.parse(localStorage.getItem('observacao')) || ''
-    const itensPedido = JSON.parse(localStorage.getItem('itensPedido')) || []
-
+    const cupom = JSON.parse(localStorage.getItem('cupom'))
+    const frete = JSON.parse(localStorage.getItem('frete'))
+    const cliente = JSON.parse(localStorage.getItem('cliente'))
+    const desconto = JSON.parse(localStorage.getItem('desconto'))
+    const observacao = JSON.parse(localStorage.getItem('observacao'))
+    const itensPedido = JSON.parse(localStorage.getItem('itensPedido'))
     if (itensPedido.length > 0) {
         itensPedido.forEach(item => {
             valorItens += parseFloat(item.preco) * item.quantidade
         })
     }
-
     const data = {
         itensPedido: {
             valor: valorItens,
             data: itensPedido
         },
-        cupom: cupom,
-        frete: frete,
-        desconto: desconto,
-        cliente: cliente,
-        observacao: observacao
+        cupom: cupom || [],
+        frete: frete || 0,
+        desconto: desconto || 0,
+        cliente: cliente || [],
+        observacao: observacao || ''
     }
-
     return data
 }
 
 
 function setItensPedidoInLocalStorage(item) {
-    const itensPedido = localStorage.getItem('itensPedido') || []
-    itensPedido.push(item)
+    const itensPedido = JSON.parse(localStorage.getItem('itensPedido')) || []
+    // Procura se já existe um item com o mesmo ID
+    const itemExistente = itensPedido.find(itemExistente => itemExistente.id === item.id)
+    if (itemExistente) {
+        // Se o item já existe, aumenta a quantidade
+        itemExistente.quantidade += item.quantidade || 1
+    } else {
+        // Se o item não existe, adiciona o novo item
+        itensPedido.push(item)
+    }
     localStorage.setItem('itensPedido', JSON.stringify(itensPedido))
 }
 

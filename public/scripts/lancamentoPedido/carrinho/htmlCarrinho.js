@@ -6,7 +6,7 @@ function constructHtmlCarrinho() {
 
     // Calcular o valor do desconto do cupom
     let descontoCupom = 0;
-    if (cupom) {
+    if (cupom > 0) {
         if (cupom.tipo === 'percentual') {
             descontoCupom = itensPedido.valor * (parseFloat(cupom.valor) / 100);
         } else {
@@ -16,7 +16,7 @@ function constructHtmlCarrinho() {
     // Calcular o desconto total (manual + cupom)
     const descontoTotal = desconto + descontoCupom;
     // Calcular o total final (subtotal + frete - desconto total)
-    const totalFinal = Math.max(0, itensPedido.valor + frete - descontoTotal);
+    const totalFinal = itensPedido.valor + frete - descontoTotal;
     // Formatar os valores para exibição
     const subtotalFormatado = itensPedido.valor.toFixed(2).replace('.', ',');
     const descontoManualFormatado = desconto.toFixed(2).replace('.', ',');
@@ -50,6 +50,7 @@ function constructHtmlCarrinho() {
             </div>
         `;
     }
+
     // Informação do desconto manual
     const conteudoDesconto = desconto > 0 ? `
         <div class="desconto-manual">
@@ -57,6 +58,7 @@ function constructHtmlCarrinho() {
             <span>- R$ ${descontoManualFormatado}</span>
         </div>
     ` : '';
+    
     // Informação do frete
     const conteudoFrete = frete > 0 ? `
         <div class="frete-valor">
@@ -74,7 +76,7 @@ function constructHtmlCarrinho() {
                 <div class="item-carrinho">
                     <span>${item.nome}</span>
                     <span>${item.quantidade}x</span>
-                    <span>${item.preco}</span>
+                    <span>${formatarValorMonetario(item.preco, 'R$ 0,00')}</span>
                 </div>
             `).join('')}
         </div>

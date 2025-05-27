@@ -1,5 +1,3 @@
-
-
 function converterParaNumero(valor) {
     // Se já for um número, retorna o próprio valor
     if (typeof valor === 'number') {
@@ -14,13 +12,13 @@ function converterParaNumero(valor) {
         try {
             // Remove símbolos de moeda (R$), pontos de milhar, espaços, etc
             let valorLimpo = valor.replace(/[^\d,.-]/g, '');
-            
+
             // Converte vírgula decimal para ponto (padrão brasileiro para internacional)
             valorLimpo = valorLimpo.replace(',', '.');
-            
+
             // Converte para número e verifica se é válido
             const numero = parseFloat(valorLimpo);
-            
+
             // Retorna o número ou zero se for inválido (NaN)
             return isNaN(numero) ? 0 : numero;
         } catch (erro) {
@@ -46,21 +44,44 @@ function formatarValorMonetario(valor, valorPadrao = 'R$ 0') {
     }
     // Se já for um número, usa o toLocaleString para formatação brasileira
     if (typeof valor === 'number') {
-        return valor.toLocaleString('pt-BR', { 
-            style: 'currency', 
-            currency: 'BRL' 
+        return valor.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
         });
     }
     // Se for string ou outro tipo, tenta converter para número primeiro
     try {
         const valorNumerico = converterParaNumero(valor);
-        return valorNumerico.toLocaleString('pt-BR', { 
-            style: 'currency', 
-            currency: 'BRL' 
+        return valorNumerico.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
         });
     } catch (erro) {
         // Em caso de erro, retorna o valor original com prefixo R$
         return `R$ ${valor}`;
     }
 }
+
+/**
+ * Converte string de dinheiro para número
+ * @param {string} stringDinheiro - String com valor monetário (ex: "R$ 1.234,56")
+ * @returns {number} Valor numérico
+ */
+function converterStringDinheiroParaNumero(stringDinheiro) {
+    if (!stringDinheiro || typeof stringDinheiro !== 'string') {
+        return 0;
+    }
+
+    // Remove R$, espaços e outros símbolos, mantém apenas dígitos, vírgulas e pontos
+    let valorLimpo = stringDinheiro.replace(/[^\d,.-]/g, '');
+
+    // Converte vírgula decimal para ponto
+    valorLimpo = valorLimpo.replace(',', '.');
+
+    // Converte para número
+    const numero = parseFloat(valorLimpo);
+
+    return isNaN(numero) ? 0 : numero;
+}
+
 

@@ -73,11 +73,8 @@ async function gerarTabelaDeProdutosParaPedido() {
                     <input type="radio" name="produto" id="input-produto-${produto.id}">
                 </div>
             </td>
-
             <td class="coluna-nome">${produto.nome}</td>
-
             <td class="coluna-preco">R$ ${produto.preco.toFixed(2).replace('.', ',')}</td>
-            
             <td class="coluna-contadores">
                 <div class="contador-container">
                     <button class="btn-contador" onclick="decrementarContador(${produto.id})">
@@ -92,8 +89,8 @@ async function gerarTabelaDeProdutosParaPedido() {
                 </div>
             </td> `
     });
-
     conteudo += '</tbody></table>';
+    
     html.innerHTML = conteudo;
 }
 
