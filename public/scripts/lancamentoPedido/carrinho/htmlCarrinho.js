@@ -13,12 +13,18 @@ function constructHtmlCarrinho() {
             descontoCupom = parseFloat(cupom.valor);
         }
     }
+    let subtotal = 0
+    if (itensPedido.length > 0) {
+        itensPedido.forEach(item => {
+            subtotal += parseFloat(item.preco) * item.quantidade
+        })
+    }
     // Calcular o desconto total (manual + cupom)
     const descontoTotal = desconto + descontoCupom;
     // Calcular o total final (subtotal + frete - desconto total)
-    const totalFinal = itensPedido.valor + frete - descontoTotal;
+    const totalFinal = subtotal + frete - descontoTotal;
     // Formatar os valores para exibição
-    const subtotalFormatado = itensPedido.valor.toFixed(2).replace('.', ',');
+    const subtotalFormatado = subtotal.toFixed(2).replace('.', ',');
     const descontoManualFormatado = desconto.toFixed(2).replace('.', ',');
     const descontoCupomFormatado = descontoCupom.toFixed(2).replace('.', ',');
     const freteFormatado = frete.toFixed(2).replace('.', ',');
@@ -71,8 +77,8 @@ function constructHtmlCarrinho() {
     const conteudoCarrinho = `
         <h3>Carrinho de Compras</h3>
         <div id="itens-carrinho">
-            ${itensPedido.data.length === 0 ? '<p>Nenhum item no carrinho</p>' : ''}
-            ${itensPedido.data.map(item => `
+            ${itensPedido.length === 0 ? '<p>Nenhum item no carrinho</p>' : ''}
+            ${itensPedido.map(item => `
                 <div class="item-carrinho">
                     <span>${item.nome}</span>
                     <span>${item.quantidade}x</span>
@@ -88,12 +94,12 @@ function constructHtmlCarrinho() {
             ${conteudoFrete}
             ${conteudoDesconto}
             ${conteudoCupom}
-            <div class="total-carrinho">
+            <div class="total-carrinho" id="total-carrinho" value="${totalFinalFormatado}">
                 <p>Total: R$ ${totalFinalFormatado}</p>
             </div>
         </div>
-        <button class="btn-primario" onclick="finalizarPedido()" 
-        ${itensPedido.data.length === 0 ? 'disabled' : ''}>
+        <button class="btn-primario" onclick="constructPostPedido()" 
+        ${itensPedido.length === 0 ? 'disabled' : ''}>
             Finalizar Venda
         </button>
     `;

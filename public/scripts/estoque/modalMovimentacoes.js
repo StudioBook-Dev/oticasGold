@@ -52,22 +52,34 @@ async function abrirModalMovimentacoes(id) {
 /**
  * Funções para registrar as movimentações de estoque (entradas e saídas)
  */
-async function constructPostMovimentacao(id) {
-    const produto = await getProdutoById(id)
-    const quantidade = document.getElementById('quantidade').value;
-    const observacao = document.getElementById('observacao').value;
-    const tipo = document.querySelector('input[name="tipo"]:checked').value;
-
+async function constructPostMovimentacao(id, modo = 'manual') {
     let movimentacao = {
         id: gerarId(),
-        tipo: tipo,
-        motivo: 'Lançamento Manual',
-        produtoId: produto.id,
-        produtoNome: produto.nome,
-        quantidade: Number(quantidade), // Converter para número
-        observacao: observacao || '',
         data: dataFormatada().data
-    };
+    }
+
+    if (modo === 'manual') {
+        const produto = await getProdutoById(id)
+        const quantidade = document.getElementById('quantidade').value;
+        const observacao = document.getElementById('observacao').value;
+        const tipo = document.querySelector('input[name="tipo"]:checked').value;
+        movimentacao.tipo = tipo
+        movimentacao.motivo = 'Lançamento Manual'
+        movimentacao.produtoId = produto.id
+        movimentacao.produtoNome = produto.nome
+        movimentacao.quantidade = Number(quantidade)
+        movimentacao.observacao = observacao || ''
+    }
+
+    if (modo === 'automatico') {
+        const produto = getItensPedidoInLocalStorage().itensPedido.find(item => item.id === id)
+        movimentacao.tipo = 'saida'
+        movimentacao.motivo = 'Lançamento de Pedido'
+        movimentacao.produtoId = produto.id
+        movimentacao.produtoNome = produto.nome
+        movimentacao.quantidade = produto.quantidade
+        movimentacao.observacao = getItensPedidoInLocalStorage().observacao
+    }
 
     postMovimentacao(movimentacao)
 }

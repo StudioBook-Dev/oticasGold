@@ -1,6 +1,5 @@
 async function editarProduto(id) {
     const produto = await getProdutoById(id);
-    console.log(produto)
     const categorias = await getCategorias();
     abrirModalSecundario({
         titulo: `Editar Produto ${produto.nome} #${produto.id}`,

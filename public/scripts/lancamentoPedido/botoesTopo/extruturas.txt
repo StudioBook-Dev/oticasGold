@@ -1,0 +1,69 @@
+
+
+observacao: observacao || '',
+
+frete: frete || 0,
+
+desconto: desconto || 0,
+
+item = {
+    id: produtoId,
+    nome: nome,
+    quantidade: quantidade,
+    preco: preco
+} 
+
+cliente = {
+    id: clienteId,
+    nome: clienteNome,
+    telefone: clienteTelefone
+}
+
+cupom = {
+    id: cupomId,
+    nome: cupomNome,
+    valor: cupomValor,
+    tipo: cupomTipo
+}
+
+pagamento: {
+    id: '',
+    dataCriacao: '',
+    descricao: ``,
+    tipo: '',
+    categoria: '',
+    valor: 0,
+    pagamento: {
+        formas: {
+            forma: 'pix', 
+            valor: pagamentoPix
+        },
+        juros: 0,
+    }
+}
+
+
+pedido = {
+    id: gerarId(),
+    cliente: cliente,
+    produtos: itensPedido,
+    total: totalCarrinho || 0,
+    frete: frete || 0,
+    status: 'fila', 
+    dataCriacao: dataFormatada().data, 
+    cupons: cupomInfo || {},
+    desconto: desconto || 0,
+    observacao: observacao || '',
+    pagamento: {
+        id: '',
+        dataCriacao: '',
+        descricao: ``,
+        tipo: '',
+        categoria: '',
+        valor: 0,
+        pagamento: {
+            formas: '',
+            juros: 0,
+        }
+    },
+}
