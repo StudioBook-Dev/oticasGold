@@ -1,6 +1,6 @@
 
 function abrirDashboard(){
-    setTelaAtualLocalStorage('dashboard');
+    localStorage.setItem('telaAtual', 'dashboard');
     const dashboard = document.querySelector('.dashboard');
     const kanban = document.querySelector('.kanban');
     dashboard.classList.remove('desativado');

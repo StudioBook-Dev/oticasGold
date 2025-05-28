@@ -1,7 +1,6 @@
 
-
 function abrirKanban() {
-    setTelaAtualLocalStorage('kanban');
+    localStorage.setItem('telaAtual', 'kanban');
     const kanban = document.querySelector('.kanban');
     const dashboard = document.querySelector('.dashboard');
     kanban.classList.remove('desativado');
