@@ -59,7 +59,7 @@ function criarCardPedidoHTML(pedido) {
                 <span class="data-pedido">${dataFormatada}</span>
             </div>
             <div class="card-cliente">${nomeCliente}</div>
-            <div class="card-itens">${quantidadeItens} item(ns)</div>
+            <div class="card-itens">${quantidadeItens} item</div>
             <div class="card-valor">${valorFormatado}</div>
             <div class="card-acoes">
 

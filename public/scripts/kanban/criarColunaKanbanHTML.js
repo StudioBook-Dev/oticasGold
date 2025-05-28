@@ -32,9 +32,6 @@ function criarColunaKanbanHTML(status) {
             const pedidoStatus = (String(pedido.status || 'fila')).trim().toLowerCase();
             const statusColuna = status.trim().toLowerCase();
             
-            // Debug para ver os status
-            console.log(`Pedido ${pedido.id} - Status: [${pedidoStatus}] - Comparando com: [${statusColuna}] - Igual: ${pedidoStatus === statusColuna}`);
-            
             if (pedidoStatus === statusColuna) {
                 htmlColuna += criarCardPedidoHTML(pedido);
                 pedidosNaColuna++;

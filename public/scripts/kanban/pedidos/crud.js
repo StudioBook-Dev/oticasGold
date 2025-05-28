@@ -51,8 +51,9 @@ function deletePedido(id) {
 }
 
 
-// Função para salvar um novo pedido
+// Função para salvar uma nova categoria
 function postPedido(pedido) {
+    console.log(pedido)
     fetch('/api/pedidos', {
         method: 'POST',
         headers: {
@@ -72,7 +73,7 @@ function postPedido(pedido) {
 }
 
 
-// Função para salvar a edição do pedido
+// Função para salvar a edição da categoria
 function putPedido(pedido) {
     fetch(`/api/pedidos/${pedido.id}`, {
         method: 'PUT',
@@ -91,4 +92,7 @@ function putPedido(pedido) {
         alert('Erro ao atualizar pedido.');
     });
 }
+
+
+
 

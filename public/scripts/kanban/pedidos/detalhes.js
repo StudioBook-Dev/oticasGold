@@ -109,7 +109,7 @@ async function html_visualizarDetalhesPedido(id) {
             ${pedido.observacao ? `
             <div class="detalhe-secao">
                 <h3>Observações</h3>
-                <p>${pedido.observacao}</p>
+                <p> " ${pedido.observacao} "</p>
             </div>
             ` : ''}
         </div>
