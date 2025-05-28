@@ -14,7 +14,7 @@ function abrirModalPrincipal_DetalhesDosPedidos(id) {
 // Função para visualizar detalhes do pedido (chamada pelo onclick do card)
 async function html_visualizarDetalhesPedido(id) {
     // Buscar o pedido específico
-    const pedido = await getPedido(id);
+    const pedido = await getPedidoById(id);
     const html = document.getElementById('detalhes-pedido');
 
     let clienteFormatado = 'anonimo';
